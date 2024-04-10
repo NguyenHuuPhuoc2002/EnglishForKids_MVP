@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/img"
+    tools:context=".activity.MainActivity">
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="-80dp">-->
+<!--        <ImageView-->
+<!--            android:id="@+id/img_question"-->
+<!--            android:layout_width="290dp"-->
+<!--            android:layout_height="190dp"-->
+<!--            android:src="@drawable/img_tracnghiem"/>-->
+<!--    </LinearLayout>-->
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:fontFamily="@font/poppins"
+                android:text=" Score : "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/poppins"
+                android:text="20 "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txtcontent_question"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:fontFamily="@font/poppins"
+                android:paddingTop="40dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="40dp"
+                android:background="@drawable/pink_boder"
+                android:text="Câu hỏi 1"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/txtanswer1"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:text="Answer 1"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:fontFamily="@font/poppins"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/black"
+        android:background="@drawable/pink_boder_answer"/>
+    <TextView
+        android:id="@+id/txtanswer2"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:text="Answer 2"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:fontFamily="@font/poppins"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/black"
+        android:background="@drawable/pink_boder_answer"/>
+    <TextView
+        android:id="@+id/txtanswer3"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:text="Answer 3"
+        android:textSize="18dp"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/black"
+        android:background="@drawable/pink_boder_answer"/>
+    <TextView
+        android:id="@+id/txtanswer4"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:text="Answer 4"
+        android:textSize="18dp"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/black"
+        android:background="@drawable/pink_boder_answer"/>
+</LinearLayout>
