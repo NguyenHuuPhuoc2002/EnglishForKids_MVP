@@ -55,8 +55,8 @@ class DBHelperRepository(private val context: Context) {
                 val content = cursor.getString(cursor.getColumnIndex("Content"))
                 val answerID = cursor.getInt(cursor.getColumnIndex("AnswerID"))
                 val topic = cursor.getString(cursor.getColumnIndex("TopicID"))
-                val img = cursor.getString(cursor.getColumnIndex("AnhQues"))
-                itemList.add(QuestionModel(questionID, content, answerID, topic, img))
+              //  val img = cursor.getString(cursor.getColumnIndex("AnhQues"))
+                itemList.add(QuestionModel(questionID, content, answerID, topic))
             } while (cursor.moveToNext())
         }
         cursor.close()
