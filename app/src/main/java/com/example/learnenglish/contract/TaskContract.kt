@@ -15,6 +15,7 @@ interface TaskContract {
         fun showAnswer(mListAnswer: ArrayList<AnswerModel>)
         fun showQuizEndMessage()
         fun showErrorMessage(message: String)
+        fun showActivityFinished(totalNumberOfQuestion: Int, numCorrectAnswer: Int, point: Int)
         fun showResult(isCorrect: Boolean, textview: TextView)
         fun showNextQuestion(listQuestion: ArrayList<QuestionModel>, listAnswer: ArrayList<AnswerModel>, newCurrentPos: Int)
     }

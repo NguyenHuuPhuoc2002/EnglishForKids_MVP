@@ -1,9 +1,12 @@
 package com.example.learnenglish.presenter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Handler
 import android.util.Log
 import android.widget.TextView
+import com.example.learnenglish.activity.FinishActivity
 import com.example.learnenglish.activity.MainActivity
 import com.example.learnenglish.contract.TaskContract
 import com.example.learnenglish.model.TopicModel
@@ -79,18 +82,27 @@ class TaskPresenter(private val context: Context, private val view: MainActivity
         Log.d("ketqua 1", mListAns[currentPos].isCorrect + textview.text)
         if(mListAns[currentPos].isCorrect == textview.text){
             nextQuestion(mListQues, mListAns, currentPos)
+        }else{
+            Handler().postDelayed({
+                view.showActivityFinished(mListQues.size, currentPos, 0)
+            },500)
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun nextQuestion(mListQues: ArrayList<QuestionModel>, listAnswer: ArrayList<AnswerModel>, newCurrentPos: Int) {
-        Handler().postDelayed({
-            if(newCurrentPos == mListQues.size - 1){
-                view.showQuizEndMessage()
-            }else{
-                val incrementedPos = newCurrentPos + 1
-                view.showNextQuestion(mListQues, listAnswer, incrementedPos)
-            }
-        }, 1400)
+        if(newCurrentPos == mListQues.size - 1){
+            Handler().postDelayed({
+                view.showActivityFinished(mListQues.size, newCurrentPos, 0)
+            },500)
+        }else{
+            val incrementedPos = newCurrentPos + 1
+            val tvNumQuesCurent = incrementedPos + 1
+            view.showNextQuestion(mListQues, listAnswer, incrementedPos)
+            Handler().postDelayed({
+                view.tvNumQuesCurent.text = "$tvNumQuesCurent "
+            }, 1000)
+        }
     }
 
 }

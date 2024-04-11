@@ -1,34 +1,45 @@
 package com.example.learnenglish.activity
 
+import android.annotation.SuppressLint
+import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.bumptech.glide.Glide
+import androidx.appcompat.app.AlertDialog
 import com.example.learnenglish.R
 import com.example.learnenglish.contract.TaskContract
 import com.example.learnenglish.presenter.TaskPresenter
 import com.example.learnenglish.repository.DBHelperRepository
 import com.example.learnenglish_demo.AnswerModel
 import com.example.learnenglish_demo.QuestionModel
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity(), TaskContract.View , View.OnClickListener{
     private lateinit var presenter: TaskContract.Presenter
+    private lateinit var dialog:AlertDialog
     private lateinit var tvContentQuestion: TextView
-    private lateinit var imgQuestion: ImageView
+    private lateinit var imgBack: ImageView
     private lateinit var tvAnswer1: TextView
     private lateinit var tvAnswer2: TextView
     private lateinit var tvAnswer3: TextView
     private lateinit var tvAnswer4: TextView
+    private lateinit var tvNumQuestion: TextView
+    lateinit var tvNumQuesCurent: TextView
     private lateinit var mListQues: ArrayList<QuestionModel>
     private lateinit var mListAns: ArrayList<AnswerModel>
     var id: String? = null
     private var isAnswerSelected = false
     private var currentPos: Int = 0
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,7 +51,9 @@ class MainActivity : AppCompatActivity(), TaskContract.View , View.OnClickListen
         presenter = TaskPresenter(applicationContext, this@MainActivity,taskRepository)
         presenter.getItemsQuestion()
         presenter.getItemsAnswer()
+        imgBack()
 
+        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
     }
 
 
@@ -93,29 +106,53 @@ class MainActivity : AppCompatActivity(), TaskContract.View , View.OnClickListen
         }, 1500)
     }
 
-
     override fun showQuizEndMessage() {
         Toast.makeText(this, "ket thuc", Toast.LENGTH_SHORT).show()
     }
+    private fun imgBack(){
+        imgBack.setOnClickListener {
+            val alertDialogBuider = AlertDialog.Builder(this)
+            alertDialogBuider.setMessage("Bạn có chắc chắn muốn dừng bài học không?")
 
+            alertDialogBuider.setPositiveButton("Có"){dialog: DialogInterface, _: Int ->
+                finish()
+            }
+            alertDialogBuider.setNegativeButton("Không") { dialog: DialogInterface, _: Int ->
+                dialog.dismiss()
+            }
+            alertDialogBuider.setCancelable(false)
+            val alertDialog = alertDialogBuider.create()
+            alertDialog.show()
+        }
+    }
     override fun showErrorMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+    override fun showActivityFinished(totalNumberOfQuestion: Int, numCorrectAnswer: Int, point: Int) {
+        val intent = Intent(this, FinishActivity::class.java)
+        intent.putExtra("totalNumberOfQuestion", totalNumberOfQuestion)
+        intent.putExtra("numCorrectAnswer", numCorrectAnswer)
+        startActivity(intent)
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun initUi() {
         tvContentQuestion = findViewById(R.id.txtcontent_question)
-       // imgQuestion = findViewById(R.id.img_question)
+        imgBack = findViewById(R.id.img_back)
+        tvNumQuestion = findViewById(R.id.tv_numQuestion)
+        tvNumQuesCurent = findViewById(R.id.tv_numQuestionCurrent)
         tvAnswer1 = findViewById(R.id.txtanswer1)
         tvAnswer2 = findViewById(R.id.txtanswer2)
         tvAnswer3 = findViewById(R.id.txtanswer3)
         tvAnswer4 = findViewById(R.id.txtanswer4)
-
     }
     private fun setOnClickListener(){
 
-        tvAnswer1.setBackgroundResource(R.drawable.pink_boder_answer)
-        tvAnswer2.setBackgroundResource(R.drawable.pink_boder_answer)
-        tvAnswer3.setBackgroundResource(R.drawable.pink_boder_answer)
-        tvAnswer4.setBackgroundResource(R.drawable.pink_boder_answer)
+        tvAnswer1.setBackgroundResource(R.drawable.bg_customitem)
+        tvAnswer2.setBackgroundResource(R.drawable.bg_customitem)
+        tvAnswer3.setBackgroundResource(R.drawable.bg_customitem)
+        tvAnswer4.setBackgroundResource(R.drawable.bg_customitem)
 
         tvAnswer1.setOnClickListener(this)
         tvAnswer2.setOnClickListener(this)
@@ -129,7 +166,7 @@ class MainActivity : AppCompatActivity(), TaskContract.View , View.OnClickListen
                     R.id.txtanswer1 -> {
                         tvAnswer1.setBackgroundResource(R.drawable.orange_corner_30)
                         Handler().postDelayed({
-                            presenter.checkAnswer(tvAnswer1, mListAns, mListQues, currentPos ++)
+                            presenter.checkAnswer(tvAnswer1, mListAns, mListQues, currentPos ++ )
                         }, 1200)
                         isAnswerSelected = true // Đánh dấu đã chọn câu trả lời
                     }

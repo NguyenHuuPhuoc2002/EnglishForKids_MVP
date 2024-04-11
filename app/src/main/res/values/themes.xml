@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.LearnEnglish" parent="Base.Theme.LearnEnglish" />
+    <style name="Themecustom" parent="Theme.AppCompat.Light.Dialog.MinWidth">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>
