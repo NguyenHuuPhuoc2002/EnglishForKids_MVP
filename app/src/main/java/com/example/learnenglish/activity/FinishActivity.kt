@@ -22,8 +22,6 @@ class FinishActivity : AppCompatActivity() {
         val intent = intent
         totalNumberOfQuestion = intent.getIntExtra("totalNumberOfQuestion", 0)
         numCorrectAnswer = intent.getIntExtra("numCorrectAnswer", 0)
-        Log.d("size", totalNumberOfQuestion.toString())
-        Log.d("size2", numCorrectAnswer.toString())
 
         init()
 
