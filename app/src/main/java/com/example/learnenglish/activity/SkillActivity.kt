@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.learnenglish.R
@@ -29,7 +30,7 @@ class SkillActivity : AppCompatActivity(){
                 if(mListHome[pos].title == "Trắc Nghiệm"){
                     startActivity(Intent(this@SkillActivity, TopicActivity::class.java))
                 }else{
-                    startActivity(Intent(this@SkillActivity, TopicActivity::class.java))
+                    Toast.makeText(this@SkillActivity, "Chưa làm !", Toast.LENGTH_SHORT).show()
                 }
             }
         })

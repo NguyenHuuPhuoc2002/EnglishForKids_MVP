@@ -6,10 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -20,7 +17,6 @@ import com.example.learnenglish.presenter.TaskPresenter
 import com.example.learnenglish.repository.DBHelperRepository
 import com.example.learnenglish_demo.AnswerModel
 import com.example.learnenglish_demo.QuestionModel
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity(), TaskContract.View , View.OnClickListener{
     private lateinit var presenter: TaskContract.Presenter
@@ -130,7 +126,7 @@ class MainActivity : AppCompatActivity(), TaskContract.View , View.OnClickListen
     }
 
     override fun showActivityFinished(totalNumberOfQuestion: Int, numCorrectAnswer: Int, point: Int) {
-        val intent = Intent(this, FinishActivity::class.java)
+        val intent = Intent(this, FinishedActivity::class.java)
         intent.putExtra("totalNumberOfQuestion", totalNumberOfQuestion)
         intent.putExtra("numCorrectAnswer", numCorrectAnswer)
         startActivity(intent)

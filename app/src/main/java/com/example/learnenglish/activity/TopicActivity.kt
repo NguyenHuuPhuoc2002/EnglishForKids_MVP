@@ -3,6 +3,7 @@ package com.example.learnenglish.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ import com.example.learnenglish.repository.DBHelperRepository
 
 class TopicActivity : AppCompatActivity(), TopicContract.View {
     private lateinit var rcvTopic: RecyclerView
+    private lateinit var btnBack: ImageView
     private lateinit var presenter: TopicContract.Presenter
     private lateinit var mList: ArrayList<TopicModel>
 
@@ -24,10 +26,17 @@ class TopicActivity : AppCompatActivity(), TopicContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topic)
         rcvTopic = findViewById(R.id.rcv_topic)
+        btnBack = findViewById(R.id.img_back_topic)
         mList = arrayListOf()
         val taskRepository = DBHelperRepository(this)
         presenter = TopicPresenter(applicationContext, this@TopicActivity,taskRepository)
         presenter.getItemsTopic()
+        btnBack()
+    }
+    private fun btnBack(){
+        btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     override fun showTopic(mListTopic: ArrayList<TopicModel>) {

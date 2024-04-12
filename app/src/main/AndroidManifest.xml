@@ -15,7 +15,7 @@
         android:theme="@style/Theme.LearnEnglish"
         tools:targetApi="31">
         <activity
-            android:name=".activity.FinishActivity"
+            android:name=".activity.FinishedActivity"
             android:exported="false" />
         <activity
             android:name=".activity.TopicActivity"

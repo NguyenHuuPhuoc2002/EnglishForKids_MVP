@@ -29,9 +29,9 @@ class TopicAdapter(private val mList: ArrayList<TopicModel>, private val onClick
         holder.itemView.apply {
             findViewById<TextView>(R.id.tv_title).text = mList[position].title
         }
-        Glide.with(holder.itemView.context)
-            .load(mList[position].img)
-            .into(holder.imgTitle)
+//        Glide.with(holder.itemView.context)
+//            .load(mList[position].img)
+//            .into(holder.imgTitle)
         holder.itemView.setOnClickListener {
             onClickItem.onClickListenerItemHome(position)
         }

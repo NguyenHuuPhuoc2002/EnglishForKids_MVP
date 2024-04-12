@@ -4,13 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/img"
     android:gravity="center"
     tools:context=".activity.SkillActivity">
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="395dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="7dp"
         android:layout_gravity="center"/>
 </LinearLayout>

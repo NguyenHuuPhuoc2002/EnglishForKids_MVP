@@ -2,11 +2,9 @@ package com.example.learnenglish.presenter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.os.Handler
 import android.util.Log
 import android.widget.TextView
-import com.example.learnenglish.activity.FinishActivity
 import com.example.learnenglish.activity.MainActivity
 import com.example.learnenglish.contract.TaskContract
 import com.example.learnenglish.model.TopicModel
