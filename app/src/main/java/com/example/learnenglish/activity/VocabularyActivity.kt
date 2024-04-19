@@ -106,44 +106,49 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         }
     }
     private fun setData(pos: Int){
-        val charArray = mListQues[pos].vocaChar.toCharArray()
-        tvQuestion.text = mListQues[pos].mean
-        Glide.with(this)
-            .load(mListQues[pos].img)
-            .apply(RequestOptions().placeholder(android.R.drawable.ic_menu_gallery))
-            .into(imgOb)
-        imgOb.startAnimation(zoomImgAnimation)
-        for (i in charArray.indices) {
-            when (i) {
-                0 -> tvCharacter1.text = charArray[i].toString()
-                1 -> tvCharacter2.text = charArray[i].toString()
-                2 -> tvCharacter3.text = charArray[i].toString()
-                3 -> tvCharacter4.text = charArray[i].toString()
-                4 -> tvCharacter5.text = charArray[i].toString()
-                5 -> tvCharacter6.text = charArray[i].toString()
-                6 -> tvCharacter7.text = charArray[i].toString()
-                7 -> tvCharacter8.text = charArray[i].toString()
-                8 -> tvCharacter9.text = charArray[i].toString()
-                9 -> tvCharacter10.text = charArray[i].toString()
-                10 -> tvCharacter11.text = charArray[i].toString()
-                11 -> tvCharacter12.text = charArray[i].toString()
+        if(pos >= 0 && pos < mListQues.size){
+            val charArray = mListQues[pos].vocaChar.toCharArray()
+            tvQuestion.text = mListQues[pos].mean
+            Glide.with(this)
+                .load(mListQues[pos].img)
+                .apply(RequestOptions().placeholder(android.R.drawable.ic_menu_gallery))
+                .into(imgOb)
+            imgOb.startAnimation(zoomImgAnimation)
+            for (i in charArray.indices) {
+                when (i) {
+                    0 -> tvCharacter1.text = charArray[i].toString()
+                    1 -> tvCharacter2.text = charArray[i].toString()
+                    2 -> tvCharacter3.text = charArray[i].toString()
+                    3 -> tvCharacter4.text = charArray[i].toString()
+                    4 -> tvCharacter5.text = charArray[i].toString()
+                    5 -> tvCharacter6.text = charArray[i].toString()
+                    6 -> tvCharacter7.text = charArray[i].toString()
+                    7 -> tvCharacter8.text = charArray[i].toString()
+                    8 -> tvCharacter9.text = charArray[i].toString()
+                    9 -> tvCharacter10.text = charArray[i].toString()
+                    10 -> tvCharacter11.text = charArray[i].toString()
+                    11 -> tvCharacter12.text = charArray[i].toString()
+                }
             }
+            tvCharacter1.visibility = View.VISIBLE
+            tvCharacter2.visibility = View.VISIBLE
+            tvCharacter3.visibility = View.VISIBLE
+            tvCharacter4.visibility = View.VISIBLE
+            tvCharacter5.visibility = View.VISIBLE
+            tvCharacter6.visibility = View.VISIBLE
+            tvCharacter7.visibility = View.VISIBLE
+            tvCharacter8.visibility = View.VISIBLE
+            tvCharacter9.visibility = View.VISIBLE
+            tvCharacter10.visibility = View.VISIBLE
+            tvCharacter11.visibility = View.VISIBLE
+            tvCharacter12.visibility = View.VISIBLE
+            tvShow.text = ""
+            str = ""
+            tvShow.setBackgroundResource(R.drawable.pink_boder)
+        }else{
+            finish()
+            Toast.makeText(this, "No", Toast.LENGTH_SHORT).show()
         }
-        tvCharacter1.visibility = View.VISIBLE
-        tvCharacter2.visibility = View.VISIBLE
-        tvCharacter3.visibility = View.VISIBLE
-        tvCharacter4.visibility = View.VISIBLE
-        tvCharacter5.visibility = View.VISIBLE
-        tvCharacter6.visibility = View.VISIBLE
-        tvCharacter7.visibility = View.VISIBLE
-        tvCharacter8.visibility = View.VISIBLE
-        tvCharacter9.visibility = View.VISIBLE
-        tvCharacter10.visibility = View.VISIBLE
-        tvCharacter11.visibility = View.VISIBLE
-        tvCharacter12.visibility = View.VISIBLE
-        tvShow.text = ""
-        str = ""
-        tvShow.setBackgroundResource(R.drawable.pink_boder)
     }
     private fun init(){
         shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake)

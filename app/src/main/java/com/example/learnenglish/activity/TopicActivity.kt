@@ -32,7 +32,6 @@ class TopicActivity : AppCompatActivity(), TopicContract.View {
         getData()
         val intent = intent
         str = intent.getStringExtra("title").toString()
-        Log.d("str", str)
         btnBack()
     }
     private fun getData(){

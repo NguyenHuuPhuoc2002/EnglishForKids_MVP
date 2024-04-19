@@ -100,7 +100,7 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
         }else{
             Handler().postDelayed({
                 view.showActivityFinished(mListQues.size, currentPos, 0)
-            },500)
+            },1000)
         }
     }
 
@@ -108,8 +108,9 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
     private fun nextQuestion(mListQues: ArrayList<QuestionModel>, listAnswer: ArrayList<AnswerModel>, newCurrentPos: Int) {
         if(newCurrentPos == mListQues.size - 1){
             Handler().postDelayed({
-                view.showActivityFinished(mListQues.size, newCurrentPos, 0)
-            },500)
+                val newPos = newCurrentPos + 1
+                view.showActivityFinished(mListQues.size, newPos, 0)
+            },1000)
         }else{
             val incrementedPos = newCurrentPos + 1
             val tvNumQuesCurent = incrementedPos + 1
