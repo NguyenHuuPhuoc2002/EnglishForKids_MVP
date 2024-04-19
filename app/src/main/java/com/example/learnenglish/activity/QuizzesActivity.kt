@@ -13,6 +13,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.learnenglish.R
 import com.example.learnenglish.contract.QuizzesContract
 import com.example.learnenglish.presenter.QuizzesPresenter
@@ -47,11 +49,23 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         id = intent.getStringExtra("topic").toString()
         initUi()
         getData()
+        setData(currentPos)
         btnQuit()
 
         tvNumQuestion.text = " / " + mListQues.size.toString() + " "
     }
-
+    private fun setData(pos: Int){
+        if(pos >= 0 && pos < mListQues.size && pos < mListAns.size){
+            tvContentQuestion.text = mListQues[currentPos].content
+            tvAnswer1.text = mListAns[currentPos].answerA
+            tvAnswer2.text = mListAns[currentPos].answerB
+            tvAnswer3.text = mListAns[currentPos].answerC
+            tvAnswer4.text = mListAns[currentPos].answerD
+        }else{
+            finish()
+            Toast.makeText(this, "No", Toast.LENGTH_SHORT).show()
+        }
+    }
     private fun getData() {
         val taskRepository = DBHelperRepository(this)
         presenter = QuizzesPresenter(applicationContext, this@QuizzesActivity,taskRepository)
@@ -66,12 +80,10 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
 //            .load(mListQuestion[currentPos].img)
 //            .into(imgQuestion)
         tvContentQuestion.text = mListQues[currentPos].content
-        setOnClickListener()
     }
 
     override fun showAnswer(mListAnswer: ArrayList<AnswerModel>) {
         mListAns = mListAnswer
-
         tvAnswer1.text = mListAnswer[currentPos].answerA
         tvAnswer2.text = mListAnswer[currentPos].answerB
         tvAnswer3.text = mListAnswer[currentPos].answerC
