@@ -7,10 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.learnenglish.R
-import com.example.learnenglish.contract.TaskContract
+import com.example.learnenglish.contract.QuizzesContract
 import com.example.learnenglish.model.SkillModel
 
-class SkillAdapter(private val mList: ArrayList<SkillModel>, private val onClickItem: TaskContract.OnClickListener): RecyclerView.Adapter<SkillAdapter.HomeViewModel>() {
+class SkillAdapter(private val mList: ArrayList<SkillModel>, private val onClickItem: QuizzesContract.OnClickListener): RecyclerView.Adapter<SkillAdapter.HomeViewModel>() {
     inner class HomeViewModel(itemView: View): RecyclerView.ViewHolder(itemView){
 
     }

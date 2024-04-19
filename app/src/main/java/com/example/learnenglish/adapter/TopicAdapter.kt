@@ -6,12 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.learnenglish.R
-import com.example.learnenglish.contract.TaskContract
+import com.example.learnenglish.contract.QuizzesContract
 import com.example.learnenglish.model.TopicModel
 
-class TopicAdapter(private val mList: ArrayList<TopicModel>, private val onClickItem: TaskContract.OnClickListener): RecyclerView.Adapter<TopicAdapter.TopicViewModel>() {
+class TopicAdapter(private val mList: ArrayList<TopicModel>, private val onClickItem: QuizzesContract.OnClickListener): RecyclerView.Adapter<TopicAdapter.TopicViewModel>() {
     inner class TopicViewModel(itemView: View): RecyclerView.ViewHolder(itemView){
         var imgTitle: ImageView = itemView.findViewById(R.id.img_topictitle)
     }

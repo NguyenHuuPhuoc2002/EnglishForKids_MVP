@@ -27,7 +27,7 @@ class FinishedActivity : AppCompatActivity() {
         tvNumCorrect.text = numCorrectAnswer.toString()
         tvTotalNumQues.text = " / $totalNumberOfQuestion"
         btnBack.setOnClickListener {
-            startActivity(Intent(this@FinishedActivity, TopicActivity::class.java))
+            startActivity(Intent(this@FinishedActivity, SkillActivity::class.java))
         }
     }
     private fun init(){

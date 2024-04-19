@@ -5,6 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import com.example.learnenglish.model.TopicModel
+import com.example.learnenglish.model.VocabularyAnsModel
+import com.example.learnenglish.model.VocabularyQuesModel
 import com.example.learnenglish_demo.AnswerModel
 import com.example.learnenglish_demo.QuestionModel
 import java.io.File
@@ -15,6 +17,8 @@ class DBHelperRepository(private val context: Context) {
         fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?)
         fun onListAnswerLoaded(mListAnswer: ArrayList<AnswerModel>?)
         fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?)
+        fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?)
+        fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?)
     }
     companion object{
         private val DB_NAME = "ENGLISHDB.db"
@@ -84,6 +88,40 @@ class DBHelperRepository(private val context: Context) {
         callback.onListAnswerLoaded(itemList)
     }
     @SuppressLint("Range")
+    fun getItemsQuestionVocabulary(callback: TaskCallback) {
+        val itemList: ArrayList<VocabularyQuesModel> = arrayListOf()
+        val db = openDatabase()
+        val cursor = db.rawQuery("SELECT * FROM VOCABULARYQUESTIONS", null)
+        if (cursor.moveToFirst()) {
+            do {
+                val quesID = cursor.getInt(cursor.getColumnIndex("QuestionID"))
+                val voc = cursor.getString(cursor.getColumnIndex("VocabularyCharacter"))
+                val topicID = cursor.getString(cursor.getColumnIndex("TopicID"))
+                val img = cursor.getString(cursor.getColumnIndex("Anh"))
+                val mean = cursor.getString(cursor.getColumnIndex("Mean"))
+                itemList.add(VocabularyQuesModel(quesID, voc, topicID, img, mean))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        callback.onListVocabularyQuestionLoaded(itemList)
+    }
+    @SuppressLint("Range")
+    fun getItemsAnswerVocabulary(callback: TaskCallback) {
+        val itemList: ArrayList<VocabularyAnsModel> = arrayListOf()
+        val db = openDatabase()
+        val cursor = db.rawQuery("SELECT * FROM VOCABULARYANSWERS", null)
+        if (cursor.moveToFirst()) {
+            do {
+                val quesID = cursor.getInt(cursor.getColumnIndex("QuestionID"))
+                val isCorrect = cursor.getString(cursor.getColumnIndex("isCorrectVocabulary"))
+                val topic = cursor.getString(cursor.getColumnIndex("TopicID"))
+                itemList.add(VocabularyAnsModel(quesID, isCorrect, topic))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        callback.onListVocabularyAnswerLoaded(itemList)
+    }
+    @SuppressLint("Range")
     fun getItemsTopic(callback: TaskCallback) {
         val itemList: ArrayList<TopicModel> = arrayListOf()
         val db = openDatabase()
@@ -101,6 +139,7 @@ class DBHelperRepository(private val context: Context) {
 
         callback.onListTopicLoaded(itemList)
     }
+
 
 
 

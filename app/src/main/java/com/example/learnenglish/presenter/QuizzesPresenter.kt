@@ -5,15 +5,17 @@ import android.content.Context
 import android.os.Handler
 import android.util.Log
 import android.widget.TextView
-import com.example.learnenglish.activity.MainActivity
-import com.example.learnenglish.contract.TaskContract
+import com.example.learnenglish.activity.QuizzesActivity
+import com.example.learnenglish.contract.QuizzesContract
 import com.example.learnenglish.model.TopicModel
+import com.example.learnenglish.model.VocabularyAnsModel
+import com.example.learnenglish.model.VocabularyQuesModel
 import com.example.learnenglish.repository.DBHelperRepository
 import com.example.learnenglish_demo.AnswerModel
 import com.example.learnenglish_demo.QuestionModel
 
 
-class TaskPresenter(private val context: Context, private val view: MainActivity, private var db: DBHelperRepository) : TaskContract.Presenter {
+class QuizzesPresenter(private val context: Context, private val view: QuizzesActivity, private var db: DBHelperRepository) : QuizzesContract.Presenter {
     override fun getItemsQuestion(): ArrayList<QuestionModel> {
         db = DBHelperRepository(context)
         db.openDatabase()
@@ -38,6 +40,14 @@ class TaskPresenter(private val context: Context, private val view: MainActivity
             }
 
             override fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
                 TODO("Not yet implemented")
             }
 
@@ -71,13 +81,20 @@ class TaskPresenter(private val context: Context, private val view: MainActivity
                 TODO("Not yet implemented")
             }
 
+            override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
+                TODO("Not yet implemented")
+            }
+
         })
         return mListAnswers
     }
 
     override fun checkAnswer(textview: TextView, mListAns: ArrayList<AnswerModel>, mListQues: ArrayList<QuestionModel>, currentPos: Int){
         view.showResult(mListAns[currentPos].isCorrect == textview.text, textview)
-        Log.d("ketqua 1", mListAns[currentPos].isCorrect + textview.text)
         if(mListAns[currentPos].isCorrect == textview.text){
             nextQuestion(mListQues, mListAns, currentPos)
         }else{

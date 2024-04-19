@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.learnenglish.R
 import com.example.learnenglish.adapter.SkillAdapter
-import com.example.learnenglish.contract.TaskContract
+import com.example.learnenglish.contract.QuizzesContract
 import com.example.learnenglish.model.SkillModel
 
 class SkillActivity : AppCompatActivity(){
@@ -25,10 +25,16 @@ class SkillActivity : AppCompatActivity(){
 
     }
     private fun setAdapterHome(){
-        val adapter = SkillAdapter(mListHome, object : TaskContract.OnClickListener{
+        val adapter = SkillAdapter(mListHome, object : QuizzesContract.OnClickListener{
             override fun onClickListenerItemHome(pos: Int) {
                 if(mListHome[pos].title == "Trắc Nghiệm"){
-                    startActivity(Intent(this@SkillActivity, TopicActivity::class.java))
+                    val intent = Intent(this@SkillActivity, TopicActivity::class.java)
+                    intent.putExtra("title", mListHome[pos].title)
+                    startActivity(intent)
+                }else if(mListHome[pos].title == "Nghe"){
+                    val intent = Intent(this@SkillActivity, TopicActivity::class.java)
+                    intent.putExtra("title", mListHome[pos].title)
+                    startActivity(intent)
                 }else{
                     Toast.makeText(this@SkillActivity, "Chưa làm !", Toast.LENGTH_SHORT).show()
                 }

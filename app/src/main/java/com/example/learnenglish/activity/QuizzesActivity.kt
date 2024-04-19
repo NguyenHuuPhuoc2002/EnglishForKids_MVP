@@ -12,14 +12,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.learnenglish.R
-import com.example.learnenglish.contract.TaskContract
-import com.example.learnenglish.presenter.TaskPresenter
+import com.example.learnenglish.contract.QuizzesContract
+import com.example.learnenglish.presenter.QuizzesPresenter
 import com.example.learnenglish.repository.DBHelperRepository
 import com.example.learnenglish_demo.AnswerModel
 import com.example.learnenglish_demo.QuestionModel
 
-class MainActivity : AppCompatActivity(), TaskContract.View , View.OnClickListener{
-    private lateinit var presenter: TaskContract.Presenter
+class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClickListener{
+    private lateinit var presenter: QuizzesContract.Presenter
     private lateinit var dialog:AlertDialog
     private lateinit var tvContentQuestion: TextView
     private lateinit var imgBack: ImageView
@@ -38,13 +38,13 @@ class MainActivity : AppCompatActivity(), TaskContract.View , View.OnClickListen
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_quizzes)
         val intent = intent
         id = intent.getStringExtra("topic").toString()
         mListQues = arrayListOf()
         initUi()
         val taskRepository = DBHelperRepository(this)
-        presenter = TaskPresenter(applicationContext, this@MainActivity,taskRepository)
+        presenter = QuizzesPresenter(applicationContext, this@QuizzesActivity,taskRepository)
         presenter.getItemsQuestion()
         presenter.getItemsAnswer()
         imgBack()
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(), TaskContract.View , View.OnClickListen
             tvAnswer4.text = listAnswer[newCurrentPos].answerD
 
             isAnswerSelected = false
-        }, 1500)
+        }, 1200)
     }
 
     override fun showQuizEndMessage() {
@@ -163,28 +163,28 @@ class MainActivity : AppCompatActivity(), TaskContract.View , View.OnClickListen
                         tvAnswer1.setBackgroundResource(R.drawable.orange_corner_30)
                         Handler().postDelayed({
                             presenter.checkAnswer(tvAnswer1, mListAns, mListQues, currentPos ++ )
-                        }, 1200)
+                        }, 1000)
                         isAnswerSelected = true // Đánh dấu đã chọn câu trả lời
                     }
                     R.id.txtanswer2 -> {
                         tvAnswer2.setBackgroundResource(R.drawable.orange_corner_30)
                         Handler().postDelayed({
                             presenter.checkAnswer(tvAnswer2, mListAns, mListQues,currentPos ++)
-                        }, 1200)
+                        }, 1000)
                         isAnswerSelected = true
                     }
                     R.id.txtanswer3 -> {
                         tvAnswer3.setBackgroundResource(R.drawable.orange_corner_30)
                         Handler().postDelayed({
                             presenter.checkAnswer(tvAnswer3, mListAns, mListQues, currentPos ++)
-                        }, 1200)
+                        }, 1000)
                         isAnswerSelected = true
                     }
                     R.id.txtanswer4 -> {
                         tvAnswer4.setBackgroundResource(R.drawable.orange_corner_30)
                         Handler().postDelayed({
                             presenter.checkAnswer(tvAnswer4, mListAns, mListQues, currentPos ++)
-                        }, 1200)
+                        }, 1000)
                         isAnswerSelected = true
                     }
                 }

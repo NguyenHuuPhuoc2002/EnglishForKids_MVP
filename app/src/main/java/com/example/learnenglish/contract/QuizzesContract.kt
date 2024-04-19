@@ -1,12 +1,11 @@
 package com.example.learnenglish.contract
 
 import android.widget.TextView
-import com.example.learnenglish.model.TopicModel
 import com.example.learnenglish_demo.AnswerModel
 import com.example.learnenglish_demo.QuestionModel
 
 
-interface TaskContract {
+interface QuizzesContract {
     interface OnClickListener {
         fun onClickListenerItemHome(pos: Int)
     }

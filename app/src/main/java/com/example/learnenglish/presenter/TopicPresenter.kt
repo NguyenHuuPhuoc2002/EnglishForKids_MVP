@@ -2,10 +2,11 @@ package com.example.learnenglish.presenter
 
 import android.content.Context
 import android.util.Log
-import com.example.learnenglish.activity.MainActivity
 import com.example.learnenglish.activity.TopicActivity
 import com.example.learnenglish.contract.TopicContract
 import com.example.learnenglish.model.TopicModel
+import com.example.learnenglish.model.VocabularyAnsModel
+import com.example.learnenglish.model.VocabularyQuesModel
 import com.example.learnenglish.repository.DBHelperRepository
 import com.example.learnenglish_demo.AnswerModel
 import com.example.learnenglish_demo.QuestionModel
@@ -36,6 +37,14 @@ class TopicPresenter(private val context: Context, private val view: TopicActivi
                 } else {
                     view.showErrorMessage("Không tải được dữ liệu !")
                 }
+            }
+
+            override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
+                TODO("Not yet implemented")
             }
         })
         return mListTopics
