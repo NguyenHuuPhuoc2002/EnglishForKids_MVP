@@ -8,6 +8,19 @@
     android:background="@drawable/img"
     tools:context=".activity.VocabularyActivity">
 
+    <ImageView
+        android:id="@+id/img_restart"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_restart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.77"
+        app:layout_constraintHorizontal_bias="0.95"
+        tools:ignore="MissingConstraints" />
     <TextView
         android:id="@+id/tv_Question"
         android:layout_width="320dp"
@@ -302,12 +315,15 @@
         tools:ignore="MissingConstraints" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.AppCompatButton

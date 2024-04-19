@@ -101,7 +101,7 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
             }else{
                 handler.postDelayed({
                     view.showActivityFinished(mListQues.size, currentPos, 0)
-                },500)
+                },1000)
             }
         }
     }
@@ -109,9 +109,10 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
     private fun nextQuestion(mListQues: ArrayList<VocabularyQuesModel>, mListAns: ArrayList<VocabularyAnsModel>,
                              newCurrentPos: Int) {
         if(newCurrentPos == mListQues.size - 1){
+            val newPos = newCurrentPos + 1
             handler.postDelayed({
-                view.showActivityFinished(mListQues.size, newCurrentPos, 0)
-            },500)
+                view.showActivityFinished(mListQues.size, newPos, 0)
+            },1000)
         }else{
             val incrementedPos = newCurrentPos + 1
             val tvNumQuesCurent = incrementedPos + 1

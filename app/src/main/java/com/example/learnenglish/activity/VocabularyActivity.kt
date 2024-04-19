@@ -1,7 +1,6 @@
 package com.example.learnenglish.activity
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.learnenglish.R
 import com.example.learnenglish.contract.VocabularyContract
 import com.example.learnenglish.model.VocabularyAnsModel
@@ -41,6 +41,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     private lateinit var tvCharacter12: TextView
     private lateinit var tvNumQuestion: TextView
     private lateinit var btnQuit: Button
+    private lateinit var btnRestart: ImageView
     lateinit var tvNumQuesCurent: TextView
     private lateinit var imgOb: ImageView
     private lateinit var tvQuestion: TextView
@@ -49,10 +50,13 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     private lateinit var mListQues: ArrayList<VocabularyQuesModel>
     private lateinit var mListAns: ArrayList<VocabularyAnsModel>
     var id: String? = null
+    private var createPos: Int = 0
     private var currentPos: Int = 0
     private lateinit var presenter: VocabularyContract.Presenter
     private lateinit var shakeAnimation: Animation
-
+    private lateinit var zoomAnimation: Animation
+    private lateinit var zoomImgAnimation: Animation
+    private lateinit var dialog:AlertDialog
     private var str: String = ""
     @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,24 +68,27 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         setOnClickListener()
         getData()
         btnCheck()
-        setData(currentPos)
+        setData(createPos)
         btnQuit()
+        btnRestart()
         tvNumQuestion.text = " / " + mListQues.size.toString() + " "
     }
+    @SuppressLint("MissingInflatedId")
     private fun btnQuit() {
         btnQuit.setOnClickListener {
-            val alertDialogBuider = AlertDialog.Builder(this)
-            alertDialogBuider.setMessage("Bạn có chắc chắn muốn dừng bài học không?")
-
-            alertDialogBuider.setPositiveButton("Có"){ dialog: DialogInterface, _: Int ->
-                startActivity(Intent(this@VocabularyActivity, SkillActivity::class.java))
-            }
-            alertDialogBuider.setNegativeButton("Không") { dialog: DialogInterface, _: Int ->
+            val buid = AlertDialog.Builder(this,R.style.Themecustom)
+            val view = layoutInflater.inflate(R.layout.customdialog_layout, null)
+            buid.setView(view)
+            buid.setCancelable(false)
+            dialog = buid.create()
+            dialog.setCancelable(false)
+            dialog.show()
+            view.findViewById<Button>(R.id.btn_no).setOnClickListener {
                 dialog.dismiss()
             }
-            alertDialogBuider.setCancelable(false)
-            val alertDialog = alertDialogBuider.create()
-            alertDialog.show()
+            view.findViewById<Button>(R.id.btn_yes).setOnClickListener {
+                finish()
+            }
         }
     }
     private fun btnCheck() {
@@ -89,8 +96,13 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
             if (tvShow.text.isEmpty()) {
                 tvShow.startAnimation(shakeAnimation)
             } else {
-                presenter.checkAnswer(tvShow, mListQues, mListAns, currentPos++)
+                presenter.checkAnswer(tvShow, mListQues, mListAns, createPos++)
             }
+        }
+    }
+    private fun btnRestart() {
+        btnRestart.setOnClickListener {
+            setData(currentPos)
         }
     }
     private fun setData(pos: Int){
@@ -98,7 +110,9 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         tvQuestion.text = mListQues[pos].mean
         Glide.with(this)
             .load(mListQues[pos].img)
+            .apply(RequestOptions().placeholder(android.R.drawable.ic_menu_gallery))
             .into(imgOb)
+        imgOb.startAnimation(zoomImgAnimation)
         for (i in charArray.indices) {
             when (i) {
                 0 -> tvCharacter1.text = charArray[i].toString()
@@ -133,6 +147,8 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     }
     private fun init(){
         shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake)
+        zoomAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom)
+        zoomImgAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_img)
         mListQues = arrayListOf()
         mListAns = arrayListOf()
 
@@ -155,6 +171,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         tvNumQuestion = findViewById(R.id.tv_numQuestion)
         tvNumQuesCurent = findViewById(R.id.tv_numQuestionCurrent)
         btnQuit = findViewById(R.id.btn_quit)
+        btnRestart = findViewById(R.id.img_restart)
     }
     private fun getData(){
         val vocaRepository = DBHelperRepository(this)
@@ -178,12 +195,8 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         tvCharacter12.setOnClickListener(this)
     }
 
-    override fun showNextQuestion(
-        listQuestion: ArrayList<VocabularyQuesModel>,
-        listAnswer: ArrayList<VocabularyAnsModel>,
-        newCurrentPos: Int
-    ) {
-
+    override fun showNextQuestion(listQuestion: ArrayList<VocabularyQuesModel>, listAnswer: ArrayList<VocabularyAnsModel>, newCurrentPos: Int) {
+        currentPos = newCurrentPos
         val charArray = listQuestion[newCurrentPos].vocaChar.toCharArray()
         tvQuestion.text = listQuestion[newCurrentPos].mean
         Glide.with(this)
@@ -210,10 +223,10 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     }
     override fun showVocabularyQuestion(mListQuestion: ArrayList<VocabularyQuesModel>) {
         mListQues = mListQuestion
-        val charArray = mListQuestion[currentPos].vocaChar.toCharArray()
-        tvQuestion.text = mListQuestion[currentPos].mean
+        val charArray = mListQuestion[createPos].vocaChar.toCharArray()
+        tvQuestion.text = mListQuestion[createPos].mean
         Glide.with(this)
-            .load(mListQuestion[currentPos].img)
+            .load(mListQuestion[createPos].img)
             .into(imgOb)
         for (i in charArray.indices) {
             when (i) {
@@ -253,6 +266,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         if(isCorrect){
             handler.postDelayed({
                 textview.setBackgroundResource(R.drawable.bg_green_corner_30)
+                textview.startAnimation(zoomAnimation)
             }, 200)
         }else {
             handler.postDelayed({

@@ -31,7 +31,7 @@ class SkillActivity : AppCompatActivity(){
                     val intent = Intent(this@SkillActivity, TopicActivity::class.java)
                     intent.putExtra("title", mListHome[pos].title)
                     startActivity(intent)
-                }else if(mListHome[pos].title == "Nghe"){
+                }else if(mListHome[pos].title == "Từ Vựng"){
                     val intent = Intent(this@SkillActivity, TopicActivity::class.java)
                     intent.putExtra("title", mListHome[pos].title)
                     startActivity(intent)
@@ -47,7 +47,7 @@ class SkillActivity : AppCompatActivity(){
     private fun addDataHome(){
         mListHome = arrayListOf()
         mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Trắc Nghiệm"))
-        mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Nghe"))
+        mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Từ Vựng"))
         mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Điền Khuyết"))
         mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Sắp Xếp Câu"))
     }

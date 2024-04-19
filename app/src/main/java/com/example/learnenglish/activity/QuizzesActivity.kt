@@ -1,12 +1,14 @@
 package com.example.learnenglish.activity
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
+import android.view.animation.AnimationUtils
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.animation.Animation
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -34,6 +36,8 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
     var id: String? = null
     private var isAnswerSelected = false
     private var currentPos: Int = 0
+    private lateinit var shakeAnimation: Animation
+    private lateinit var zoomAnimation: Animation
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,15 +45,18 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         setContentView(R.layout.activity_quizzes)
         val intent = intent
         id = intent.getStringExtra("topic").toString()
-        mListQues = arrayListOf()
         initUi()
+        getData()
+        btnQuit()
+
+        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
+    }
+
+    private fun getData() {
         val taskRepository = DBHelperRepository(this)
         presenter = QuizzesPresenter(applicationContext, this@QuizzesActivity,taskRepository)
         presenter.getItemsQuestion()
         presenter.getItemsAnswer()
-        imgBack()
-
-        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
     }
 
 
@@ -76,8 +83,10 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
     override fun showResult(isCorrect: Boolean, textview: TextView) {
         if(isCorrect){
             textview.setBackgroundResource(R.drawable.bg_green_corner_30)
+            textview.startAnimation(zoomAnimation)
         }else {
             textview.setBackgroundResource(R.drawable.bg_red_corner_10)
+            textview.startAnimation(shakeAnimation)
         }
     }
 
@@ -105,20 +114,21 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
     override fun showQuizEndMessage() {
         Toast.makeText(this, "ket thuc", Toast.LENGTH_SHORT).show()
     }
-    private fun imgBack(){
+    private fun btnQuit(){
         imgBack.setOnClickListener {
-            val alertDialogBuider = AlertDialog.Builder(this)
-            alertDialogBuider.setMessage("Bạn có chắc chắn muốn dừng bài học không?")
-
-            alertDialogBuider.setPositiveButton("Có"){dialog: DialogInterface, _: Int ->
-                finish()
-            }
-            alertDialogBuider.setNegativeButton("Không") { dialog: DialogInterface, _: Int ->
+            val buid = AlertDialog.Builder(this,R.style.Themecustom)
+            val view = layoutInflater.inflate(R.layout.customdialog_layout, null)
+            buid.setView(view)
+            buid.setCancelable(false)
+            dialog = buid.create()
+            dialog.setCancelable(false)
+            dialog.show()
+            view.findViewById<Button>(R.id.btn_no).setOnClickListener {
                 dialog.dismiss()
             }
-            alertDialogBuider.setCancelable(false)
-            val alertDialog = alertDialogBuider.create()
-            alertDialog.show()
+            view.findViewById<Button>(R.id.btn_yes).setOnClickListener {
+                finish()
+            }
         }
     }
     override fun showErrorMessage(message: String) {
@@ -134,6 +144,10 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
 
     @SuppressLint("SetTextI18n")
     private fun initUi() {
+        shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake)
+        zoomAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom)
+
+        mListQues = arrayListOf()
         tvContentQuestion = findViewById(R.id.txtcontent_question)
         imgBack = findViewById(R.id.img_back)
         tvNumQuestion = findViewById(R.id.tv_numQuestion)
