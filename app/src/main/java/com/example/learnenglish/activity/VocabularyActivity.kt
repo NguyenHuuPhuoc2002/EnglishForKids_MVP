@@ -52,6 +52,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     var id: String? = null
     private var createPos: Int = 0
     private var currentPos: Int = 0
+    private var isCheckChar: Boolean = false
     private lateinit var presenter: VocabularyContract.Presenter
     private lateinit var shakeAnimation: Animation
     private lateinit var zoomAnimation: Animation
@@ -107,6 +108,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     }
     private fun setData(pos: Int){
         if(pos >= 0 && pos < mListQues.size){
+            setTvEnable()
             val charArray = mListQues[pos].vocaChar.toCharArray()
             tvQuestion.text = mListQues[pos].mean
             Glide.with(this)
@@ -149,6 +151,20 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
             finish()
             Toast.makeText(this, "No", Toast.LENGTH_SHORT).show()
         }
+    }
+    private fun setTvEnable(){
+        tvCharacter1.isEnabled = true
+        tvCharacter2.isEnabled = true
+        tvCharacter3.isEnabled = true
+        tvCharacter4.isEnabled = true
+        tvCharacter5.isEnabled = true
+        tvCharacter6.isEnabled = true
+        tvCharacter7.isEnabled = true
+        tvCharacter8.isEnabled = true
+        tvCharacter9.isEnabled = true
+        tvCharacter10.isEnabled = true
+        tvCharacter11.isEnabled = true
+        tvCharacter12.isEnabled = true
     }
     private fun init(){
         shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake)
@@ -285,72 +301,96 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         if (v != null) {
             when (v.id) {
                 R.id.tv_character_1 -> {
+                    tvCharacter1.startAnimation(zoomAnimation)
+                    tvCharacter1.isEnabled = false
                     tvCharacter1.visibility = View.GONE
                     val textToAdd = tvCharacter1.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_2 -> {
+                    tvCharacter2.startAnimation(zoomAnimation)
+                    tvCharacter2.isEnabled = false
                     tvCharacter2.visibility = View.GONE
                     val textToAdd = tvCharacter2.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_3 -> {
+                    tvCharacter3.startAnimation(zoomAnimation)
+                    tvCharacter3.isEnabled = false
                     tvCharacter3.visibility = View.GONE
                     val textToAdd = tvCharacter3.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_4 -> {
+                    tvCharacter4.startAnimation(zoomAnimation)
+                    tvCharacter4.isEnabled = false
                     tvCharacter4.visibility = View.GONE
                     val textToAdd = tvCharacter4.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_5 -> {
+                    tvCharacter5.startAnimation(zoomAnimation)
+                    tvCharacter5.isEnabled = false
                     tvCharacter5.visibility = View.GONE
                     val textToAdd = tvCharacter5.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_6 -> {
+                    tvCharacter6.startAnimation(zoomAnimation)
+                    tvCharacter6.isEnabled = false
                     tvCharacter6.visibility = View.GONE
                     val textToAdd = tvCharacter6.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_7 -> {
+                    tvCharacter7.startAnimation(zoomAnimation)
+                    tvCharacter7.isEnabled = false
                     tvCharacter7.visibility = View.GONE
                     val textToAdd = tvCharacter7.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_8 -> {
+                    tvCharacter8.startAnimation(zoomAnimation)
+                    tvCharacter8.isEnabled = false
                     tvCharacter8.visibility = View.GONE
                     val textToAdd = tvCharacter8.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_9 -> {
+                    tvCharacter9.startAnimation(zoomAnimation)
+                    tvCharacter9.isEnabled = false
                     tvCharacter9.visibility = View.GONE
                     val textToAdd = tvCharacter9.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_10 -> {
+                    tvCharacter10.startAnimation(zoomAnimation)
+                    tvCharacter10.isEnabled = false
                     tvCharacter10.visibility = View.GONE
                     val textToAdd = tvCharacter10.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_11 -> {
+                    tvCharacter11.startAnimation(zoomAnimation)
+                    tvCharacter11.isEnabled = false
                     tvCharacter11.visibility = View.GONE
                     val textToAdd = tvCharacter11.text.toString()
                     str += textToAdd
                     tvShow.text = str
                 }
                 R.id.tv_character_12 -> {
+                    tvCharacter12.startAnimation(zoomAnimation)
+                    tvCharacter12.isEnabled = false
                     tvCharacter12.visibility = View.GONE
                     val textToAdd = tvCharacter12.text.toString()
                     str += textToAdd

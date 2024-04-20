@@ -98,7 +98,7 @@ class DBHelperRepository(private val context: Context) {
                 val voc = cursor.getString(cursor.getColumnIndex("VocabularyCharacter"))
                 val topicID = cursor.getString(cursor.getColumnIndex("TopicID"))
                 val img = cursor.getString(cursor.getColumnIndex("Anh"))
-                val mean = cursor.getString(cursor.getColumnIndex("Mean"))
+                val mean = cursor.getString(cursor.getColumnIndex("Meaning"))
                 itemList.add(VocabularyQuesModel(quesID, voc, topicID, img, mean))
             } while (cursor.moveToNext())
         }
