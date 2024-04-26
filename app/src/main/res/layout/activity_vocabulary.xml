@@ -7,7 +7,19 @@
     android:gravity="center"
     android:background="@drawable/img"
     tools:context=".activity.VocabularyActivity">
-
+    <ImageView
+        android:id="@+id/img_speaker"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/img_speaker"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7"
+        app:layout_constraintHorizontal_bias="0.95"
+        tools:ignore="MissingConstraints" />
     <ImageView
         android:id="@+id/img_restart"
         android:layout_width="40dp"

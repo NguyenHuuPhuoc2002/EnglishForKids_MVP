@@ -1,11 +1,15 @@
 package com.example.learnenglish.activity
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.animation.AnimationUtils
 import android.view.View
 import android.view.animation.Animation
@@ -22,6 +26,7 @@ import com.example.learnenglish.model.VocabularyAnsModel
 import com.example.learnenglish.model.VocabularyQuesModel
 import com.example.learnenglish.presenter.VocabularyPresenter
 import com.example.learnenglish.repository.DBHelperRepository
+import java.io.File
 
 class VocabularyActivity : AppCompatActivity(), View.OnClickListener, VocabularyContract.View {
     companion object {
@@ -42,6 +47,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     private lateinit var tvNumQuestion: TextView
     private lateinit var btnQuit: Button
     private lateinit var btnRestart: ImageView
+    private lateinit var btnSpeaker: ImageView
     lateinit var tvNumQuesCurent: TextView
     private lateinit var imgOb: ImageView
     private lateinit var tvQuestion: TextView
@@ -57,7 +63,9 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     private lateinit var shakeAnimation: Animation
     private lateinit var zoomAnimation: Animation
     private lateinit var zoomImgAnimation: Animation
+    private lateinit var zoomCharacterAnimation: Animation
     private lateinit var dialog:AlertDialog
+    private var mediaPlayer:MediaPlayer? = null
     private var str: String = ""
     @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +80,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         setData(createPos)
         btnQuit()
         btnRestart()
+        btnSpeaker()
         tvNumQuestion.text = " / " + mListQues.size.toString() + " "
     }
     @SuppressLint("MissingInflatedId")
@@ -91,6 +100,46 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                 finish()
             }
         }
+    }
+    private fun btnSpeaker() {
+        btnSpeaker.setOnClickListener {
+            val audioBytes = mListAns[currentPos].audio
+            if (audioBytes != null) {
+                mediaPlayer = byteArrayToAudio(this@VocabularyActivity, audioBytes)
+                playSound()
+            }
+        }
+    }
+//    for (item in mListAns) {
+//        if(item.quesID == mListQues[currentPos].quesID){
+//            val audioId = item.quesID
+//            Log.d("keu", mListAns[currentPos].isCorrect)
+//            val audioBytes = presenter.getAudioFromPresenter(audioId)
+//            if (audioBytes != null) {
+//                mediaPlayer = byteArrayToAudio(this@VocabularyActivity, audioBytes)
+//                playSound()
+//            }
+//            return@setOnClickListener
+//        }
+//    }
+
+    private fun byteArrayToAudio(context: Context?, audioBytes: ByteArray?): MediaPlayer? {
+        val tempFile = File.createTempFile("temp_audio", null, context?.cacheDir)
+        tempFile.deleteOnExit()
+        if (audioBytes != null) {
+            tempFile.writeBytes(audioBytes)
+        }
+        return MediaPlayer.create(context, Uri.fromFile(tempFile))
+    }
+
+
+    private fun playSound() {
+        mediaPlayer?.start()
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
     private fun btnCheck() {
         btnCheck.setOnClickListener {
@@ -170,6 +219,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake)
         zoomAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom)
         zoomImgAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_img)
+        zoomCharacterAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_character)
         mListQues = arrayListOf()
         mListAns = arrayListOf()
 
@@ -189,6 +239,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         imgOb = findViewById(R.id.image_ob)
         tvQuestion = findViewById(R.id.tv_Question)
         btnCheck = findViewById(R.id.btn_check)
+        btnSpeaker = findViewById(R.id.img_speaker)
         tvNumQuestion = findViewById(R.id.tv_numQuestion)
         tvNumQuesCurent = findViewById(R.id.tv_numQuestionCurrent)
         btnQuit = findViewById(R.id.btn_quit)
@@ -301,7 +352,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         if (v != null) {
             when (v.id) {
                 R.id.tv_character_1 -> {
-                    tvCharacter1.startAnimation(zoomAnimation)
+                    tvCharacter1.startAnimation(zoomCharacterAnimation)
                     tvCharacter1.isEnabled = false
                     tvCharacter1.visibility = View.GONE
                     val textToAdd = tvCharacter1.text.toString()
@@ -309,7 +360,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_2 -> {
-                    tvCharacter2.startAnimation(zoomAnimation)
+                    tvCharacter2.startAnimation(zoomCharacterAnimation)
                     tvCharacter2.isEnabled = false
                     tvCharacter2.visibility = View.GONE
                     val textToAdd = tvCharacter2.text.toString()
@@ -317,7 +368,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_3 -> {
-                    tvCharacter3.startAnimation(zoomAnimation)
+                    tvCharacter3.startAnimation(zoomCharacterAnimation)
                     tvCharacter3.isEnabled = false
                     tvCharacter3.visibility = View.GONE
                     val textToAdd = tvCharacter3.text.toString()
@@ -325,7 +376,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_4 -> {
-                    tvCharacter4.startAnimation(zoomAnimation)
+                    tvCharacter4.startAnimation(zoomCharacterAnimation)
                     tvCharacter4.isEnabled = false
                     tvCharacter4.visibility = View.GONE
                     val textToAdd = tvCharacter4.text.toString()
@@ -333,7 +384,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_5 -> {
-                    tvCharacter5.startAnimation(zoomAnimation)
+                    tvCharacter5.startAnimation(zoomCharacterAnimation)
                     tvCharacter5.isEnabled = false
                     tvCharacter5.visibility = View.GONE
                     val textToAdd = tvCharacter5.text.toString()
@@ -341,7 +392,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_6 -> {
-                    tvCharacter6.startAnimation(zoomAnimation)
+                    tvCharacter6.startAnimation(zoomCharacterAnimation)
                     tvCharacter6.isEnabled = false
                     tvCharacter6.visibility = View.GONE
                     val textToAdd = tvCharacter6.text.toString()
@@ -349,7 +400,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_7 -> {
-                    tvCharacter7.startAnimation(zoomAnimation)
+                    tvCharacter7.startAnimation(zoomCharacterAnimation)
                     tvCharacter7.isEnabled = false
                     tvCharacter7.visibility = View.GONE
                     val textToAdd = tvCharacter7.text.toString()
@@ -357,7 +408,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_8 -> {
-                    tvCharacter8.startAnimation(zoomAnimation)
+                    tvCharacter8.startAnimation(zoomCharacterAnimation)
                     tvCharacter8.isEnabled = false
                     tvCharacter8.visibility = View.GONE
                     val textToAdd = tvCharacter8.text.toString()
@@ -365,7 +416,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_9 -> {
-                    tvCharacter9.startAnimation(zoomAnimation)
+                    tvCharacter9.startAnimation(zoomCharacterAnimation)
                     tvCharacter9.isEnabled = false
                     tvCharacter9.visibility = View.GONE
                     val textToAdd = tvCharacter9.text.toString()
@@ -373,7 +424,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_10 -> {
-                    tvCharacter10.startAnimation(zoomAnimation)
+                    tvCharacter10.startAnimation(zoomCharacterAnimation)
                     tvCharacter10.isEnabled = false
                     tvCharacter10.visibility = View.GONE
                     val textToAdd = tvCharacter10.text.toString()
@@ -381,7 +432,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_11 -> {
-                    tvCharacter11.startAnimation(zoomAnimation)
+                    tvCharacter11.startAnimation(zoomCharacterAnimation)
                     tvCharacter11.isEnabled = false
                     tvCharacter11.visibility = View.GONE
                     val textToAdd = tvCharacter11.text.toString()
@@ -389,7 +440,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                     tvShow.text = str
                 }
                 R.id.tv_character_12 -> {
-                    tvCharacter12.startAnimation(zoomAnimation)
+                    tvCharacter12.startAnimation(zoomCharacterAnimation)
                     tvCharacter12.isEnabled = false
                     tvCharacter12.visibility = View.GONE
                     val textToAdd = tvCharacter12.text.toString()

@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
+import com.example.learnenglish.R
 import com.example.learnenglish.activity.VocabularyActivity
 import com.example.learnenglish.contract.VocabularyContract
 import com.example.learnenglish.model.TopicModel
@@ -91,6 +92,7 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
         })
         return mList
     }
+
 
     override fun checkAnswer(textview: TextView, mListQues: ArrayList<VocabularyQuesModel>,
                                 mListAns: ArrayList<VocabularyAnsModel>, currentPos: Int) {

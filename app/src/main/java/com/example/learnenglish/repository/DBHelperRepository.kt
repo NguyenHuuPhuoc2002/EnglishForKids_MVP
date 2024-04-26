@@ -115,7 +115,8 @@ class DBHelperRepository(private val context: Context) {
                 val quesID = cursor.getInt(cursor.getColumnIndex("QuestionID"))
                 val isCorrect = cursor.getString(cursor.getColumnIndex("isCorrectVocabulary"))
                 val topic = cursor.getString(cursor.getColumnIndex("TopicID"))
-                itemList.add(VocabularyAnsModel(quesID, isCorrect, topic))
+                val audio = cursor.getBlob(cursor.getColumnIndex("Audio"))
+                itemList.add(VocabularyAnsModel(quesID, isCorrect, topic, audio))
             } while (cursor.moveToNext())
         }
         cursor.close()
