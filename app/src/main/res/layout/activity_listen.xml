@@ -12,7 +12,6 @@
         android:layout_width="75dp"
         android:layout_height="65dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="20dp"
         android:src="@drawable/img_girl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_question_listen"
@@ -47,17 +46,48 @@
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/edt_answer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_answer_listen"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/tv_title_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="score: "
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="70"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
     <TextView
         android:id="@+id/tv_question_listen"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
+        android:layout_width="290dp"
+        android:layout_height="90dp"
         android:background="@drawable/pink_boder_white"
         android:gravity="center"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="10dp"
+        android:padding="5dp"
         android:text="@string/app_name"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.819"
@@ -73,6 +103,7 @@
         android:layout_height="65dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/img_man"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toTopOf="@+id/edt_answer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_answer_listen"
@@ -81,16 +112,17 @@
 
     <TextView
         android:id="@+id/tv_answer_listen"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="300dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/pink_boder_white"
         android:fontFamily="@font/poppins"
         android:gravity="center"
+        android:padding="5dp"
         android:text="_________________"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.227"
@@ -105,10 +137,12 @@
         android:layout_height="150dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:layout_marginTop="-10dp"
         android:padding="10dp"
         android:paddingLeft="5dp"
         android:paddingRight="7dp"
         android:ems="10"
+        android:textSize="18sp"
         android:inputType="textMultiLine"
         android:text=""
         android:gravity="top"
@@ -118,7 +152,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_answer_listen"
-        app:layout_constraintVertical_bias="0.279"
+        app:layout_constraintVertical_bias="0.27"
         tools:ignore="MissingConstraints" />
 
     <RelativeLayout
@@ -127,10 +161,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.AppCompatButton
@@ -157,15 +191,15 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="9dp"
+            android:layout_marginEnd="15dp"
             android:layout_toStartOf="@+id/btn_quit"
             android:background="@drawable/bg_customitem"
             android:fontFamily="@font/poppins"
-            android:textStyle="bold"
-            android:layout_marginEnd="15dp"
-            android:visibility="gone"
             android:text="Tiếp tục"
             android:textColor="@color/black"
             android:textSize="18dp"
+            android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -174,8 +208,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="-10dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/bg_customitem"
             android:fontFamily="@font/poppins"
             android:text="X"

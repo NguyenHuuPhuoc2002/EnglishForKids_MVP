@@ -198,6 +198,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
                 mediaPlayer = MediaPlayer.create(this, R.raw.true_)
                 playSound()
                 btnNext(currentPos)
+                btnNext.startAnimation(zoomAnimation)
             }, 200)
         }else {
             mediaPlayer!!.stop()
@@ -207,7 +208,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
             handler.postDelayed({
                // textview.setBackgroundResource(R.drawable.bg_red_corner_listen)
                 btnCheck.setBackgroundResource(R.drawable.bg_red_corner_10)
-                textview.startAnimation(shakeAnimation)
+                btnCheck.startAnimation(shakeAnimation)
             }, 200)
         }
     }
