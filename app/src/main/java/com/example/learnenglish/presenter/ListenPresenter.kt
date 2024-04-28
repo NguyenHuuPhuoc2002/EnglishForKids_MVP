@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.TextView
 import com.example.learnenglish.R
+import com.example.learnenglish.activity.ListenActivity
 import com.example.learnenglish.activity.VocabularyActivity
+import com.example.learnenglish.contract.ListenContract
 import com.example.learnenglish.contract.VocabularyContract
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
@@ -18,15 +21,16 @@ import com.example.learnenglish_demo.AnswerModel
 import com.example.learnenglish_demo.QuestionModel
 
 
-class VocabularyPresenter(private val context: Context, private val view: VocabularyActivity, private var db: DBHelperRepository) : VocabularyContract.Presenter {
+class ListenPresenter(private val context: Context, private val view: ListenActivity, private var db: DBHelperRepository) : ListenContract.Presenter {
     companion object {
         val handler = Handler(Looper.getMainLooper())
     }
-    override fun getItemsVocabularyQuestion(): ArrayList<VocabularyQuesModel> {
+
+    override fun getItemsListenQuestion(): ArrayList<ListenQuestionModel> {
         db = DBHelperRepository(context)
         db.openDatabase()
-        val mList: ArrayList<VocabularyQuesModel> = ArrayList()
-        db.getItemsQuestionVocabulary(object : DBHelperRepository.TaskCallback{
+        val mList: ArrayList<ListenQuestionModel> = ArrayList()
+        db.getItemsQuestionsListen(object : DBHelperRepository.TaskCallback {
             override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
                 TODO("Not yet implemented")
             }
@@ -40,16 +44,7 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
             }
 
             override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
-                if(mListVocQues != null){
-                    for (i in 0 until mListVocQues.size) {
-                        if(mListVocQues[i].topicID == view.id.toString()){
-                            mList.add(mListVocQues[i])
-                            view.showVocabularyQuestion(mList)
-                        }
-                    }
-                }else {
-                    view.showErrorMessage("Không tải được dữ liệu !")
-                }
+                TODO("Not yet implemented")
             }
 
             override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
@@ -57,20 +52,28 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
             }
 
             override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
-                TODO("Not yet implemented")
+                if (mListLisQues != null) {
+                    for (i in 0 until mListLisQues.size) {
+                        if (mListLisQues[i].topicID == view.id.toString()) {
+                            mList.add(mListLisQues[i])
+                            view.showListenQuestion(mList)
+                        }
+                    }
+                } else {
+                    view.showErrorMessage("Không tải được dữ liệu !")
+                }
             }
 
             override fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?) {
                 TODO("Not yet implemented")
             }
-
         })
         return mList
     }
 
-    override fun getItemsVocabularyAnswer(): ArrayList<VocabularyAnsModel> {
-        val mList: ArrayList<VocabularyAnsModel> = ArrayList()
-        db.getItemsAnswerVocabulary(object : DBHelperRepository.TaskCallback{
+    override fun getItemsListenAnswer(): ArrayList<ListenAnswerModel> {
+        val mList: ArrayList<ListenAnswerModel> = ArrayList()
+        db.getItemsAnswersListen(object : DBHelperRepository.TaskCallback{
             override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
                 TODO("Not yet implemented")
             }
@@ -84,19 +87,11 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
             }
 
             override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
+                TODO("Not yet implemented")
             }
 
             override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
-                if(mListVocAns != null){
-                    for (i in 0 until mListVocAns.size) {
-                        if(mListVocAns[i].topicID == view.id.toString()){
-                            mList.add(mListVocAns[i])
-                            view.showVocabularyAnswer(mList)
-                        }
-                    }
-                }else {
-                    view.showErrorMessage("Không tải được dữ liệu !")
-                }
+                TODO("Not yet implemented")
             }
 
             override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
@@ -104,44 +99,56 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
             }
 
             override fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?) {
-                TODO("Not yet implemented")
+                if (mListLisAns != null) {
+                    for (i in 0 until mListLisAns.size) {
+                        if (mListLisAns[i].topicID == view.id.toString()) {
+                            mList.add(mListLisAns[i])
+                            view.showListenAnswer(mList)
+                        }
+                    }
+                } else {
+                    view.showErrorMessage("Không tải được dữ liệu !")
+                }
             }
 
         })
         return mList
     }
 
-
-    override fun checkAnswer(textview: TextView, mListQues: ArrayList<VocabularyQuesModel>,
-                                mListAns: ArrayList<VocabularyAnsModel>, currentPos: Int) {
-        view.showResult(mListAns[currentPos].isCorrect == textview.text, textview)
+    override fun checkAnswer(textview: TextView, mListQues: ArrayList<ListenQuestionModel>,
+                                mListAns: ArrayList<ListenAnswerModel>, currentPos: Int
+    ) {
+        val newTextView = textview.text.toString().trim().toLowerCase()
+        val newIsCorrect = mListAns[currentPos].isCorrect.trim().toLowerCase()
+        view.showResult(newIsCorrect == newTextView, textview)
         if(textview.text.isNotEmpty()){
-            if(mListAns[currentPos].isCorrect == textview.text){
-                nextQuestion(mListQues, mListAns, currentPos)
+            if(newIsCorrect == newTextView){
+//                nextQuestion(mListQues, mListAns, currentPos)
             }else{
-                handler.postDelayed({
+                VocabularyPresenter.handler.postDelayed({
                     view.showActivityFinished(mListQues.size, currentPos, 0)
                 },1000)
             }
         }
     }
-    @SuppressLint("SetTextI18n")
-    private fun nextQuestion(mListQues: ArrayList<VocabularyQuesModel>, mListAns: ArrayList<VocabularyAnsModel>,
+     fun nextQuestion(mListQues: ArrayList<ListenQuestionModel>, mListAns: ArrayList<ListenAnswerModel>,
                              newCurrentPos: Int) {
         if(newCurrentPos == mListQues.size - 1){
             val newPos = newCurrentPos + 1
-            handler.postDelayed({
+            VocabularyPresenter.handler.postDelayed({
                 view.showActivityFinished(mListQues.size, newPos, 0)
             },1000)
         }else{
             val incrementedPos = newCurrentPos + 1
             val tvNumQuesCurent = incrementedPos + 1
-            handler.postDelayed({
+            //VocabularyPresenter.handler.postDelayed({
                 view.showNextQuestion(mListQues, mListAns, incrementedPos)
-            },1000)
-            handler.postDelayed({
-                view.tvNumQuesCurent.text = "$tvNumQuesCurent "
+                view.setData(incrementedPos)
+           // },10000)
+            VocabularyPresenter.handler.postDelayed({
+                //view.tvNumQuesCurent.text = "$tvNumQuesCurent "
             }, 1000)
         }
     }
+
 }

@@ -371,7 +371,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:background="@drawable/bg_customitem"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/tv_Question"

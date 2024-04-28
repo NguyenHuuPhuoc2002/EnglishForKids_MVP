@@ -3,6 +3,7 @@ package com.example.learnenglish.activity
 import android.annotation.SuppressLint
 import android.view.animation.AnimationUtils
 import android.content.Intent
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -38,6 +39,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
     var id: String? = null
     private var isAnswerSelected = false
     private var currentPos: Int = 0
+    private var mediaPlayer:MediaPlayer? = null
     private lateinit var shakeAnimation: Animation
     private lateinit var zoomAnimation: Animation
 
@@ -73,7 +75,9 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         presenter.getItemsAnswer()
     }
 
-
+    private fun playSound() {
+        mediaPlayer?.start()
+    }
     override fun showQuestion(mListQuestion: ArrayList<QuestionModel>) {
         mListQues = mListQuestion
 //        Glide.with(this)
@@ -94,11 +98,15 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
 
     override fun showResult(isCorrect: Boolean, textview: TextView) {
         if(isCorrect){
+            mediaPlayer = MediaPlayer.create(this, R.raw.true_)
+            playSound()
             textview.setBackgroundResource(R.drawable.bg_green_corner_30)
             textview.startAnimation(zoomAnimation)
         }else {
             textview.setBackgroundResource(R.drawable.bg_red_corner_10)
             textview.startAnimation(shakeAnimation)
+            mediaPlayer = MediaPlayer.create(this, R.raw.false_)
+            playSound()
         }
     }
 

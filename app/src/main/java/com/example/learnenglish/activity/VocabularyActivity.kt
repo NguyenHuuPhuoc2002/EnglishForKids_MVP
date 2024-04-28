@@ -110,18 +110,6 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
             }
         }
     }
-//    for (item in mListAns) {
-//        if(item.quesID == mListQues[currentPos].quesID){
-//            val audioId = item.quesID
-//            Log.d("keu", mListAns[currentPos].isCorrect)
-//            val audioBytes = presenter.getAudioFromPresenter(audioId)
-//            if (audioBytes != null) {
-//                mediaPlayer = byteArrayToAudio(this@VocabularyActivity, audioBytes)
-//                playSound()
-//            }
-//            return@setOnClickListener
-//        }
-//    }
 
     private fun byteArrayToAudio(context: Context?, audioBytes: ByteArray?): MediaPlayer? {
         val tempFile = File.createTempFile("temp_audio", null, context?.cacheDir)
@@ -336,11 +324,15 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
 
     override fun showResult(isCorrect: Boolean, textview: TextView) {
         if(isCorrect){
+            mediaPlayer = MediaPlayer.create(this, R.raw.true_)
+            playSound()
             handler.postDelayed({
                 textview.setBackgroundResource(R.drawable.bg_green_corner_30)
                 textview.startAnimation(zoomAnimation)
             }, 200)
         }else {
+            mediaPlayer = MediaPlayer.create(this, R.raw.false_)
+            playSound()
             handler.postDelayed({
                 textview.setBackgroundResource(R.drawable.bg_red_corner_10)
                 textview.startAnimation(shakeAnimation)

@@ -10,8 +10,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:background="@drawable/pink_boder"
         android:layout_marginTop="-110dp"
-        android:layout_marginEnd="27dp">
+        android:layout_marginEnd="25dp">
         <ImageView
             android:id="@+id/img_back"
             android:layout_width="wrap_content"
@@ -132,7 +133,7 @@
         <RelativeLayout
             android:layout_width="100dp"
             android:gravity="center"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:background="@drawable/bg_customitem"
             android:layout_marginTop="10dp">
             <LinearLayout

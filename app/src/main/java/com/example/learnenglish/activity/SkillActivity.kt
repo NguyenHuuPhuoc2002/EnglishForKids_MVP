@@ -35,6 +35,10 @@ class SkillActivity : AppCompatActivity(){
                     val intent = Intent(this@SkillActivity, TopicActivity::class.java)
                     intent.putExtra("title", mListHome[pos].title)
                     startActivity(intent)
+                }else if(mListHome[pos].title == "Luyện Nghe"){
+                    val intent = Intent(this@SkillActivity, TopicActivity::class.java)
+                    intent.putExtra("title", mListHome[pos].title)
+                    startActivity(intent)
                 }else{
                     Toast.makeText(this@SkillActivity, "Chưa làm !", Toast.LENGTH_SHORT).show()
                 }
@@ -48,7 +52,7 @@ class SkillActivity : AppCompatActivity(){
         mListHome = arrayListOf()
         mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Trắc Nghiệm"))
         mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Từ Vựng"))
-        mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Điền Khuyết"))
+        mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Luyện Nghe"))
         mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Sắp Xếp Câu"))
     }
 }

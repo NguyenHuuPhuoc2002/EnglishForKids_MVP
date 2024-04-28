@@ -7,6 +7,8 @@ import android.util.Log
 import android.widget.TextView
 import com.example.learnenglish.activity.QuizzesActivity
 import com.example.learnenglish.contract.QuizzesContract
+import com.example.learnenglish.model.ListenAnswerModel
+import com.example.learnenglish.model.ListenQuestionModel
 import com.example.learnenglish.model.TopicModel
 import com.example.learnenglish.model.VocabularyAnsModel
 import com.example.learnenglish.model.VocabularyQuesModel
@@ -51,6 +53,14 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
                 TODO("Not yet implemented")
             }
 
+            override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?) {
+                TODO("Not yet implemented")
+            }
+
 
         })
         return mListQuestions
@@ -86,6 +96,14 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
             }
 
             override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?) {
                 TODO("Not yet implemented")
             }
 

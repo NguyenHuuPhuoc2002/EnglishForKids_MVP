@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
+import com.example.learnenglish.model.ListenAnswerModel
+import com.example.learnenglish.model.ListenQuestionModel
 import com.example.learnenglish.model.TopicModel
 import com.example.learnenglish.model.VocabularyAnsModel
 import com.example.learnenglish.model.VocabularyQuesModel
@@ -19,6 +21,8 @@ class DBHelperRepository(private val context: Context) {
         fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?)
         fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?)
         fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?)
+        fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?)
+        fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?)
     }
     companion object{
         private val DB_NAME = "ENGLISHDB.db"
@@ -121,6 +125,40 @@ class DBHelperRepository(private val context: Context) {
         }
         cursor.close()
         callback.onListVocabularyAnswerLoaded(itemList)
+    }
+    @SuppressLint("Range")
+    fun getItemsQuestionsListen(callback: TaskCallback) {
+        val itemList: ArrayList<ListenQuestionModel> = arrayListOf()
+        val db = openDatabase()
+        val cursor = db.rawQuery("SELECT * FROM LISTENQUESTIONS", null)
+        if (cursor.moveToFirst()) {
+            do {
+                val quesID = cursor.getInt(cursor.getColumnIndex("QuestionID"))
+                val content = cursor.getString(cursor.getColumnIndex("Content"))
+                val topicID = cursor.getString(cursor.getColumnIndex("TopicID"))
+                val audio = cursor.getBlob(cursor.getColumnIndex("Audio"))
+                itemList.add(ListenQuestionModel(quesID, content, topicID, audio))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        callback.onListListenQuestionLoaded(itemList)
+    }
+    @SuppressLint("Range")
+    fun getItemsAnswersListen(callback: TaskCallback) {
+        val itemList: ArrayList<ListenAnswerModel> = arrayListOf()
+        val db = openDatabase()
+        val cursor = db.rawQuery("SELECT * FROM LISTENANSWERS", null)
+        if (cursor.moveToFirst()) {
+            do {
+                val quesID = cursor.getInt(cursor.getColumnIndex("QuestionID"))
+                val correct = cursor.getString(cursor.getColumnIndex("isCorrect"))
+                val topicID = cursor.getString(cursor.getColumnIndex("TopicID"))
+                val audio = cursor.getBlob(cursor.getColumnIndex("Audio"))
+                itemList.add(ListenAnswerModel(quesID, correct, topicID, audio))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        callback.onListListenAnswerLoaded(itemList)
     }
     @SuppressLint("Range")
     fun getItemsTopic(callback: TaskCallback) {

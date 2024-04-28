@@ -52,8 +52,12 @@ class TopicActivity : AppCompatActivity(), TopicContract.View {
                     val intent = Intent(this@TopicActivity, QuizzesActivity::class.java)
                     intent.putExtra("topic", mListTopic[pos].id)
                     startActivity(intent)
-                }else{
+                }else if(str == "Từ Vựng"){
                     val intent = Intent(this@TopicActivity, VocabularyActivity::class.java)
+                    intent.putExtra("topic", mListTopic[pos].id)
+                    startActivity(intent)
+                }else if(str == "Luyện Nghe"){
+                    val intent = Intent(this@TopicActivity, ListenActivity::class.java)
                     intent.putExtra("topic", mListTopic[pos].id)
                     startActivity(intent)
                 }
