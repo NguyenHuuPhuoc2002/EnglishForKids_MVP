@@ -13,6 +13,7 @@ interface VocabularyContract {
         fun showErrorMessage(message: String)
         fun showActivityFinished(totalNumberOfQuestion: Int, numCorrectAnswer: Int, point: Int)
         fun showResult(isCorrect: Boolean, textview: TextView)
+        fun showNumQuesCurent(pos: Int)
         fun showNextQuestion(listQuestion: ArrayList<VocabularyQuesModel>, listAnswer: ArrayList<VocabularyAnsModel>, newCurrentPos: Int)
     }
     interface Presenter {

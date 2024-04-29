@@ -131,8 +131,9 @@ class ListenPresenter(private val context: Context, private val view: ListenActi
             }
         }
     }
+     @SuppressLint("SetTextI18n")
      fun nextQuestion(mListQues: ArrayList<ListenQuestionModel>, mListAns: ArrayList<ListenAnswerModel>,
-                             newCurrentPos: Int) {
+                      newCurrentPos: Int) {
         if(newCurrentPos == mListQues.size - 1){
             val newPos = newCurrentPos + 1
             VocabularyPresenter.handler.postDelayed({
@@ -140,14 +141,10 @@ class ListenPresenter(private val context: Context, private val view: ListenActi
             },1000)
         }else{
             val incrementedPos = newCurrentPos + 1
-            val tvNumQuesCurent = incrementedPos + 1
-            //VocabularyPresenter.handler.postDelayed({
-                view.showNextQuestion(mListQues, mListAns, incrementedPos)
-                view.setData(incrementedPos)
-           // },10000)
-            VocabularyPresenter.handler.postDelayed({
-                //view.tvNumQuesCurent.text = "$tvNumQuesCurent "
-            }, 1000)
+            val newNumQuesCurent = incrementedPos + 1
+            view.showNextQuestion(mListQues, mListAns, incrementedPos)
+            view.setData(incrementedPos)
+            view.showNumQuesCurent(newNumQuesCurent)
         }
     }
 

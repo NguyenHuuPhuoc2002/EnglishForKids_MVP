@@ -16,6 +16,7 @@ interface ListenContract {
         fun showActivityFinished(totalNumberOfQuestion: Int, numCorrectAnswer: Int, point: Int)
         fun showResult(isCorrect: Boolean, textview: TextView)
         fun setData(pos: Int)
+        fun showNumQuesCurent(pos: Int)
         fun showNextQuestion(listQuestion: ArrayList<ListenQuestionModel>, listAnswer: ArrayList<ListenAnswerModel>, newCurrentPos: Int)
     }
     interface Presenter {

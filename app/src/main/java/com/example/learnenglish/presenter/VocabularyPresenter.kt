@@ -135,12 +135,12 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
             },1000)
         }else{
             val incrementedPos = newCurrentPos + 1
-            val tvNumQuesCurent = incrementedPos + 1
+            val newNumQuesCurent = incrementedPos + 1
             handler.postDelayed({
                 view.showNextQuestion(mListQues, mListAns, incrementedPos)
             },1000)
             handler.postDelayed({
-                view.tvNumQuesCurent.text = "$tvNumQuesCurent "
+                view.showNumQuesCurent(newNumQuesCurent)
             }, 1000)
         }
     }

@@ -131,10 +131,10 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
             },1000)
         }else{
             val incrementedPos = newCurrentPos + 1
-            val tvNumQuesCurent = incrementedPos + 1
+            val newNumQuesCurent = incrementedPos + 1
             view.showNextQuestion(mListQues, listAnswer, incrementedPos)
             Handler().postDelayed({
-                view.tvNumQuesCurent.text = "$tvNumQuesCurent "
+                view.showNumQuesCurent(newNumQuesCurent)
             }, 1000)
         }
     }

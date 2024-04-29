@@ -40,6 +40,8 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
     private lateinit var tvQuestion: TextView
     private lateinit var tvAnswer: TextView
     private lateinit var edtAnswer: EditText
+    lateinit var tvNumQuesCurent: TextView
+    private lateinit var tvNumQuestion: TextView
     private lateinit var mListQues: ArrayList<ListenQuestionModel>
     private lateinit var mListAns: ArrayList<ListenAnswerModel>
     var id: String? = null
@@ -51,6 +53,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
     private lateinit var zoomImgAnimation: Animation
     private lateinit var zoomCharacterAnimation: Animation
     private lateinit var dialog:AlertDialog
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listen)
@@ -64,6 +67,8 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         btnLoaQues()
         btnLoaAns()
         btnQuit()
+
+        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
     }
     private fun btnLoaQues(){
         btnLoaQues.setOnClickListener {
@@ -76,6 +81,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
     }
     private fun btnLoaAns(){
         btnLoaAns.setOnClickListener {
+            removeHandler()
             mediaPlayer!!.stop()
             freeUpResources()
             val audioBytes = mListAns[currentPos].audio
@@ -118,7 +124,9 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         presenter.getItemsListenAnswer()
 
     }
-
+    private fun removeHandler(){
+        handler.removeCallbacksAndMessages(null)
+    }
     @SuppressLint("MissingInflatedId")
     private fun btnQuit() {
         btnQuit.setOnClickListener {
@@ -133,8 +141,12 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
                 dialog.dismiss()
             }
             view.findViewById<Button>(R.id.btn_yes).setOnClickListener {
+                mediaPlayer!!.stop()
+                removeHandler()
+                freeUpResources()
                 finish()
             }
+
         }
     }
     private fun btnNext(pos: Int) {
@@ -153,6 +165,8 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         zoomImgAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_img)
         zoomCharacterAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom_character)
 
+        tvNumQuestion = findViewById(R.id.tv_numQuestion)
+        tvNumQuesCurent = findViewById(R.id.tv_numQuestionCurrent)
         btnLoaQues = findViewById(R.id.img_loa_question)
         btnNext = findViewById(R.id.btn_next)
         btnCheck = findViewById(R.id.btn_check)
@@ -239,6 +253,12 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
             Toast.makeText(this, "No", Toast.LENGTH_SHORT).show()
         }
     }
+
+    @SuppressLint("SetTextI18n")
+    override fun showNumQuesCurent(pos: Int) {
+        tvNumQuesCurent.text = "$pos "
+    }
+
     private fun freeUpResources(){
         mediaPlayer!!.release()
         mediaPlayer = null

@@ -110,6 +110,10 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         }
     }
 
+    override fun showNumQuesCurent(pos: Int) {
+        tvNumQuesCurent.text = "$pos "
+    }
+
     override fun showNextQuestion(listQuestion: ArrayList<QuestionModel>, listAnswer: ArrayList<AnswerModel>, newCurrentPos: Int) {
         tvAnswer1.isEnabled = true
         tvAnswer2.isEnabled = true

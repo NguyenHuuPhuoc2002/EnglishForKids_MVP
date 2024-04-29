@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.animation.AnimationUtils
 import android.view.View
 import android.view.animation.Animation
@@ -103,14 +102,20 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     }
     private fun btnSpeaker() {
         btnSpeaker.setOnClickListener {
-            val audioBytes = mListAns[currentPos].audio
-            if (audioBytes != null) {
-                mediaPlayer = byteArrayToAudio(this@VocabularyActivity, audioBytes)
-                playSound()
+            if(mediaPlayer != null && mediaPlayer!!.isPlaying)
+            {
+                mediaPlayer!!.stop()
+                freeUpResources()
             }
+            val audioBytes = mListAns[currentPos].audio
+            mediaPlayer = byteArrayToAudio(this@VocabularyActivity, audioBytes)
+            playSound()
         }
     }
-
+    private fun freeUpResources(){
+        mediaPlayer!!.release()
+        mediaPlayer = null
+    }
     private fun byteArrayToAudio(context: Context?, audioBytes: ByteArray?): MediaPlayer? {
         val tempFile = File.createTempFile("temp_audio", null, context?.cacheDir)
         tempFile.deleteOnExit()
@@ -338,6 +343,11 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                 textview.startAnimation(shakeAnimation)
             }, 200)
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun showNumQuesCurent(pos: Int) {
+        tvNumQuesCurent.text = "$pos "
     }
 
     override fun onClick(v: View?) {
