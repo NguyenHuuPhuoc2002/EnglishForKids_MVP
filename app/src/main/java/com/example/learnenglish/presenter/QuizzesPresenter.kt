@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.TextView
 import com.example.learnenglish.activity.QuizzesActivity
 import com.example.learnenglish.contract.QuizzesContract
+import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
 import com.example.learnenglish.model.TopicModel
@@ -22,7 +23,7 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
         db = DBHelperRepository(context)
         db.openDatabase()
         val mListQuestions: ArrayList<QuestionModel> = ArrayList()
-        db.getItemsQuestion(object : DBHelperRepository.TaskCallback {
+        db.getItemsQuestion(object : TaskCallback.TaskCallbackQuizzes {
             override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
                 if (mListQuestion != null) {
                     for (i in 0 until mListQuestion.size) {
@@ -41,27 +42,6 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
                 TODO("Not yet implemented")
             }
 
-            override fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?) {
-                TODO("Not yet implemented")
-            }
-
-
         })
         return mListQuestions
     }
@@ -69,7 +49,7 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
 
     override fun getItemsAnswer(): ArrayList<AnswerModel> {
         val mListAnswers: ArrayList<AnswerModel> = ArrayList()
-        db.getItemsAnswer(object : DBHelperRepository.TaskCallback{
+        db.getItemsAnswer(object : TaskCallback.TaskCallbackQuizzes{
             override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
                 TODO("Not yet implemented")
             }
@@ -85,26 +65,6 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
                 } else {
                     view.showErrorMessage("Không tải được dữ liệu !")
                 }
-            }
-
-            override fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?) {
-                TODO("Not yet implemented")
             }
 
         })

@@ -7,6 +7,7 @@ import android.os.Looper
 import android.widget.TextView
 import com.example.learnenglish.R
 import com.example.learnenglish.activity.VocabularyActivity
+import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.contract.VocabularyContract
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
@@ -26,19 +27,7 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
         db = DBHelperRepository(context)
         db.openDatabase()
         val mList: ArrayList<VocabularyQuesModel> = ArrayList()
-        db.getItemsQuestionVocabulary(object : DBHelperRepository.TaskCallback{
-            override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListAnswerLoaded(mListAnswer: ArrayList<AnswerModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?) {
-                TODO("Not yet implemented")
-            }
-
+        db.getItemsQuestionVocabulary(object : TaskCallback.TaskCallbackVocabulary{
             override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
                 if(mListVocQues != null){
                     for (i in 0 until mListVocQues.size) {
@@ -55,34 +44,13 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
             override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
                 TODO("Not yet implemented")
             }
-
-            override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?) {
-                TODO("Not yet implemented")
-            }
-
         })
         return mList
     }
 
     override fun getItemsVocabularyAnswer(): ArrayList<VocabularyAnsModel> {
         val mList: ArrayList<VocabularyAnsModel> = ArrayList()
-        db.getItemsAnswerVocabulary(object : DBHelperRepository.TaskCallback{
-            override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListAnswerLoaded(mListAnswer: ArrayList<AnswerModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?) {
-                TODO("Not yet implemented")
-            }
-
+        db.getItemsAnswerVocabulary(object : TaskCallback.TaskCallbackVocabulary{
             override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
             }
 
@@ -98,15 +66,6 @@ class VocabularyPresenter(private val context: Context, private val view: Vocabu
                     view.showErrorMessage("Không tải được dữ liệu !")
                 }
             }
-
-            override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?) {
-                TODO("Not yet implemented")
-            }
-
         })
         return mList
     }

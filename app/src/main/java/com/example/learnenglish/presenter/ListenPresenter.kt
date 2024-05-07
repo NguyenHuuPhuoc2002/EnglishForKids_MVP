@@ -10,6 +10,7 @@ import com.example.learnenglish.R
 import com.example.learnenglish.activity.ListenActivity
 import com.example.learnenglish.activity.VocabularyActivity
 import com.example.learnenglish.contract.ListenContract
+import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.contract.VocabularyContract
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
@@ -30,26 +31,7 @@ class ListenPresenter(private val context: Context, private val view: ListenActi
         db = DBHelperRepository(context)
         db.openDatabase()
         val mList: ArrayList<ListenQuestionModel> = ArrayList()
-        db.getItemsQuestionsListen(object : DBHelperRepository.TaskCallback {
-            override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListAnswerLoaded(mListAnswer: ArrayList<AnswerModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
-                TODO("Not yet implemented")
-            }
+        db.getItemsQuestionsListen(object : TaskCallback.TaskCallbackListen {
 
             override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
                 if (mListLisQues != null) {
@@ -73,27 +55,7 @@ class ListenPresenter(private val context: Context, private val view: ListenActi
 
     override fun getItemsListenAnswer(): ArrayList<ListenAnswerModel> {
         val mList: ArrayList<ListenAnswerModel> = ArrayList()
-        db.getItemsAnswersListen(object : DBHelperRepository.TaskCallback{
-            override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListAnswerLoaded(mListAnswer: ArrayList<AnswerModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
-                TODO("Not yet implemented")
-            }
-
+        db.getItemsAnswersListen(object : TaskCallback.TaskCallbackListen{
             override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
                 TODO("Not yet implemented")
             }

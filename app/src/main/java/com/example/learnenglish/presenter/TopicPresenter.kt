@@ -3,6 +3,7 @@ package com.example.learnenglish.presenter
 import android.content.Context
 import android.util.Log
 import com.example.learnenglish.activity.TopicActivity
+import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.contract.TopicContract
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
@@ -18,15 +19,7 @@ class TopicPresenter(private val context: Context, private val view: TopicActivi
         db = DBHelperRepository(context)
         db.openDatabase()
         val mListTopics: ArrayList<TopicModel> = ArrayList()
-        db.getItemsTopic(object : DBHelperRepository.TaskCallback {
-            override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
-
-            }
-
-            override fun onListAnswerLoaded(mListAnswer: ArrayList<AnswerModel>?) {
-
-            }
-
+        db.getItemsTopic(object : TaskCallback.TaskCallbackTopic {
             override fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?) {
                 if (mListTopic != null) {
                     for (i in 0 until mListTopic.size) {
@@ -41,21 +34,6 @@ class TopicPresenter(private val context: Context, private val view: TopicActivi
                 }
             }
 
-            override fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?) {
-                TODO("Not yet implemented")
-            }
         })
         return mListTopics
     }

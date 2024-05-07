@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
+import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
 import com.example.learnenglish.model.TopicModel
@@ -15,15 +16,7 @@ import java.io.File
 import java.io.FileOutputStream
 
 class DBHelperRepository(private val context: Context) {
-    interface TaskCallback {
-        fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?)
-        fun onListAnswerLoaded(mListAnswer: ArrayList<AnswerModel>?)
-        fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?)
-        fun onListVocabularyQuestionLoaded(mListVocQues: ArrayList<VocabularyQuesModel>?)
-        fun onListVocabularyAnswerLoaded(mListVocAns: ArrayList<VocabularyAnsModel>?)
-        fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?)
-        fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?)
-    }
+
     companion object{
         private val DB_NAME = "ENGLISHDB.db"
     }
@@ -53,7 +46,7 @@ class DBHelperRepository(private val context: Context) {
         Log.wtf("DB", "Copy DB Complete")
     }
     @SuppressLint("Range")
-    fun getItemsQuestion(callback: TaskCallback) {
+    fun getItemsQuestion(callback: TaskCallback.TaskCallbackQuizzes) {
         val itemList: ArrayList<QuestionModel> = arrayListOf()
         val db = openDatabase()
         val cursor = db.rawQuery("SELECT * FROM QUESTIONS", null)
@@ -72,7 +65,7 @@ class DBHelperRepository(private val context: Context) {
     }
 
     @SuppressLint("Range")
-    fun getItemsAnswer(callback: TaskCallback) {
+    fun getItemsAnswer(callback: TaskCallback.TaskCallbackQuizzes) {
         val itemList: ArrayList<AnswerModel> = arrayListOf()
         val db = openDatabase()
         val cursor = db.rawQuery("SELECT * FROM ANSWERS", null)
@@ -92,7 +85,7 @@ class DBHelperRepository(private val context: Context) {
         callback.onListAnswerLoaded(itemList)
     }
     @SuppressLint("Range")
-    fun getItemsQuestionVocabulary(callback: TaskCallback) {
+    fun getItemsQuestionVocabulary(callback: TaskCallback.TaskCallbackVocabulary) {
         val itemList: ArrayList<VocabularyQuesModel> = arrayListOf()
         val db = openDatabase()
         val cursor = db.rawQuery("SELECT * FROM VOCABULARYQUESTIONS", null)
@@ -110,7 +103,7 @@ class DBHelperRepository(private val context: Context) {
         callback.onListVocabularyQuestionLoaded(itemList)
     }
     @SuppressLint("Range")
-    fun getItemsAnswerVocabulary(callback: TaskCallback) {
+    fun getItemsAnswerVocabulary(callback: TaskCallback.TaskCallbackVocabulary) {
         val itemList: ArrayList<VocabularyAnsModel> = arrayListOf()
         val db = openDatabase()
         val cursor = db.rawQuery("SELECT * FROM VOCABULARYANSWERS", null)
@@ -127,7 +120,7 @@ class DBHelperRepository(private val context: Context) {
         callback.onListVocabularyAnswerLoaded(itemList)
     }
     @SuppressLint("Range")
-    fun getItemsQuestionsListen(callback: TaskCallback) {
+    fun getItemsQuestionsListen(callback: TaskCallback.TaskCallbackListen) {
         val itemList: ArrayList<ListenQuestionModel> = arrayListOf()
         val db = openDatabase()
         val cursor = db.rawQuery("SELECT * FROM LISTENQUESTIONS", null)
@@ -144,7 +137,7 @@ class DBHelperRepository(private val context: Context) {
         callback.onListListenQuestionLoaded(itemList)
     }
     @SuppressLint("Range")
-    fun getItemsAnswersListen(callback: TaskCallback) {
+    fun getItemsAnswersListen(callback: TaskCallback.TaskCallbackListen) {
         val itemList: ArrayList<ListenAnswerModel> = arrayListOf()
         val db = openDatabase()
         val cursor = db.rawQuery("SELECT * FROM LISTENANSWERS", null)
@@ -161,7 +154,7 @@ class DBHelperRepository(private val context: Context) {
         callback.onListListenAnswerLoaded(itemList)
     }
     @SuppressLint("Range")
-    fun getItemsTopic(callback: TaskCallback) {
+    fun getItemsTopic(callback: TaskCallback.TaskCallbackTopic) {
         val itemList: ArrayList<TopicModel> = arrayListOf()
         val db = openDatabase()
         val cursor = db.rawQuery("SELECT * FROM TOPIC", null)
@@ -178,8 +171,6 @@ class DBHelperRepository(private val context: Context) {
 
         callback.onListTopicLoaded(itemList)
     }
-
-
 
 
 }
