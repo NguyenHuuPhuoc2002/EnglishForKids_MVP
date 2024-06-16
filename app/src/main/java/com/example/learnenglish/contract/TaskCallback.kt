@@ -5,13 +5,15 @@ import com.example.learnenglish.model.ListenQuestionModel
 import com.example.learnenglish.model.TopicModel
 import com.example.learnenglish.model.VocabularyAnsModel
 import com.example.learnenglish.model.VocabularyQuesModel
-import com.example.learnenglish_demo.AnswerModel
-import com.example.learnenglish_demo.QuestionModel
+import com.example.learnenglish_demo.QuizzAnswerModel
+import com.example.learnenglish.model.QuizzQuestionModel
+import com.example.learnenglish.model.SentencesSortAnswerModel
+import com.example.learnenglish.model.SentencesSortQuesModel
 
 interface TaskCallback {
     interface TaskCallbackQuizzes {
-        fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?)
-        fun onListAnswerLoaded(mListAnswer: ArrayList<AnswerModel>?)
+        fun onListQuestionLoaded(mListQuestion: ArrayList<QuizzQuestionModel>?)
+        fun onListAnswerLoaded(mListAnswer: ArrayList<QuizzAnswerModel>?)
     }
     interface TaskCallbackTopic {
         fun onListTopicLoaded(mListTopic: ArrayList<TopicModel>?)
@@ -23,5 +25,9 @@ interface TaskCallback {
     interface TaskCallbackListen{
         fun onListListenQuestionLoaded(mListLisQues: ArrayList<ListenQuestionModel>?)
         fun onListListenAnswerLoaded(mListLisAns: ArrayList<ListenAnswerModel>?)
+    }
+    interface TaskCallbackSentencesSort{
+        fun onListSentencesSortQuestionLoaded(mListQues: ArrayList<SentencesSortQuesModel>?)
+        fun onListSentencesSortAnswerLoaded(mListAns: ArrayList<SentencesSortAnswerModel>?)
     }
 }

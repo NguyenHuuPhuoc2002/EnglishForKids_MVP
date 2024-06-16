@@ -39,8 +39,10 @@ class SkillActivity : AppCompatActivity(){
                     val intent = Intent(this@SkillActivity, TopicActivity::class.java)
                     intent.putExtra("title", mListHome[pos].title)
                     startActivity(intent)
-                }else{
-                    Toast.makeText(this@SkillActivity, "Chưa làm !", Toast.LENGTH_SHORT).show()
+                }else if(mListHome[pos].title == "Sắp Xếp Câu"){
+                    val intent = Intent(this@SkillActivity, TopicActivity::class.java)
+                    intent.putExtra("title", mListHome[pos].title)
+                    startActivity(intent)
                 }
             }
         })

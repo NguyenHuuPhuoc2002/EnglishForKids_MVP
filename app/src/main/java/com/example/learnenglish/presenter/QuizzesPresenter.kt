@@ -8,23 +8,18 @@ import android.widget.TextView
 import com.example.learnenglish.activity.QuizzesActivity
 import com.example.learnenglish.contract.QuizzesContract
 import com.example.learnenglish.contract.TaskCallback
-import com.example.learnenglish.model.ListenAnswerModel
-import com.example.learnenglish.model.ListenQuestionModel
-import com.example.learnenglish.model.TopicModel
-import com.example.learnenglish.model.VocabularyAnsModel
-import com.example.learnenglish.model.VocabularyQuesModel
 import com.example.learnenglish.repository.DBHelperRepository
-import com.example.learnenglish_demo.AnswerModel
-import com.example.learnenglish_demo.QuestionModel
+import com.example.learnenglish_demo.QuizzAnswerModel
+import com.example.learnenglish.model.QuizzQuestionModel
 
 
 class QuizzesPresenter(private val context: Context, private val view: QuizzesActivity, private var db: DBHelperRepository) : QuizzesContract.Presenter {
-    override fun getItemsQuestion(): ArrayList<QuestionModel> {
+    override fun getItemsQuestion(): ArrayList<QuizzQuestionModel> {
         db = DBHelperRepository(context)
         db.openDatabase()
-        val mListQuestions: ArrayList<QuestionModel> = ArrayList()
+        val mListQuestions: ArrayList<QuizzQuestionModel> = ArrayList()
         db.getItemsQuestion(object : TaskCallback.TaskCallbackQuizzes {
-            override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
+            override fun onListQuestionLoaded(mListQuestion: ArrayList<QuizzQuestionModel>?) {
                 if (mListQuestion != null) {
                     for (i in 0 until mListQuestion.size) {
                         if(mListQuestion[i].topic == view.id){
@@ -38,7 +33,7 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
                 }
             }
 
-            override fun onListAnswerLoaded(mListAnswer: ArrayList<AnswerModel>?) {
+            override fun onListAnswerLoaded(mListAnswer: ArrayList<QuizzAnswerModel>?) {
                 TODO("Not yet implemented")
             }
 
@@ -47,13 +42,13 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
     }
 
 
-    override fun getItemsAnswer(): ArrayList<AnswerModel> {
-        val mListAnswers: ArrayList<AnswerModel> = ArrayList()
+    override fun getItemsAnswer(): ArrayList<QuizzAnswerModel> {
+        val mListAnswers: ArrayList<QuizzAnswerModel> = ArrayList()
         db.getItemsAnswer(object : TaskCallback.TaskCallbackQuizzes{
-            override fun onListQuestionLoaded(mListQuestion: ArrayList<QuestionModel>?) {
+            override fun onListQuestionLoaded(mListQuestion: ArrayList<QuizzQuestionModel>?) {
                 TODO("Not yet implemented")
             }
-            override fun onListAnswerLoaded(mListAnswer: ArrayList<AnswerModel>?) {
+            override fun onListAnswerLoaded(mListAnswer: ArrayList<QuizzAnswerModel>?) {
                 if (mListAnswer != null) {
                     for (i in 0 until mListAnswer.size) {
                         if(mListAnswer[i].topic == view.id){
@@ -71,7 +66,7 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
         return mListAnswers
     }
 
-    override fun checkAnswer(textview: TextView, mListAns: ArrayList<AnswerModel>, mListQues: ArrayList<QuestionModel>, currentPos: Int){
+    override fun checkAnswer(textview: TextView, mListAns: ArrayList<QuizzAnswerModel>, mListQues: ArrayList<QuizzQuestionModel>, currentPos: Int){
         view.showResult(mListAns[currentPos].isCorrect == textview.text, textview)
         if(mListAns[currentPos].isCorrect == textview.text){
             nextQuestion(mListQues, mListAns, currentPos)
@@ -83,7 +78,7 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
     }
 
     @SuppressLint("SetTextI18n")
-    private fun nextQuestion(mListQues: ArrayList<QuestionModel>, listAnswer: ArrayList<AnswerModel>, newCurrentPos: Int) {
+    private fun nextQuestion(mListQues: ArrayList<QuizzQuestionModel>, listAnswer: ArrayList<QuizzAnswerModel>, newCurrentPos: Int) {
         if(newCurrentPos == mListQues.size - 1){
             Handler().postDelayed({
                 val newPos = newCurrentPos + 1

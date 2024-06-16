@@ -1,8 +1,8 @@
 package com.example.learnenglish.contract
 
 import android.widget.TextView
-import com.example.learnenglish_demo.AnswerModel
-import com.example.learnenglish_demo.QuestionModel
+import com.example.learnenglish_demo.QuizzAnswerModel
+import com.example.learnenglish.model.QuizzQuestionModel
 
 
 interface QuizzesContract {
@@ -10,19 +10,19 @@ interface QuizzesContract {
         fun onClickListenerItemHome(pos: Int)
     }
     interface View {
-        fun showQuestion(mListQuestion: ArrayList<QuestionModel>)
-        fun showAnswer(mListAnswer: ArrayList<AnswerModel>)
+        fun showQuestion(mListQuestion: ArrayList<QuizzQuestionModel>)
+        fun showAnswer(mListAnswer: ArrayList<QuizzAnswerModel>)
         fun showQuizEndMessage()
         fun showErrorMessage(message: String)
         fun showActivityFinished(totalNumberOfQuestion: Int, numCorrectAnswer: Int, point: Int)
         fun showResult(isCorrect: Boolean, textview: TextView)
         fun showNumQuesCurent(pos: Int)
-        fun showNextQuestion(listQuestion: ArrayList<QuestionModel>, listAnswer: ArrayList<AnswerModel>, newCurrentPos: Int)
+        fun showNextQuestion(listQuestion: ArrayList<QuizzQuestionModel>, listAnswer: ArrayList<QuizzAnswerModel>, newCurrentPos: Int)
     }
 
     interface Presenter {
-        fun getItemsQuestion(): ArrayList<QuestionModel>
-        fun getItemsAnswer(): ArrayList<AnswerModel>
-        fun checkAnswer(textview: TextView, mListAns: ArrayList<AnswerModel>, mListQues: ArrayList<QuestionModel>, currentPos: Int)
+        fun getItemsQuestion(): ArrayList<QuizzQuestionModel>
+        fun getItemsAnswer(): ArrayList<QuizzAnswerModel>
+        fun checkAnswer(textview: TextView, mListAns: ArrayList<QuizzAnswerModel>, mListQues: ArrayList<QuizzQuestionModel>, currentPos: Int)
     }
 }

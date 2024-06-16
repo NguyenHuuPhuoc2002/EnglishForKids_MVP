@@ -60,6 +60,10 @@ class TopicActivity : AppCompatActivity(), TopicContract.View {
                     val intent = Intent(this@TopicActivity, ListenActivity::class.java)
                     intent.putExtra("topic", mListTopic[pos].id)
                     startActivity(intent)
+                }else if(str == "Sắp Xếp Câu") {
+                    val intent = Intent(this@TopicActivity, SentencesSortActivity::class.java)
+                    intent.putExtra("topic", mListTopic[pos].id)
+                    startActivity(intent)
                 }
             }
         })

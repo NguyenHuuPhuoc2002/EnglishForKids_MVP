@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:gravity="center"
-        android:text="KẾT THÚC BÀI HỌC"
+        android:text="Chúc mừng Phước đã hoàn thành bài học"
         android:textStyle="bold"
         android:fontFamily="@font/poppins"
         android:textColor="@color/black"

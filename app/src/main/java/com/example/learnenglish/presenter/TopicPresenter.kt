@@ -5,14 +5,8 @@ import android.util.Log
 import com.example.learnenglish.activity.TopicActivity
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.contract.TopicContract
-import com.example.learnenglish.model.ListenAnswerModel
-import com.example.learnenglish.model.ListenQuestionModel
 import com.example.learnenglish.model.TopicModel
-import com.example.learnenglish.model.VocabularyAnsModel
-import com.example.learnenglish.model.VocabularyQuesModel
 import com.example.learnenglish.repository.DBHelperRepository
-import com.example.learnenglish_demo.AnswerModel
-import com.example.learnenglish_demo.QuestionModel
 
 class TopicPresenter(private val context: Context, private val view: TopicActivity, private var db: DBHelperRepository): TopicContract.Presenter {
     override fun getItemsTopic(): ArrayList<TopicModel> {

@@ -4,22 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.TextView
-import com.example.learnenglish.R
 import com.example.learnenglish.activity.ListenActivity
-import com.example.learnenglish.activity.VocabularyActivity
 import com.example.learnenglish.contract.ListenContract
 import com.example.learnenglish.contract.TaskCallback
-import com.example.learnenglish.contract.VocabularyContract
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
-import com.example.learnenglish.model.TopicModel
-import com.example.learnenglish.model.VocabularyAnsModel
-import com.example.learnenglish.model.VocabularyQuesModel
 import com.example.learnenglish.repository.DBHelperRepository
-import com.example.learnenglish_demo.AnswerModel
-import com.example.learnenglish_demo.QuestionModel
 
 
 class ListenPresenter(private val context: Context, private val view: ListenActivity, private var db: DBHelperRepository) : ListenContract.Presenter {

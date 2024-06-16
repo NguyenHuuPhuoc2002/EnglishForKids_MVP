@@ -5,18 +5,12 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
-import com.example.learnenglish.R
 import com.example.learnenglish.activity.VocabularyActivity
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.contract.VocabularyContract
-import com.example.learnenglish.model.ListenAnswerModel
-import com.example.learnenglish.model.ListenQuestionModel
-import com.example.learnenglish.model.TopicModel
 import com.example.learnenglish.model.VocabularyAnsModel
 import com.example.learnenglish.model.VocabularyQuesModel
 import com.example.learnenglish.repository.DBHelperRepository
-import com.example.learnenglish_demo.AnswerModel
-import com.example.learnenglish_demo.QuestionModel
 
 
 class VocabularyPresenter(private val context: Context, private val view: VocabularyActivity, private var db: DBHelperRepository) : VocabularyContract.Presenter {

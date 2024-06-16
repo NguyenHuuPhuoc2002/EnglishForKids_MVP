@@ -16,6 +16,9 @@
         android:theme="@style/Theme.LearnEnglish"
         tools:targetApi="31">
         <activity
+            android:name=".activity.SentencesSortActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ListenActivity"
             android:exported="false" />
         <activity

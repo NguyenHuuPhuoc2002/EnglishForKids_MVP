@@ -3,10 +3,6 @@ package com.example.learnenglish.contract
 import android.widget.TextView
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
-import com.example.learnenglish.model.VocabularyAnsModel
-import com.example.learnenglish.model.VocabularyQuesModel
-import com.example.learnenglish_demo.AnswerModel
-import com.example.learnenglish_demo.QuestionModel
 
 interface ListenContract {
     interface View {

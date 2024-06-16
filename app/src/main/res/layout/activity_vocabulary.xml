@@ -366,6 +366,7 @@
             android:text="X"
             android:textColor="@color/black"
             android:textSize="18dp" />
+
     </RelativeLayout>
 
     <RelativeLayout

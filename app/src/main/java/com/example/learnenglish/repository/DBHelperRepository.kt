@@ -10,8 +10,10 @@ import com.example.learnenglish.model.ListenQuestionModel
 import com.example.learnenglish.model.TopicModel
 import com.example.learnenglish.model.VocabularyAnsModel
 import com.example.learnenglish.model.VocabularyQuesModel
-import com.example.learnenglish_demo.AnswerModel
-import com.example.learnenglish_demo.QuestionModel
+import com.example.learnenglish_demo.QuizzAnswerModel
+import com.example.learnenglish.model.QuizzQuestionModel
+import com.example.learnenglish.model.SentencesSortAnswerModel
+import com.example.learnenglish.model.SentencesSortQuesModel
 import java.io.File
 import java.io.FileOutputStream
 
@@ -47,7 +49,7 @@ class DBHelperRepository(private val context: Context) {
     }
     @SuppressLint("Range")
     fun getItemsQuestion(callback: TaskCallback.TaskCallbackQuizzes) {
-        val itemList: ArrayList<QuestionModel> = arrayListOf()
+        val itemList: ArrayList<QuizzQuestionModel> = arrayListOf()
         val db = openDatabase()
         val cursor = db.rawQuery("SELECT * FROM QUESTIONS", null)
         if (cursor.moveToFirst()) {
@@ -57,7 +59,7 @@ class DBHelperRepository(private val context: Context) {
                 val answerID = cursor.getInt(cursor.getColumnIndex("AnswerID"))
                 val topic = cursor.getString(cursor.getColumnIndex("TopicID"))
               //  val img = cursor.getString(cursor.getColumnIndex("AnhQues"))
-                itemList.add(QuestionModel(questionID, content, answerID, topic))
+                itemList.add(QuizzQuestionModel(questionID, content, answerID, topic))
             } while (cursor.moveToNext())
         }
         cursor.close()
@@ -66,7 +68,7 @@ class DBHelperRepository(private val context: Context) {
 
     @SuppressLint("Range")
     fun getItemsAnswer(callback: TaskCallback.TaskCallbackQuizzes) {
-        val itemList: ArrayList<AnswerModel> = arrayListOf()
+        val itemList: ArrayList<QuizzAnswerModel> = arrayListOf()
         val db = openDatabase()
         val cursor = db.rawQuery("SELECT * FROM ANSWERS", null)
         if (cursor.moveToFirst()) {
@@ -78,7 +80,7 @@ class DBHelperRepository(private val context: Context) {
                 val D = cursor.getString(cursor.getColumnIndex("D"))
                 val isCorrect = cursor.getString(cursor.getColumnIndex("isCorrect"))
                 val topic = cursor.getString(cursor.getColumnIndex("TopicID"))
-                itemList.add(AnswerModel(answerID, A, B, C, D, isCorrect, topic))
+                itemList.add(QuizzAnswerModel(answerID, A, B, C, D, isCorrect, topic))
             } while (cursor.moveToNext())
         }
         cursor.close()
@@ -154,6 +156,43 @@ class DBHelperRepository(private val context: Context) {
         callback.onListListenAnswerLoaded(itemList)
     }
     @SuppressLint("Range")
+    fun getItemsQuesSentencesSort(callback: TaskCallback.TaskCallbackSentencesSort) {
+        val itemList: ArrayList<SentencesSortQuesModel> = arrayListOf()
+        val db = openDatabase()
+        val cursor = db.rawQuery("SELECT * FROM SENTENCESSORTQUESTIONS", null)
+        if (cursor.moveToFirst()) {
+            do {
+                val quesID = cursor.getInt(cursor.getColumnIndex("QuestionID"))
+                val content = cursor.getString(cursor.getColumnIndex("Content"))
+                val topicID = cursor.getString(cursor.getColumnIndex("TopicID"))
+                val answerID = cursor.getInt(cursor.getColumnIndex("AnswerID"))
+                itemList.add(SentencesSortQuesModel(quesID, content, answerID, topicID))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        callback.onListSentencesSortQuestionLoaded(itemList)
+    }
+    @SuppressLint("Range")
+    fun getItemsAnsersSentencesSort(callback: TaskCallback.TaskCallbackSentencesSort){
+        val itemList: ArrayList<SentencesSortAnswerModel> = arrayListOf()
+        val db = openDatabase()
+        val cursor = db.rawQuery("SELECT * FROM SENTENCESSORTANSWERS", null)
+        if(cursor.moveToFirst()){
+            do{
+                val ansID = cursor.getInt(cursor.getColumnIndex("AnswerID"))
+                val correct = cursor.getString(cursor.getColumnIndex("isCorrect"))
+                val answerA = cursor.getString(cursor.getColumnIndex("A"))
+                val answerB = cursor.getString(cursor.getColumnIndex("B"))
+                val answerC = cursor.getString(cursor.getColumnIndex("C"))
+                val answerD = cursor.getString(cursor.getColumnIndex("D"))
+                val topicID = cursor.getString(cursor.getColumnIndex("TopicID"))
+                itemList.add(SentencesSortAnswerModel(ansID, answerA, answerB, answerC, answerD, correct, topicID))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        callback.onListSentencesSortAnswerLoaded(itemList)
+    }
+    @SuppressLint("Range")
     fun getItemsTopic(callback: TaskCallback.TaskCallbackTopic) {
         val itemList: ArrayList<TopicModel> = arrayListOf()
         val db = openDatabase()
@@ -171,6 +210,7 @@ class DBHelperRepository(private val context: Context) {
 
         callback.onListTopicLoaded(itemList)
     }
+
 
 
 }
