@@ -80,7 +80,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         btnQuit()
         btnRestart()
         btnSpeaker()
-        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
+        tvNumQuestion.text = "/" + mListQues.size.toString() + " "
     }
     @SuppressLint("MissingInflatedId")
     private fun btnQuit() {
@@ -347,7 +347,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
 
     @SuppressLint("SetTextI18n")
     override fun showNumQuesCurent(pos: Int) {
-        tvNumQuesCurent.text = "$pos "
+        tvNumQuesCurent.text = "$pos"
     }
 
     override fun onClick(v: View?) {

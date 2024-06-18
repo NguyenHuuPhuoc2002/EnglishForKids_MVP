@@ -52,7 +52,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         getData()
         setData(currentPos)
         btnQuit()
-        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
+        tvNumQuestion.text = "/" + mListQues.size.toString() + " "
     }
     private fun setData(pos: Int){
         if(pos >= 0 && pos < mListQues.size && pos < mListAns.size){
@@ -110,7 +110,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
     }
 
     override fun showNumQuesCurent(pos: Int) {
-        tvNumQuesCurent.text = "$pos "
+        tvNumQuesCurent.text = "$pos"
     }
 
     override fun showNextQuestion(listQuestion: ArrayList<QuizzQuestionModel>, listAnswer: ArrayList<QuizzAnswerModel>, newCurrentPos: Int) {

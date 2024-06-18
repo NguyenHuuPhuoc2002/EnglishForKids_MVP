@@ -68,7 +68,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         btnLoaAns()
         btnQuit()
 
-        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
+        tvNumQuestion.text = "/" + mListQues.size.toString() + ""
     }
     private fun btnLoaQues(){
         btnLoaQues.setOnClickListener {
@@ -256,7 +256,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
 
     @SuppressLint("SetTextI18n")
     override fun showNumQuesCurent(pos: Int) {
-        tvNumQuesCurent.text = "$pos "
+        tvNumQuesCurent.text = "$pos"
     }
 
     private fun freeUpResources(){

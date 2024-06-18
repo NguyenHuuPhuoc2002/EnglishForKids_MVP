@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "309646859726",
+    "firebase_url": "https://learnenglish-30d9b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "learnenglish-30d9b",
+    "storage_bucket": "learnenglish-30d9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309646859726:android:b06a5798679bb65cabdf9f",
+        "android_client_info": {
+          "package_name": "com.example.learnenglish"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzdfIyG-YzVlbup3xJv_qC86xl7TLrHPc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

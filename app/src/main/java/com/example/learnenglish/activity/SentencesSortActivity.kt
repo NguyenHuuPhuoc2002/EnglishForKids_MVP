@@ -105,6 +105,7 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
                 for(i in 0 until mListAns.size){
                     if(mListQues[currentPos].answerID == mListAns[i].answerID){
                         presenter.checkAnswer(binding.tvAnswerShow, mListQues, mListAns[i], createPos++ )
+                        Log.d("isCorrect", mListAns[i].isCorrect)
                         break;
                     }
                 }
@@ -225,7 +226,7 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
 
     @SuppressLint("SetTextI18n")
     override fun showNumQuesCurent(pos: Int) {
-        binding.tvNumQuestionCurrent.text = "$pos "
+        binding.tvNumQuestionCurrent.text = "$pos"
     }
 
     override fun showNextQuestion(

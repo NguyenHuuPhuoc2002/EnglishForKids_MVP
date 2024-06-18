@@ -180,7 +180,7 @@
                 android:gravity="center"
                 android:text="1"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="17dp" />
 
             <TextView
                 android:id="@+id/tv_numQuestion"
@@ -191,7 +191,7 @@
                 android:text="10"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="18dp"
+                android:textSize="17dp"
                 tools:layout_editor_absoluteX="57dp"
                 tools:layout_editor_absoluteY="240dp" />
         </LinearLayout>
@@ -225,7 +225,7 @@
                 android:textStyle="bold"
                 android:text="Score: "
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/tv_point"
@@ -234,7 +234,7 @@
                 android:fontFamily="@font/poppins"
                 android:text=" 10"
                 android:textColor="@color/black"
-                android:textSize="18dp"
+                android:textSize="17dp"
                 tools:layout_editor_absoluteX="57dp"
                 tools:layout_editor_absoluteY="240dp" />
         </LinearLayout>
