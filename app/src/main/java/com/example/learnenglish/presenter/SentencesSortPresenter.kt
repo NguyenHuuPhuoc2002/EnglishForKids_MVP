@@ -3,19 +3,13 @@ package com.example.learnenglish.presenter
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.TextView
 import com.example.learnenglish.activity.SentencesSortActivity
 import com.example.learnenglish.contract.SentencesSortContract
 import com.example.learnenglish.contract.TaskCallback
-import com.example.learnenglish.model.QuizzQuestionModel
 import com.example.learnenglish.model.SentencesSortAnswerModel
 import com.example.learnenglish.model.SentencesSortQuesModel
-import com.example.learnenglish.model.VocabularyAnsModel
-import com.example.learnenglish.model.VocabularyQuesModel
 import com.example.learnenglish.repository.DBHelperRepository
-import com.example.learnenglish_demo.QuizzAnswerModel
-import java.lang.ref.WeakReference
 
 class SentencesSortPresenter(private val context: Context, private val view: SentencesSortActivity, private var db: DBHelperRepository) : SentencesSortContract.Presenter{
     companion object {

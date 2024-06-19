@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import com.example.learnenglish.contract.TaskCallback
+import com.example.learnenglish.fragment.RegisterFragment
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
 import com.example.learnenglish.model.TopicModel
@@ -14,10 +15,17 @@ import com.example.learnenglish_demo.QuizzAnswerModel
 import com.example.learnenglish.model.QuizzQuestionModel
 import com.example.learnenglish.model.SentencesSortAnswerModel
 import com.example.learnenglish.model.SentencesSortQuesModel
+import com.example.learnenglish.model.UserModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.io.File
 import java.io.FileOutputStream
 
 class DBHelperRepository(private val context: Context) {
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var dbRef: DatabaseReference
+    private lateinit var view: RegisterFragment
 
     companion object{
         private val DB_NAME = "ENGLISHDB.db"
@@ -211,6 +219,30 @@ class DBHelperRepository(private val context: Context) {
         callback.onListTopicLoaded(itemList)
     }
 
+    @SuppressLint("SuspiciousIndentation")
+    fun RegisterDb(email: String, name: String, password: String, callback: TaskCallback.TaskCallbackRegister){
+        firebaseAuth = FirebaseAuth.getInstance()
+        dbRef = FirebaseDatabase.getInstance().getReference("Users")
+        val id = dbRef.push().key
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val user = UserModel(id, name, email, 0, 0)
+                        dbRef.child(id!!).setValue(user)
+                            .addOnSuccessListener {
+
+                                callback.showRegisterSuccess("Đăng kí thành công")
+                            }
+                            .addOnFailureListener {
+
+                                callback.showRegisterFail("Đăng kí không thành công!")
+                            }
+                    } else {
+                        val errorMessage = task.exception?.message
+                        callback.showRegisterFail("Lỗi: $errorMessage")
+                    }
+                }
+    }
 
 
 }

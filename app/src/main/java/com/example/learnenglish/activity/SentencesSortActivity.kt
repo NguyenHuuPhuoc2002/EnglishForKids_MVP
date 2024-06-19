@@ -3,7 +3,6 @@ package com.example.learnenglish.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.MediaPlayer
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -18,7 +17,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.learnenglish.R
 import com.example.learnenglish.contract.SentencesSortContract
-import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.databinding.ActivitySentencesSortBinding
 import com.example.learnenglish.model.SentencesSortAnswerModel
 import com.example.learnenglish.model.SentencesSortQuesModel

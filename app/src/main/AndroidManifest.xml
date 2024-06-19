@@ -37,7 +37,7 @@
             android:name=".activity.QuizzesActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.LogInActivity"
+            android:name=".activity.SkillActivity"
             android:exported="true"
             tools:ignore="DuplicateActivity">
             <intent-filter>

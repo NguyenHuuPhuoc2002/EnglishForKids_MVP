@@ -36,8 +36,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_marginTop="5dp"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
                     <com.google.android.material.textfield.TextInputEditText
@@ -52,8 +52,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_marginTop="5dp"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
                     <com.google.android.material.textfield.TextInputEditText
@@ -70,11 +70,11 @@
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_marginTop="5dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="32"
-                    android:layout_marginEnd="20dp"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -92,11 +92,11 @@
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_marginTop="1dp"
                     app:counterEnabled="true"
                     app:counterMaxLength="32"
-                    android:layout_marginEnd="20dp"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
