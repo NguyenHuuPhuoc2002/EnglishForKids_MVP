@@ -3,7 +3,6 @@ package com.example.learnenglish.fragment
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,11 +14,7 @@ import com.example.learnenglish.activity.LogInActivity
 import com.example.learnenglish.contract.RegisterContract
 import com.example.learnenglish.databinding.FragmentRegisterBinding
 import com.example.learnenglish.presenter.RegisterPresenter
-import com.example.learnenglish.presenter.SentencesSortPresenter
 import com.example.learnenglish.repository.DBHelperRepository
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import java.lang.ref.WeakReference
 
 class RegisterFragment : Fragment(), RegisterContract.View {

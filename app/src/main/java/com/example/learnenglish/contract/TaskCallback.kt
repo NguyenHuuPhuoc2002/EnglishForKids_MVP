@@ -36,4 +36,9 @@ interface TaskCallback {
         fun showRegisterSuccess(message: String)
         fun showRegisterFail(message: String)
     }
+
+    interface TaskCallbackLogin{
+        fun onLogInSuccess(message: String)
+        fun onLogInFail(message: String)
+    }
 }

@@ -1,9 +1,12 @@
 package com.example.learnenglish.repository
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
+import android.widget.Toast
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.fragment.RegisterFragment
 import com.example.learnenglish.model.ListenAnswerModel
@@ -23,12 +26,11 @@ import java.io.File
 import java.io.FileOutputStream
 
 class DBHelperRepository(private val context: Context) {
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var dbRef: DatabaseReference
-    private lateinit var view: RegisterFragment
 
+    private lateinit var dbRef: DatabaseReference
+    private lateinit var firebaseAuth: FirebaseAuth
     companion object{
-        private val DB_NAME = "ENGLISHDB.db"
+        private const val DB_NAME = "ENGLISHDB.db"
     }
     fun openDatabase(): SQLiteDatabase{
         val dbFile = context.getDatabasePath(DB_NAME)
@@ -220,7 +222,7 @@ class DBHelperRepository(private val context: Context) {
     }
 
     @SuppressLint("SuspiciousIndentation")
-    fun RegisterDb(email: String, name: String, password: String, callback: TaskCallback.TaskCallbackRegister){
+    fun registerDb(email: String, name: String, password: String, callback: TaskCallback.TaskCallbackRegister){
         firebaseAuth = FirebaseAuth.getInstance()
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
         val id = dbRef.push().key
@@ -242,6 +244,17 @@ class DBHelperRepository(private val context: Context) {
                         callback.showRegisterFail("Lỗi: $errorMessage")
                     }
                 }
+    }
+
+    fun getLogIn(email: String, passWord: String, callback: TaskCallback.TaskCallbackLogin){
+        firebaseAuth = FirebaseAuth.getInstance()
+        firebaseAuth.signInWithEmailAndPassword(email, passWord).addOnCompleteListener {task ->
+            if (task.isSuccessful) {
+                callback.onLogInSuccess("Đăng nhập thành công!")
+            } else {
+                callback.onLogInFail("Đăng nhập thất bại!")
+            }
+        }
     }
 
 

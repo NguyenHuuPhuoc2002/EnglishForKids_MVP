@@ -1,8 +1,6 @@
 package com.example.learnenglish.presenter
 
-import android.app.AlertDialog
 import android.content.Context
-import android.widget.Toast
 import com.example.learnenglish.contract.RegisterContract
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.fragment.RegisterFragment
@@ -41,7 +39,7 @@ class RegisterPresenter(private val context: Context, private val view: Register
             view.hideLoading()
         } else {
             view.showLoading()
-            db.RegisterDb(email, name, password, object : TaskCallback.TaskCallbackRegister{
+            db.registerDb(email, name, password, object : TaskCallback.TaskCallbackRegister{
                 override fun showRegisterSuccess(message: String) {
                     view.onRegistrationSuccess(message)
                     view.hideLoading()
