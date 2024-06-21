@@ -1,14 +1,20 @@
 package com.example.learnenglish.presenter
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.example.learnenglish.activity.ListenActivity
+import com.example.learnenglish.activity.QuizzesActivity
+import com.example.learnenglish.activity.SentencesSortActivity
 import com.example.learnenglish.activity.TopicActivity
+import com.example.learnenglish.activity.VocabularyActivity
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.contract.TopicContract
 import com.example.learnenglish.model.TopicModel
 import com.example.learnenglish.repository.DBHelperRepository
 
 class TopicPresenter(private val context: Context, private val view: TopicActivity, private var db: DBHelperRepository): TopicContract.Presenter {
+    private var activity = view as Activity
     override fun getItemsTopic(): ArrayList<TopicModel> {
         db = DBHelperRepository(context)
         db.openDatabase()
@@ -30,5 +36,17 @@ class TopicPresenter(private val context: Context, private val view: TopicActivi
 
         })
         return mListTopics
+    }
+
+    override fun onStartActivity(str: String, email: String, id: String) {
+        if(str == "Trắc Nghiệm"){
+            view.showActivity(email, id, str)
+        }else if(str == "Từ Vựng"){
+            view.showActivity(email, id, str)
+        }else if(str == "Luyện Nghe"){
+            view.showActivity(email, id, str)
+        }else if(str == "Sắp Xếp Câu") {
+            view.showActivity(email, id, str)
+        }
     }
 }

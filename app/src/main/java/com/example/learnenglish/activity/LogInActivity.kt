@@ -2,6 +2,7 @@ package com.example.learnenglish.activity
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ProgressBar
@@ -21,6 +22,8 @@ class LogInActivity : AppCompatActivity(), LogInContract.View {
     lateinit var binding: ActivityLogInBinding
     private lateinit var dialog: Dialog
     private lateinit var presenter: LogInPresenter
+    private lateinit var email: String
+    private lateinit var passWord: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +36,8 @@ class LogInActivity : AppCompatActivity(), LogInContract.View {
 
     private fun setupUI() {
         binding.btnlogin.setOnClickListener {
-            val email = binding.edtemail.text.toString()
-            val passWord = binding.edtpassword.text.toString()
+            email = binding.edtemail.text.toString()
+            passWord = binding.edtpassword.text.toString()
             presenter.logIn(email, passWord)
         }
         binding.tvRegister.setOnClickListener {
@@ -72,6 +75,14 @@ class LogInActivity : AppCompatActivity(), LogInContract.View {
 
     override fun hideLoading() {
         dialog.dismiss()
+    }
+
+    override fun intenDataTransfer(message: String,email: String) {
+        val intent = Intent(this, SkillActivity::class.java)
+        intent.putExtra("Login", message)
+        intent.putExtra("email", email.replace(".", ""))
+        intent.putExtra("emailAcountTitle", email)
+        startActivity(intent)
     }
 
     override fun showMessageLogInFailure(message: String) {

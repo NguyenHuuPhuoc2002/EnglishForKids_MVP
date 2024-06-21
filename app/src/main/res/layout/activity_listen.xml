@@ -48,6 +48,7 @@
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
                     android:text="/ 10 "
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="18dp" />
             </LinearLayout>
@@ -107,7 +108,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="score: "
-            android:textStyle="bold"
             android:fontFamily="@font/poppins"
             android:textColor="@color/black"
             android:textSize="17sp"
@@ -119,7 +119,7 @@
             android:textColor="@color/black"
             android:fontFamily="@font/poppins"
             android:textStyle="bold"
-            android:textSize="17sp"
+            android:textSize="18sp"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
     <TextView

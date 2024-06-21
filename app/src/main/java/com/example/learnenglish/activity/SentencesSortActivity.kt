@@ -57,7 +57,7 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
         bintCheck()
         btnQuit()
         btnRestart()
-        binding.tvNumQuestion.text = "/" + mListQues.size.toString() + " "
+        binding.tvNumQuestion.text = " / " + mListQues.size.toString() + " "
 
     }
 

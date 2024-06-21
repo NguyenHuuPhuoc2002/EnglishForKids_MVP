@@ -19,11 +19,7 @@ class LogInPresenter(private val context: Context, private val view: LogInActivi
             view.showLoading()
             db.getLogIn(email, passWord, object : TaskCallback.TaskCallbackLogin{
                 override fun onLogInSuccess(message: String) {
-                    val intent = Intent(context, SkillActivity::class.java)
-                    intent.putExtra("Login", message)
-                    intent.putExtra("email", email.replace(".", ""))
-                    intent.putExtra("emailAcountTitle", email)
-                    context.startActivity(intent)
+                    view.intenDataTransfer(message, email)
                     view.hideLoading()
                 }
 

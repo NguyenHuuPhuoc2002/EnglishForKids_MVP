@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:gravity="center"
-                android:text="1"
+                android:text="1 "
                 android:textColor="@color/black"
                 android:textSize="17dp" />
 
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:gravity="center"
-                android:text="10"
+                android:text=" 10"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="17dp"
@@ -222,7 +222,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:gravity="center"
-                android:textStyle="bold"
                 android:text="Score: "
                 android:textColor="@color/black"
                 android:textSize="16dp" />
@@ -234,7 +233,8 @@
                 android:fontFamily="@font/poppins"
                 android:text=" 10"
                 android:textColor="@color/black"
-                android:textSize="17dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="57dp"
                 tools:layout_editor_absoluteY="240dp" />
         </LinearLayout>

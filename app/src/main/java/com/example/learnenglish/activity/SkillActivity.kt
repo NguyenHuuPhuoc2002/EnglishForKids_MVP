@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ class SkillActivity : AppCompatActivity(), SkillContract.View{
     private lateinit var rcvHome: RecyclerView
     private lateinit var mListHome: ArrayList<SkillModel>
     private lateinit var presenter: SkillContract.Presenter
+    private lateinit var email: String
     @SuppressLint("MissingInflatedId", "CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +28,18 @@ class SkillActivity : AppCompatActivity(), SkillContract.View{
         rcvHome = findViewById(R.id.rcv_home)
         addDataHome()
         setAdapterHome()
-        presenter = SkillPresenter(this@SkillActivity)
+        getDataFromInten()
+        presenter = SkillPresenter(this@SkillActivity, email)
+    }
+
+    private fun getDataFromInten(){
+        val intent = intent
+        email = intent.getStringExtra("emailAcountTitle").toString()
     }
     private fun setAdapterHome(){
         val adapter = SkillAdapter(mListHome, object : QuizzesContract.OnClickListener{
             override fun onClickListenerItemHome(pos: Int) {
-                presenter.onStartActivity(mListHome[pos])
+                presenter.onStartActivity(mListHome[pos], email)
             }
         })
         rcvHome.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
@@ -46,9 +54,10 @@ class SkillActivity : AppCompatActivity(), SkillContract.View{
         mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Sắp Xếp Câu"))
     }
 
-    override fun showTopicActivity(title: String) {
+    override fun showTopicActivity(title: String, email: String) {
         val intent = Intent(this@SkillActivity, TopicActivity::class.java)
-        intent.putExtra("title", title)
+        intent.putExtra("title_skill", title)
+        intent.putExtra("email", email)
         startActivity(intent)
     }
 

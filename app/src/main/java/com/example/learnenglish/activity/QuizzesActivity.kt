@@ -51,7 +51,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         getData()
         setData(currentPos)
         btnQuit()
-        tvNumQuestion.text = "/" + mListQues.size.toString() + " "
+        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
     }
     private fun setData(pos: Int){
         if(pos >= 0 && pos < mListQues.size && pos < mListAns.size){
