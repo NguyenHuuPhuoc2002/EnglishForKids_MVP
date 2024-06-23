@@ -57,7 +57,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     var id: String? = null
     private var createPos: Int = 0
     private var currentPos: Int = 0
-    private var isCheckChar: Boolean = false
+    private lateinit var email: String
     private lateinit var presenter: VocabularyContract.Presenter
     private lateinit var shakeAnimation: Animation
     private lateinit var zoomAnimation: Animation
@@ -72,6 +72,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         setContentView(R.layout.activity_vocabulary)
         val intent = intent
         id = intent.getStringExtra("topic").toString()
+        email = intent.getStringExtra("email").toString()
         init()
         setOnClickListener()
         getData()
@@ -324,6 +325,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         val intent = Intent(this, FinishedActivity::class.java)
         intent.putExtra("totalNumberOfQuestion", totalNumberOfQuestion)
         intent.putExtra("numCorrectAnswer", numCorrectAnswer)
+        intent.putExtra("email", email)
         startActivity(intent)
     }
 

@@ -38,6 +38,7 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
     private var currentPos: Int = 0
     private var createPos: Int = 0
     private lateinit var dialog: AlertDialog
+    private lateinit var email: String
     private var mediaPlayer: MediaPlayer? = null
     var id: String? = null
     private var str: String = ""
@@ -51,6 +52,7 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
 
         val intent = intent
         id = intent.getStringExtra("topic").toString()
+        email = intent.getStringExtra("email").toString()
 
         getData()
         setOnClickListener()
@@ -201,6 +203,7 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
         val intent = Intent(this, FinishedActivity::class.java)
         intent.putExtra("totalNumberOfQuestion", totalNumberOfQuestion)
         intent.putExtra("numCorrectAnswer", numCorrectAnswer)
+        intent.putExtra("email", email)
         startActivity(intent)
     }
 

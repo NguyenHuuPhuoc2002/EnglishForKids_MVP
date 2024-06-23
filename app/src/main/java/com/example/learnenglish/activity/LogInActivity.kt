@@ -32,6 +32,7 @@ class LogInActivity : AppCompatActivity(), LogInContract.View {
         init()
         getData()
         setupUI()
+
     }
 
     private fun setupUI() {
@@ -80,8 +81,8 @@ class LogInActivity : AppCompatActivity(), LogInContract.View {
     override fun intenDataTransfer(message: String,email: String) {
         val intent = Intent(this, SkillActivity::class.java)
         intent.putExtra("Login", message)
-        intent.putExtra("email", email.replace(".", ""))
-        intent.putExtra("emailAcountTitle", email)
+        intent.putExtra("email_", email.replace(".", ""))
+        intent.putExtra("email", email)
         startActivity(intent)
     }
 

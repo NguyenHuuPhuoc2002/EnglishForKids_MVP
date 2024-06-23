@@ -1,6 +1,5 @@
 package com.example.learnenglish.contract
 
-import android.app.AlertDialog
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
 import com.example.learnenglish.model.TopicModel
@@ -10,7 +9,7 @@ import com.example.learnenglish_demo.QuizzAnswerModel
 import com.example.learnenglish.model.QuizzQuestionModel
 import com.example.learnenglish.model.SentencesSortAnswerModel
 import com.example.learnenglish.model.SentencesSortQuesModel
-import java.lang.StringBuilder
+import com.example.learnenglish.model.UserModel
 
 interface TaskCallback {
     interface TaskCallbackQuizzes {
@@ -35,6 +34,15 @@ interface TaskCallback {
     interface TaskCallbackRegister{
         fun showRegisterSuccess(message: String)
         fun showRegisterFail(message: String)
+    }
+    interface TaskCallbackUser{
+        fun onListUserLoaded(listUser: ArrayList<UserModel>)
+
+    }
+
+    interface TaskCallbackUser2{
+        fun onListUserLoaded(user: UserModel)
+
     }
 
     interface TaskCallbackLogin{

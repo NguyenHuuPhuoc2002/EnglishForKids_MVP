@@ -44,6 +44,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
     private lateinit var tvNumQuestion: TextView
     private lateinit var mListQues: ArrayList<ListenQuestionModel>
     private lateinit var mListAns: ArrayList<ListenAnswerModel>
+    private lateinit var email: String
     var id: String? = null
     private var createPos: Int = 0
     private var currentPos: Int = 0
@@ -59,7 +60,8 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         setContentView(R.layout.activity_listen)
         val intent = intent
         id = intent.getStringExtra("topic").toString()
-        Log.d("id", id.toString())
+        email = intent.getStringExtra("email").toString()
+
         init()
         getData()
         setData(createPos)
@@ -198,6 +200,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         val intent = Intent(this, FinishedActivity::class.java)
         intent.putExtra("totalNumberOfQuestion", totalNumberOfQuestion)
         intent.putExtra("numCorrectAnswer", numCorrectAnswer)
+        intent.putExtra("email", email)
         startActivity(intent)
     }
 

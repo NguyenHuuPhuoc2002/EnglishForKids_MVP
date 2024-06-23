@@ -30,11 +30,12 @@ class SkillActivity : AppCompatActivity(), SkillContract.View{
         setAdapterHome()
         getDataFromInten()
         presenter = SkillPresenter(this@SkillActivity, email)
+        Log.d("email_skill", email)
     }
 
     private fun getDataFromInten(){
         val intent = intent
-        email = intent.getStringExtra("emailAcountTitle").toString()
+        email = intent.getStringExtra("email").toString()
     }
     private fun setAdapterHome(){
         val adapter = SkillAdapter(mListHome, object : QuizzesContract.OnClickListener{

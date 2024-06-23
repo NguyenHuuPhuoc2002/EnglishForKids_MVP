@@ -33,13 +33,13 @@ class TopicActivity : AppCompatActivity(), TopicContract.View {
         getDataFromInten()
         getData()
         btnBack()
+        Log.d("email_topic", email)
     }
 
     private fun getDataFromInten(){
         val intent = intent
         str = intent.getStringExtra("title_skill").toString()
         email = intent.getStringExtra("email").toString()
-        Log.d("emailTopic", email)
     }
     private fun getData(){
         val taskRepository = DBHelperRepository(this)

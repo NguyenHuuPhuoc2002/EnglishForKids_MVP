@@ -11,6 +11,7 @@ import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.repository.DBHelperRepository
 import com.example.learnenglish_demo.QuizzAnswerModel
 import com.example.learnenglish.model.QuizzQuestionModel
+import com.example.learnenglish.model.UserModel
 
 
 class QuizzesPresenter(private val context: Context, private val view: QuizzesActivity, private var db: DBHelperRepository) : QuizzesContract.Presenter {
@@ -66,15 +67,44 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
         return mListAnswers
     }
 
-    override fun checkAnswer(textview: TextView, mListAns: ArrayList<QuizzAnswerModel>, mListQues: ArrayList<QuizzQuestionModel>, currentPos: Int){
+    override fun getUser(email: String, callback: TaskCallback.TaskCallbackUser2) {
+        db.getItemUser(object : TaskCallback.TaskCallbackUser {
+            override fun onListUserLoaded(listUser: ArrayList<UserModel>) {
+                var mUser: UserModel? = null
+                for (user in listUser) {
+                    if (user.email.toString() == email) {
+                        mUser = user
+                        break
+                    }
+                }
+                if (mUser != null) {
+                    callback.onListUserLoaded(mUser)
+                } else {
+                    view.showErrorMessage("Không tìm thấy người dùng với email $email")
+                }
+            }
+        })
+    }
+
+    override fun updatePoint(id: String, point: Int) {
+        db.upDatePoint(id, point)
+    }
+
+
+    override fun checkAnswer(textview: TextView, mListAns: ArrayList<QuizzAnswerModel>,
+                             mListQues: ArrayList<QuizzQuestionModel>, currentPos: Int, point: Int): Int{
+        var newPoint = point
         view.showResult(mListAns[currentPos].isCorrect == textview.text, textview)
         if(mListAns[currentPos].isCorrect == textview.text){
+            newPoint += 5
+            view.showPoint(newPoint)
             nextQuestion(mListQues, mListAns, currentPos)
         }else{
             Handler().postDelayed({
                 view.showActivityFinished(mListQues.size, currentPos, 0)
             },1000)
         }
+        return newPoint
     }
 
     @SuppressLint("SetTextI18n")

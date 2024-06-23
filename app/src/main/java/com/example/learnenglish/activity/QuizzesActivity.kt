@@ -7,6 +7,7 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.widget.Button
@@ -16,10 +17,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.learnenglish.R
 import com.example.learnenglish.contract.QuizzesContract
+import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.presenter.QuizzesPresenter
 import com.example.learnenglish.repository.DBHelperRepository
 import com.example.learnenglish_demo.QuizzAnswerModel
 import com.example.learnenglish.model.QuizzQuestionModel
+import com.example.learnenglish.model.UserModel
 
 class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClickListener{
     private lateinit var presenter: QuizzesContract.Presenter
@@ -31,12 +34,16 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
     private lateinit var tvAnswer3: TextView
     private lateinit var tvAnswer4: TextView
     private lateinit var tvNumQuestion: TextView
+    private lateinit var tvPoint: TextView
+    private var mUser: UserModel? = null
     lateinit var tvNumQuesCurent: TextView
     private lateinit var mListQues: ArrayList<QuizzQuestionModel>
     private lateinit var mListAns: ArrayList<QuizzAnswerModel>
     var id: String? = null
+    private lateinit var email: String
     private var isAnswerSelected = false
     private var currentPos: Int = 0
+    private var point: Int = 0
     private var mediaPlayer:MediaPlayer? = null
     private lateinit var shakeAnimation: Animation
     private lateinit var zoomAnimation: Animation
@@ -45,14 +52,20 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quizzes)
-        val intent = intent
-        id = intent.getStringExtra("topic").toString()
+        getDataFromIntent()
         initUi()
         getData()
         setData(currentPos)
         btnQuit()
-        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
+
     }
+
+    private fun getDataFromIntent(){
+        val intent = intent
+        id = intent.getStringExtra("topic").toString()
+        email = intent.getStringExtra("email").toString()
+    }
+
     private fun setData(pos: Int){
         if(pos >= 0 && pos < mListQues.size && pos < mListAns.size){
             tvContentQuestion.text = mListQues[currentPos].content
@@ -70,6 +83,14 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         presenter = QuizzesPresenter(applicationContext, this@QuizzesActivity,taskRepository)
         presenter.getItemsQuestion()
         presenter.getItemsAnswer()
+        presenter.getUser(email, object : TaskCallback.TaskCallbackUser2 {
+            override fun onListUserLoaded(user: UserModel) {
+                mUser = user
+                point = user.point!!
+                tvPoint.text = user.point.toString()
+                Log.d("abssc", mUser!!.email.toString() + " " + mUser!!.point.toString())
+            }
+        })
     }
 
     private fun playSound() {
@@ -112,6 +133,10 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         tvNumQuesCurent.text = "$pos"
     }
 
+    override fun showPoint(point: Int) {
+        tvPoint.text = point.toString()
+    }
+
     override fun showNextQuestion(listQuestion: ArrayList<QuizzQuestionModel>, listAnswer: ArrayList<QuizzAnswerModel>, newCurrentPos: Int) {
         tvAnswer1.isEnabled = true
         tvAnswer2.isEnabled = true
@@ -149,6 +174,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
                 dialog.dismiss()
             }
             view.findViewById<Button>(R.id.btn_yes).setOnClickListener {
+                mUser?.id?.let { presenter.updatePoint(it, point) }
                 finish()
             }
         }
@@ -161,6 +187,8 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         val intent = Intent(this, FinishedActivity::class.java)
         intent.putExtra("totalNumberOfQuestion", totalNumberOfQuestion)
         intent.putExtra("numCorrectAnswer", numCorrectAnswer)
+        intent.putExtra("point", point)
+        intent.putExtra("email", email)
         startActivity(intent)
     }
 
@@ -178,6 +206,9 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         tvAnswer2 = findViewById(R.id.txtanswer2)
         tvAnswer3 = findViewById(R.id.txtanswer3)
         tvAnswer4 = findViewById(R.id.txtanswer4)
+        tvPoint = findViewById(R.id.tv_point)
+
+
     }
     private fun setOnClickListener(){
 
@@ -198,28 +229,28 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
                     R.id.txtanswer1 -> {
                         tvAnswer1.setBackgroundResource(R.drawable.orange_corner_30)
                         Handler().postDelayed({
-                            presenter.checkAnswer(tvAnswer1, mListAns, mListQues, currentPos ++ )
+                            point = presenter.checkAnswer(tvAnswer1, mListAns, mListQues, currentPos ++, point)
                         }, 1000)
                         isAnswerSelected = true // Đánh dấu đã chọn câu trả lời
                     }
                     R.id.txtanswer2 -> {
                         tvAnswer2.setBackgroundResource(R.drawable.orange_corner_30)
                         Handler().postDelayed({
-                            presenter.checkAnswer(tvAnswer2, mListAns, mListQues,currentPos ++)
+                            point = presenter.checkAnswer(tvAnswer2, mListAns, mListQues,currentPos ++, point)
                         }, 1000)
                         isAnswerSelected = true
                     }
                     R.id.txtanswer3 -> {
                         tvAnswer3.setBackgroundResource(R.drawable.orange_corner_30)
                         Handler().postDelayed({
-                            presenter.checkAnswer(tvAnswer3, mListAns, mListQues, currentPos ++)
+                            point = presenter.checkAnswer(tvAnswer3, mListAns, mListQues, currentPos ++, point)
                         }, 1000)
                         isAnswerSelected = true
                     }
                     R.id.txtanswer4 -> {
                         tvAnswer4.setBackgroundResource(R.drawable.orange_corner_30)
                         Handler().postDelayed({
-                            presenter.checkAnswer(tvAnswer4, mListAns, mListQues, currentPos ++)
+                            point = presenter.checkAnswer(tvAnswer4, mListAns, mListQues, currentPos ++, point)
                         }, 1000)
                         isAnswerSelected = true
                     }

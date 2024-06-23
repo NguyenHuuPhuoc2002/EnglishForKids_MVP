@@ -1,14 +1,11 @@
 package com.example.learnenglish.repository
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
-import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.example.learnenglish.contract.TaskCallback
-import com.example.learnenglish.fragment.RegisterFragment
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
 import com.example.learnenglish.model.TopicModel
@@ -20,10 +17,14 @@ import com.example.learnenglish.model.SentencesSortAnswerModel
 import com.example.learnenglish.model.SentencesSortQuesModel
 import com.example.learnenglish.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.io.File
 import java.io.FileOutputStream
+import java.lang.ref.WeakReference
 
 class DBHelperRepository(private val context: Context) {
 
@@ -257,5 +258,33 @@ class DBHelperRepository(private val context: Context) {
         }
     }
 
+    fun getItemUser(callback: TaskCallback.TaskCallbackUser) {
+        val dbRef = FirebaseDatabase.getInstance().getReference("Users")
+        val itemList: ArrayList<UserModel> = arrayListOf()
+
+        dbRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                itemList.clear()
+                if (snapshot.exists()) {
+                    for (user in snapshot.children) {
+                        val userData = user.getValue(UserModel::class.java)
+                        userData?.let {
+                            itemList.add(it)
+                        }
+                    }
+                }
+                callback.onListUserLoaded(itemList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+    fun upDatePoint(id: String, point: Int){
+        dbRef = FirebaseDatabase.getInstance().getReference("Users").child(id)
+        val userInfo = mapOf<String, Any>("point" to point)
+        dbRef.updateChildren(userInfo)
+    }
 
 }

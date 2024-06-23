@@ -51,6 +51,12 @@ class RegisterFragment : Fragment(), RegisterContract.View {
             val name = binding.edtNameRegister.text.toString()
             val reEnterPassword = binding.edtReEnterPassword.text.toString()
             presenter.onRegisterButtonClick(email, name, passWord, reEnterPassword)
+
+            if (activity != null) {
+                activity.binding.tvRegister.isEnabled = true
+                activity.binding.btnlogin.isEnabled = true
+                activity.binding.txtForgetPass.isEnabled = true
+            }
         }
     }
 
