@@ -3,7 +3,10 @@ package com.example.learnenglish.repository
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.model.ListenAnswerModel
@@ -233,11 +236,9 @@ class DBHelperRepository(private val context: Context) {
                         val user = UserModel(id, name, email, 0, 0)
                         dbRef.child(id!!).setValue(user)
                             .addOnSuccessListener {
-
                                 callback.showRegisterSuccess("Đăng kí thành công")
                             }
                             .addOnFailureListener {
-
                                 callback.showRegisterFail("Đăng kí không thành công!")
                             }
                     } else {
@@ -286,5 +287,20 @@ class DBHelperRepository(private val context: Context) {
         val userInfo = mapOf<String, Any>("point" to point)
         dbRef.updateChildren(userInfo)
     }
-
+    fun upDatePassWord(email: String, callback: TaskCallback.TaskCallbackForgotPassWord){
+        firebaseAuth = FirebaseAuth.getInstance()
+        firebaseAuth.sendPasswordResetEmail(email)
+            .addOnSuccessListener {
+                val handler = Handler(Looper.getMainLooper())
+                handler.postDelayed({
+                    callback.onSuccess("Vui lòng kiểm tra email của bạn!")
+                },1200)
+            }
+            .addOnFailureListener {
+                val handler = Handler(Looper.getMainLooper())
+                handler.postDelayed({
+                    callback.onFail("Email không tồn tại!")
+                },1200)
+            }
+    }
 }

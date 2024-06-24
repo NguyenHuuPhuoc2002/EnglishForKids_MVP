@@ -3,6 +3,7 @@ package com.example.learnenglish.presenter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.core.content.ContextCompat.startActivity
 import com.example.learnenglish.activity.LogInActivity
 import com.example.learnenglish.activity.SkillActivity
@@ -29,6 +30,20 @@ class LogInPresenter(private val context: Context, private val view: LogInActivi
                 }
 
             })
+        }
+    }
+
+    override fun saveDataInf(isChecked: Boolean) {
+        if (isChecked) {
+            view.trueDataHandle()
+        } else{
+            view.falseDataHandle()
+        }
+    }
+
+    override fun restoreData(checkBox: String) {
+        if (checkBox == "true") {
+            view.showDataAfterRestore(checkBox)
         }
     }
 }

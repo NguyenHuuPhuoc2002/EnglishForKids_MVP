@@ -49,4 +49,9 @@ interface TaskCallback {
         fun onLogInSuccess(message: String)
         fun onLogInFail(message: String)
     }
+
+    interface TaskCallbackForgotPassWord{
+        fun onSuccess(message: String)
+        fun onFail(message: String)
+    }
 }
