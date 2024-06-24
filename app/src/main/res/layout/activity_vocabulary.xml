@@ -442,12 +442,12 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_score"
+                android:id="@+id/tv_point"
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/poppins"
-                android:text="27"
+                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />

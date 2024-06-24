@@ -12,11 +12,15 @@ interface SentencesSortContract {
         fun showActivityFinished(totalNumberOfQuestion: Int, numCorrectAnswer: Int, point: Int)
         fun showResult(isCorrect: Boolean, textview: TextView)
         fun showNumQuesCurent(pos: Int)
+        fun showPoint(point: Int)
         fun showNextQuestion(listQuestion: ArrayList<SentencesSortQuesModel>, mAnswer: SentencesSortAnswerModel, newCurrentPos: Int)
     }
     interface Presenter {
         fun getItemsQuestion(): ArrayList<SentencesSortQuesModel>
         fun getItemsAnswer(): ArrayList<SentencesSortAnswerModel>
-        fun checkAnswer(textview: TextView, mListQues: ArrayList<SentencesSortQuesModel>, mListAns: SentencesSortAnswerModel, currentPos: Int)
+        fun updatePoint(id: String, point: Int)
+        fun getUser(email: String, callback: TaskCallback.TaskCallbackUser2)
+        fun checkAnswer(textview: TextView, mListQues: ArrayList<SentencesSortQuesModel>,
+                        mListAns: SentencesSortAnswerModel, currentPos: Int, point: Int)
     }
 }

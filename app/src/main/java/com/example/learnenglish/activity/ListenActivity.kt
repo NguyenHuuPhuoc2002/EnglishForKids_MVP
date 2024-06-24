@@ -21,8 +21,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.learnenglish.R
 import com.example.learnenglish.contract.ListenContract
+import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.model.ListenAnswerModel
 import com.example.learnenglish.model.ListenQuestionModel
+import com.example.learnenglish.model.UserModel
 import com.example.learnenglish.presenter.ListenPresenter
 import com.example.learnenglish.repository.DBHelperRepository
 import java.io.File
@@ -39,11 +41,14 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
     private lateinit var btnNext: Button
     private lateinit var tvQuestion: TextView
     private lateinit var tvAnswer: TextView
+    private lateinit var tvPoint: TextView
     private lateinit var edtAnswer: EditText
     lateinit var tvNumQuesCurent: TextView
     private lateinit var tvNumQuestion: TextView
     private lateinit var mListQues: ArrayList<ListenQuestionModel>
     private lateinit var mListAns: ArrayList<ListenAnswerModel>
+    private var mUser: UserModel? = null
+    private var point: Int = 0
     private lateinit var email: String
     var id: String? = null
     private var createPos: Int = 0
@@ -58,10 +63,8 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listen)
-        val intent = intent
-        id = intent.getStringExtra("topic").toString()
-        email = intent.getStringExtra("email").toString()
 
+        getDataFromInten()
         init()
         getData()
         setData(createPos)
@@ -71,6 +74,11 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         btnQuit()
 
         tvNumQuestion.text = " / " + mListQues.size.toString() + " "
+    }
+    private fun getDataFromInten(){
+        val intent = intent
+        id = intent.getStringExtra("topic").toString()
+        email = intent.getStringExtra("email").toString()
     }
     private fun btnLoaQues(){
         btnLoaQues.setOnClickListener {
@@ -97,7 +105,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
             if (edtAnswer.text.isEmpty()) {
                 edtAnswer.startAnimation(shakeAnimation)
             } else {
-                presenter.checkAnswer(edtAnswer, mListQues, mListAns, createPos++)
+                presenter.checkAnswer(edtAnswer, mListQues, mListAns, createPos++, point)
             }
         }
     }
@@ -124,6 +132,15 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         presenter = ListenPresenter(applicationContext, this@ListenActivity,listenRepository)
         presenter.getItemsListenQuestion()
         presenter.getItemsListenAnswer()
+        presenter.getUser(email, object : TaskCallback.TaskCallbackUser2{
+            override fun onListUserLoaded(user: UserModel) {
+                mUser = user
+                point = user.point!!
+                tvPoint.text = point.toString()
+                Log.d("abssc", mUser!!.email.toString() + " " + mUser!!.point.toString())
+            }
+
+        })
 
     }
     private fun removeHandler(){
@@ -143,6 +160,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
                 dialog.dismiss()
             }
             view.findViewById<Button>(R.id.btn_yes).setOnClickListener {
+                mUser?.id?.let { presenter.updatePoint(it, point) }
                 mediaPlayer!!.stop()
                 removeHandler()
                 freeUpResources()
@@ -177,6 +195,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         tvQuestion = findViewById(R.id.tv_question_listen)
         tvAnswer = findViewById(R.id.tv_answer_listen)
         edtAnswer = findViewById(R.id.edt_answer)
+        tvPoint = findViewById(R.id.tv_point)
     }
 
     override fun showListenQuestion(mListQuestion: ArrayList<ListenQuestionModel>) {
@@ -200,6 +219,9 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         val intent = Intent(this, FinishedActivity::class.java)
         intent.putExtra("totalNumberOfQuestion", totalNumberOfQuestion)
         intent.putExtra("numCorrectAnswer", numCorrectAnswer)
+        intent.putExtra("idUser", mUser?.id)
+        intent.putExtra("point", point)
+        Log.d("ponr poinr ", point.toString())
         intent.putExtra("email", email)
         startActivity(intent)
     }
@@ -260,6 +282,11 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
     @SuppressLint("SetTextI18n")
     override fun showNumQuesCurent(pos: Int) {
         tvNumQuesCurent.text = "$pos"
+    }
+
+    override fun showPoint(point: Int) {
+        this.point = point
+        tvPoint.text = point.toString()
     }
 
     private fun freeUpResources(){

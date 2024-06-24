@@ -13,11 +13,15 @@ interface ListenContract {
         fun showResult(isCorrect: Boolean, textview: TextView)
         fun setData(pos: Int)
         fun showNumQuesCurent(pos: Int)
+        fun showPoint(point: Int)
         fun showNextQuestion(listQuestion: ArrayList<ListenQuestionModel>, listAnswer: ArrayList<ListenAnswerModel>, newCurrentPos: Int)
     }
     interface Presenter {
         fun getItemsListenQuestion(): ArrayList<ListenQuestionModel>
         fun getItemsListenAnswer(): ArrayList<ListenAnswerModel>
-        fun checkAnswer(textview: TextView, mListQues: ArrayList<ListenQuestionModel>, mListAns: ArrayList<ListenAnswerModel>,currentPos: Int)
+        fun getUser(email: String, callback: TaskCallback.TaskCallbackUser2)
+        fun updatePoint(id: String, point: Int)
+        fun checkAnswer(textview: TextView, mListQues: ArrayList<ListenQuestionModel>,
+                        mListAns: ArrayList<ListenAnswerModel>,currentPos: Int, point: Int)
     }
 }

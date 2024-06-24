@@ -12,9 +12,11 @@ import com.example.learnenglish.repository.DBHelperRepository
 import com.example.learnenglish_demo.QuizzAnswerModel
 import com.example.learnenglish.model.QuizzQuestionModel
 import com.example.learnenglish.model.UserModel
+import kotlin.properties.Delegates
 
 
 class QuizzesPresenter(private val context: Context, private val view: QuizzesActivity, private var db: DBHelperRepository) : QuizzesContract.Presenter {
+    private var newPoint by Delegates.notNull<Int>()
     override fun getItemsQuestion(): ArrayList<QuizzQuestionModel> {
         db = DBHelperRepository(context)
         db.openDatabase()
@@ -93,7 +95,7 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
 
     override fun checkAnswer(textview: TextView, mListAns: ArrayList<QuizzAnswerModel>,
                              mListQues: ArrayList<QuizzQuestionModel>, currentPos: Int, point: Int): Int{
-        var newPoint = point
+        newPoint = point
         view.showResult(mListAns[currentPos].isCorrect == textview.text, textview)
         if(mListAns[currentPos].isCorrect == textview.text){
             newPoint += 5
@@ -101,7 +103,7 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
             nextQuestion(mListQues, mListAns, currentPos)
         }else{
             Handler().postDelayed({
-                view.showActivityFinished(mListQues.size, currentPos, 0)
+                view.showActivityFinished(mListQues.size, currentPos, newPoint)
             },1000)
         }
         return newPoint
@@ -112,7 +114,7 @@ class QuizzesPresenter(private val context: Context, private val view: QuizzesAc
         if(newCurrentPos == mListQues.size - 1){
             Handler().postDelayed({
                 val newPos = newCurrentPos + 1
-                view.showActivityFinished(mListQues.size, newPos, 0)
+                view.showActivityFinished(mListQues.size, newPos, newPoint)
             },1000)
         }else{
             val incrementedPos = newCurrentPos + 1

@@ -12,11 +12,16 @@ interface VocabularyContract {
         fun showActivityFinished(totalNumberOfQuestion: Int, numCorrectAnswer: Int, point: Int)
         fun showResult(isCorrect: Boolean, textview: TextView)
         fun showNumQuesCurent(pos: Int)
-        fun showNextQuestion(listQuestion: ArrayList<VocabularyQuesModel>, listAnswer: ArrayList<VocabularyAnsModel>, newCurrentPos: Int)
+        fun showPoint(point: Int)
+        fun showNextQuestion(listQuestion: ArrayList<VocabularyQuesModel>,
+                             listAnswer: ArrayList<VocabularyAnsModel>, newCurrentPos: Int)
     }
     interface Presenter {
         fun getItemsVocabularyQuestion(): ArrayList<VocabularyQuesModel>
         fun getItemsVocabularyAnswer(): ArrayList<VocabularyAnsModel>
-        fun checkAnswer(textview: TextView, mListQues: ArrayList<VocabularyQuesModel>, mListAns: ArrayList<VocabularyAnsModel>,currentPos: Int)
+        fun getUser(email: String, callback: TaskCallback.TaskCallbackUser2)
+        fun updatePoint(id: String, point: Int)
+        fun checkAnswer(textview: TextView, mListQues: ArrayList<VocabularyQuesModel>,
+                        mListAns: ArrayList<VocabularyAnsModel>,currentPos: Int, point: Int)
     }
 }

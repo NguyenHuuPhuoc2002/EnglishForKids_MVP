@@ -36,6 +36,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
     private lateinit var tvNumQuestion: TextView
     private lateinit var tvPoint: TextView
     private var mUser: UserModel? = null
+    private var point: Int = 0
     lateinit var tvNumQuesCurent: TextView
     private lateinit var mListQues: ArrayList<QuizzQuestionModel>
     private lateinit var mListAns: ArrayList<QuizzAnswerModel>
@@ -43,7 +44,6 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
     private lateinit var email: String
     private var isAnswerSelected = false
     private var currentPos: Int = 0
-    private var point: Int = 0
     private var mediaPlayer:MediaPlayer? = null
     private lateinit var shakeAnimation: Animation
     private lateinit var zoomAnimation: Animation
@@ -57,7 +57,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         getData()
         setData(currentPos)
         btnQuit()
-
+        tvNumQuestion.text = " / " + mListQues.size.toString()
     }
 
     private fun getDataFromIntent(){
@@ -129,11 +129,13 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun showNumQuesCurent(pos: Int) {
-        tvNumQuesCurent.text = "$pos"
+        tvNumQuesCurent.text = "$pos "
     }
 
     override fun showPoint(point: Int) {
+        this.point = point
         tvPoint.text = point.toString()
     }
 
@@ -187,6 +189,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         val intent = Intent(this, FinishedActivity::class.java)
         intent.putExtra("totalNumberOfQuestion", totalNumberOfQuestion)
         intent.putExtra("numCorrectAnswer", numCorrectAnswer)
+        intent.putExtra("idUser", mUser?.id)
         intent.putExtra("point", point)
         intent.putExtra("email", email)
         startActivity(intent)
@@ -207,7 +210,6 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         tvAnswer3 = findViewById(R.id.txtanswer3)
         tvAnswer4 = findViewById(R.id.txtanswer4)
         tvPoint = findViewById(R.id.tv_point)
-
 
     }
     private fun setOnClickListener(){

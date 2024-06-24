@@ -9,12 +9,15 @@ import com.example.learnenglish.contract.SentencesSortContract
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.model.SentencesSortAnswerModel
 import com.example.learnenglish.model.SentencesSortQuesModel
+import com.example.learnenglish.model.UserModel
 import com.example.learnenglish.repository.DBHelperRepository
+import kotlin.properties.Delegates
 
 class SentencesSortPresenter(private val context: Context, private val view: SentencesSortActivity, private var db: DBHelperRepository) : SentencesSortContract.Presenter{
     companion object {
         val handler = Handler(Looper.getMainLooper())
     }
+    private var newPoint by Delegates.notNull<Int>()
     override fun getItemsQuestion(): ArrayList<SentencesSortQuesModel> {
         db = DBHelperRepository(context)
         db.openDatabase()
@@ -65,19 +68,43 @@ class SentencesSortPresenter(private val context: Context, private val view: Sen
         return mListAnswers
     }
 
-    override fun checkAnswer(
-        textview: TextView,
-        mListQues: ArrayList<SentencesSortQuesModel>,
-        mListAns: SentencesSortAnswerModel,
-        currentPos: Int
+    override fun updatePoint(id: String, point: Int) {
+        db.upDatePoint(id, point)
+    }
+
+    override fun getUser(email: String, callback: TaskCallback.TaskCallbackUser2) {
+        db.getItemUser(object : TaskCallback.TaskCallbackUser{
+            override fun onListUserLoaded(listUser: ArrayList<UserModel>) {
+                var mUser: UserModel? = null
+                for(user in listUser){
+                    if(user.email.toString() == email){
+                        mUser = user
+                        break
+                    }
+                }
+                if (mUser != null) {
+                    callback.onListUserLoaded(mUser)
+                } else {
+                    view.showErrorMessage("Không tìm thấy người dùng với email $email")
+                }
+            }
+
+        })
+    }
+
+    override fun checkAnswer(textview: TextView, mListQues: ArrayList<SentencesSortQuesModel>,
+        mListAns: SentencesSortAnswerModel, currentPos: Int, point: Int
     ) {
+        newPoint = point
         view.showResult(mListAns.isCorrect.trim() == textview.text.trim(), textview)
         if(textview.text.isNotEmpty()){
             if(mListAns.isCorrect.trim() == textview.text.trim()){
+                newPoint += 5
+                view.showPoint(newPoint)
                 nextQuestion(mListQues, mListAns, currentPos)
             }else{
                 handler.postDelayed({
-                    view.showActivityFinished(mListQues.size, currentPos, 0)
+                    view.showActivityFinished(mListQues.size, currentPos, newPoint)
                 },1000)
             }
         }
@@ -87,7 +114,7 @@ class SentencesSortPresenter(private val context: Context, private val view: Sen
         if(newCurrentPos == mListQues.size - 1){
             val newPos = newCurrentPos + 1
             handler.postDelayed({
-                view.showActivityFinished(mListQues.size, newPos, 0)
+                view.showActivityFinished(mListQues.size, newPos, newPoint)
             }, 1000)
         }else{
             val incrementedPos = newCurrentPos + 1

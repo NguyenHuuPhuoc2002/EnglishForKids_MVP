@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.animation.AnimationUtils
 import android.view.View
 import android.view.animation.Animation
@@ -20,7 +21,9 @@ import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.learnenglish.R
+import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.contract.VocabularyContract
+import com.example.learnenglish.model.UserModel
 import com.example.learnenglish.model.VocabularyAnsModel
 import com.example.learnenglish.model.VocabularyQuesModel
 import com.example.learnenglish.presenter.VocabularyPresenter
@@ -44,6 +47,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     private lateinit var tvCharacter11: TextView
     private lateinit var tvCharacter12: TextView
     private lateinit var tvNumQuestion: TextView
+    private lateinit var tvPoint: TextView
     private lateinit var btnQuit: Button
     private lateinit var btnRestart: ImageView
     private lateinit var btnSpeaker: ImageView
@@ -57,6 +61,8 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     var id: String? = null
     private var createPos: Int = 0
     private var currentPos: Int = 0
+    private var mUser: UserModel? = null
+    private var point: Int = 0
     private lateinit var email: String
     private lateinit var presenter: VocabularyContract.Presenter
     private lateinit var shakeAnimation: Animation
@@ -97,6 +103,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
                 dialog.dismiss()
             }
             view.findViewById<Button>(R.id.btn_yes).setOnClickListener {
+                mUser?.id?.let { presenter.updatePoint(it, point) }
                 finish()
             }
         }
@@ -140,7 +147,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
             if (tvShow.text.isEmpty()) {
                 tvShow.startAnimation(shakeAnimation)
             } else {
-                presenter.checkAnswer(tvShow, mListQues, mListAns, createPos++)
+                presenter.checkAnswer(tvShow, mListQues, mListAns, createPos++, point)
             }
         }
     }
@@ -238,12 +245,21 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         tvNumQuesCurent = findViewById(R.id.tv_numQuestionCurrent)
         btnQuit = findViewById(R.id.btn_quit)
         btnRestart = findViewById(R.id.img_restart)
+        tvPoint = findViewById(R.id.tv_point)
     }
     private fun getData(){
         val vocaRepository = DBHelperRepository(this)
         presenter = VocabularyPresenter(applicationContext, this@VocabularyActivity,vocaRepository)
         presenter.getItemsVocabularyQuestion()
         presenter.getItemsVocabularyAnswer()
+        presenter.getUser(email, object : TaskCallback.TaskCallbackUser2 {
+            override fun onListUserLoaded(user: UserModel) {
+                mUser = user
+                point = user.point!!
+                tvPoint.text = user.point.toString()
+                Log.d("abssc", mUser!!.email.toString() + " " + mUser!!.point.toString())
+            }
+        })
 
     }
     private fun setOnClickListener(){
@@ -325,6 +341,8 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         val intent = Intent(this, FinishedActivity::class.java)
         intent.putExtra("totalNumberOfQuestion", totalNumberOfQuestion)
         intent.putExtra("numCorrectAnswer", numCorrectAnswer)
+        intent.putExtra("idUser", mUser?.id)
+        intent.putExtra("point", point)
         intent.putExtra("email", email)
         startActivity(intent)
     }
@@ -350,6 +368,11 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     @SuppressLint("SetTextI18n")
     override fun showNumQuesCurent(pos: Int) {
         tvNumQuesCurent.text = "$pos"
+    }
+
+    override fun showPoint(point: Int) {
+        this.point = point
+        tvPoint.text = point.toString()
     }
 
     override fun onClick(v: View?) {

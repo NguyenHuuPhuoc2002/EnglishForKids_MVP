@@ -8,6 +8,10 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.example.learnenglish.R
+import com.example.learnenglish.contract.FinishedContract
+import com.example.learnenglish.presenter.FinishedPresenter
+import com.example.learnenglish.presenter.QuizzesPresenter
+import com.example.learnenglish.repository.DBHelperRepository
 
 class FinishedActivity : AppCompatActivity() {
     private var totalNumberOfQuestion = 0
@@ -18,15 +22,18 @@ class FinishedActivity : AppCompatActivity() {
     private lateinit var tvNumCorrect: TextView
     private lateinit var tvPoint: TextView
     private lateinit var tvTotalNumQues: TextView
+    private var id: String? = null
+    private lateinit var presenter: FinishedContract.Presenter
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finished)
-
+        val taskRepository = DBHelperRepository(this)
+        presenter = FinishedPresenter(applicationContext, taskRepository)
         getDataFromInten()
         init()
         setUI()
-
+        presenter.updatePoint(id!!, point)
     }
     private fun setUI(){
         btnBack.setOnClickListener {
@@ -41,8 +48,10 @@ class FinishedActivity : AppCompatActivity() {
         numCorrectAnswer = intent.getIntExtra("numCorrectAnswer", 0)
         email = intent.getStringExtra("email").toString()
         point = intent.getIntExtra("point", 0)
+        id = intent.getStringExtra("idUser")
         Log.d("email end", email)
         Log.d("point end", point.toString())
+        Log.d("id end", id.toString())
     }
     @SuppressLint("SetTextI18n")
     private fun init(){

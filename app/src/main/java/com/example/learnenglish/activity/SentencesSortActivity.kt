@@ -17,9 +17,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.learnenglish.R
 import com.example.learnenglish.contract.SentencesSortContract
+import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.databinding.ActivitySentencesSortBinding
 import com.example.learnenglish.model.SentencesSortAnswerModel
 import com.example.learnenglish.model.SentencesSortQuesModel
+import com.example.learnenglish.model.UserModel
 import com.example.learnenglish.presenter.SentencesSortPresenter
 import com.example.learnenglish.repository.DBHelperRepository
 
@@ -37,6 +39,8 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
     private lateinit var zoomCharacterAnimation: Animation
     private var currentPos: Int = 0
     private var createPos: Int = 0
+    private var mUser: UserModel? = null
+    private var point: Int = 0
     private lateinit var dialog: AlertDialog
     private lateinit var email: String
     private var mediaPlayer: MediaPlayer? = null
@@ -82,6 +86,7 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
                 dialog.dismiss()
             }
             view.findViewById<Button>(R.id.btn_yes).setOnClickListener {
+                mUser?.id?.let { presenter.updatePoint(it, point) }
                 finish()
             }
         }
@@ -104,7 +109,7 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
             }else{
                 for(i in 0 until mListAns.size){
                     if(mListQues[currentPos].answerID == mListAns[i].answerID){
-                        presenter.checkAnswer(binding.tvAnswerShow, mListQues, mListAns[i], createPos++ )
+                        presenter.checkAnswer(binding.tvAnswerShow, mListQues, mListAns[i], createPos++, point )
                         Log.d("isCorrect", mListAns[i].isCorrect)
                         break;
                     }
@@ -158,7 +163,14 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
         presenter = SentencesSortPresenter(applicationContext, this@SentencesSortActivity, taskRepository)
         presenter.getItemsQuestion()
         presenter.getItemsAnswer()
-
+        presenter.getUser(email, object : TaskCallback.TaskCallbackUser2 {
+            override fun onListUserLoaded(user: UserModel) {
+                mUser = user
+                point = user.point!!
+                binding.tvPoint.text = user.point.toString()
+                Log.d("abssc", mUser!!.email.toString() + " " + mUser!!.point.toString())
+            }
+        })
     }
     private fun setOnClickListener(){
 
@@ -203,6 +215,8 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
         val intent = Intent(this, FinishedActivity::class.java)
         intent.putExtra("totalNumberOfQuestion", totalNumberOfQuestion)
         intent.putExtra("numCorrectAnswer", numCorrectAnswer)
+        intent.putExtra("idUser", mUser?.id)
+        intent.putExtra("point", point)
         intent.putExtra("email", email)
         startActivity(intent)
     }
@@ -228,6 +242,11 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
     @SuppressLint("SetTextI18n")
     override fun showNumQuesCurent(pos: Int) {
         binding.tvNumQuestionCurrent.text = "$pos"
+    }
+
+    override fun showPoint(point: Int) {
+        this.point = point
+        binding.tvPoint.text = point.toString()
     }
 
     override fun showNextQuestion(
