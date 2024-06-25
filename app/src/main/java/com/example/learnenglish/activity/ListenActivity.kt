@@ -66,7 +66,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
 
         getDataFromInten()
         init()
-        getData()
+        setupPresenterAndFetchUser()
         setData(createPos)
         btnCheck()
         btnLoaQues()
@@ -127,7 +127,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         mediaPlayer?.release()
         mediaPlayer = null
     }
-    private fun getData(){
+    private fun setupPresenterAndFetchUser(){
         val listenRepository = DBHelperRepository(this)
         presenter = ListenPresenter(applicationContext, this@ListenActivity,listenRepository)
         presenter.getItemsListenQuestion()

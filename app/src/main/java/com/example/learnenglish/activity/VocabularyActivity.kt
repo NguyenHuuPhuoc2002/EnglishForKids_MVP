@@ -76,18 +76,21 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vocabulary)
-        val intent = intent
-        id = intent.getStringExtra("topic").toString()
-        email = intent.getStringExtra("email").toString()
+        getDataFromIntent()
         init()
         setOnClickListener()
-        getData()
+        setupPresenterAndFetchUser()
         btnCheck()
         setData(createPos)
         btnQuit()
         btnRestart()
         btnSpeaker()
         tvNumQuestion.text = " / " + mListQues.size.toString() + " "
+    }
+    private fun getDataFromIntent(){
+        val intent = intent
+        id = intent.getStringExtra("topic").toString()
+        email = intent.getStringExtra("email").toString()
     }
     @SuppressLint("MissingInflatedId")
     private fun btnQuit() {
@@ -247,7 +250,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         btnRestart = findViewById(R.id.img_restart)
         tvPoint = findViewById(R.id.tv_point)
     }
-    private fun getData(){
+    private fun setupPresenterAndFetchUser(){
         val vocaRepository = DBHelperRepository(this)
         presenter = VocabularyPresenter(applicationContext, this@VocabularyActivity,vocaRepository)
         presenter.getItemsVocabularyQuestion()
@@ -279,27 +282,6 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
 
     override fun showNextQuestion(listQuestion: ArrayList<VocabularyQuesModel>, listAnswer: ArrayList<VocabularyAnsModel>, newCurrentPos: Int) {
         currentPos = newCurrentPos
-//        val charArray = listQuestion[newCurrentPos].vocaChar.toCharArray()
-//        tvQuestion.text = listQuestion[newCurrentPos].mean
-//        Glide.with(this)
-//            .load(listQuestion[newCurrentPos].img)
-//            .into(imgOb)
-//        for (i in charArray.indices) {
-//            when (i) {
-//                0 -> tvCharacter1.text = charArray[i].toString()
-//                1 -> tvCharacter2.text = charArray[i].toString()
-//                2 -> tvCharacter3.text = charArray[i].toString()
-//                3 -> tvCharacter4.text = charArray[i].toString()
-//                4 -> tvCharacter5.text = charArray[i].toString()
-//                5 -> tvCharacter6.text = charArray[i].toString()
-//                6 -> tvCharacter7.text = charArray[i].toString()
-//                7 -> tvCharacter8.text = charArray[i].toString()
-//                8 -> tvCharacter9.text = charArray[i].toString()
-//                9 -> tvCharacter10.text = charArray[i].toString()
-//                10 -> tvCharacter11.text = charArray[i].toString()
-//                11 -> tvCharacter12.text = charArray[i].toString()
-//            }
-//        }
         setData(newCurrentPos)
         setOnClickListener()
     }

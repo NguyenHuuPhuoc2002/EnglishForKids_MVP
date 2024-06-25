@@ -54,7 +54,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         setContentView(R.layout.activity_quizzes)
         getDataFromIntent()
         initUi()
-        getData()
+        setupPresenterAndFetchUser()
         setData(currentPos)
         btnQuit()
         tvNumQuestion.text = " / " + mListQues.size.toString()
@@ -78,7 +78,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
             Toast.makeText(this, "No", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun getData() {
+    private fun setupPresenterAndFetchUser() {
         val taskRepository = DBHelperRepository(this)
         presenter = QuizzesPresenter(applicationContext, this@QuizzesActivity,taskRepository)
         presenter.getItemsQuestion()

@@ -53,12 +53,8 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
         setContentView(binding.root)
 
         init()
-
-        val intent = intent
-        id = intent.getStringExtra("topic").toString()
-        email = intent.getStringExtra("email").toString()
-
-        getData()
+        getDataFromIntent()
+        setupPresenterAndFetchUser()
         setOnClickListener()
         bintCheck()
         btnQuit()
@@ -71,6 +67,11 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
         binding.imgRestart.setOnClickListener {
             setData(currentPos)
         }
+    }
+    private fun getDataFromIntent(){
+        val intent = intent
+        id = intent.getStringExtra("topic").toString()
+        email = intent.getStringExtra("email").toString()
     }
 
     private fun btnQuit() {
@@ -158,7 +159,7 @@ class SentencesSortActivity : AppCompatActivity(), SentencesSortContract.View, V
         mListQues = arrayListOf()
         mListAns = arrayListOf()
     }
-    private fun getData(){
+    private fun setupPresenterAndFetchUser(){
         val taskRepository = DBHelperRepository(this)
         presenter = SentencesSortPresenter(applicationContext, this@SentencesSortActivity, taskRepository)
         presenter.getItemsQuestion()

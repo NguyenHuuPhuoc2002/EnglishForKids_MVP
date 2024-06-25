@@ -9,8 +9,11 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.learnenglish.R
 import com.example.learnenglish.contract.FinishedContract
+import com.example.learnenglish.contract.TaskCallback
+import com.example.learnenglish.model.UserModel
 import com.example.learnenglish.presenter.FinishedPresenter
 import com.example.learnenglish.presenter.QuizzesPresenter
+import com.example.learnenglish.presenter.SkillPresenter
 import com.example.learnenglish.repository.DBHelperRepository
 
 class FinishedActivity : AppCompatActivity() {
@@ -28,12 +31,15 @@ class FinishedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finished)
-        val taskRepository = DBHelperRepository(this)
-        presenter = FinishedPresenter(applicationContext, taskRepository)
+        setupPresenter()
         getDataFromInten()
         init()
         setUI()
         presenter.updatePoint(id!!, point)
+    }
+    private fun setupPresenter(){
+        val taskRepository = DBHelperRepository(this)
+        presenter = FinishedPresenter(applicationContext, taskRepository)
     }
     private fun setUI(){
         btnBack.setOnClickListener {

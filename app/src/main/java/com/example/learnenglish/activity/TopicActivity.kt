@@ -28,20 +28,23 @@ class TopicActivity : AppCompatActivity(), TopicContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topic)
-        rcvTopic = findViewById(R.id.rcv_topic)
-        btnBack = findViewById(R.id.img_back_topic)
+
+        init()
         getDataFromInten()
-        getData()
+        setupPresenterAndFetchUser()
         btnBack()
         Log.d("email_topic", email)
     }
-
+    private fun init(){
+        rcvTopic = findViewById(R.id.rcv_topic)
+        btnBack = findViewById(R.id.img_back_topic)
+    }
     private fun getDataFromInten(){
         val intent = intent
         str = intent.getStringExtra("title_skill").toString()
         email = intent.getStringExtra("email").toString()
     }
-    private fun getData(){
+    private fun setupPresenterAndFetchUser(){
         val taskRepository = DBHelperRepository(this)
         presenter = TopicPresenter(applicationContext, this@TopicActivity,taskRepository)
         presenter.getItemsTopic()
