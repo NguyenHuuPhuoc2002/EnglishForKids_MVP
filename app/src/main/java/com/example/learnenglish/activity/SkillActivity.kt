@@ -14,30 +14,21 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.learnenglish.R
-import com.example.learnenglish.adapter.SkillAdapter
-import com.example.learnenglish.contract.QuizzesContract
 import com.example.learnenglish.contract.SkillContract
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.databinding.ActivitySkillBinding
-import com.example.learnenglish.model.SkillModel
+import com.example.learnenglish.fragment.InfoFragment
+import com.example.learnenglish.fragment.SkillFragment
 import com.example.learnenglish.model.UserModel
-import com.example.learnenglish.presenter.LogInPresenter
 import com.example.learnenglish.presenter.SkillPresenter
 import com.example.learnenglish.repository.DBHelperRepository
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 
 class SkillActivity : AppCompatActivity(), SkillContract.View{
     private lateinit var binding: ActivitySkillBinding
-    private lateinit var mListHome: ArrayList<SkillModel>
     private lateinit var presenter: SkillContract.Presenter
     private lateinit var email: String
     private var nameUser: String? = null
@@ -48,21 +39,23 @@ class SkillActivity : AppCompatActivity(), SkillContract.View{
         binding = ActivitySkillBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
-        addDataHome()
-        setAdapterHome()
         getDataFromIntent()
         setupPresenterAndFetchUser()
         Log.d("email_skill", email)
         setupUI()
         navigation()
+        openFragmentSkill(SkillFragment(), email)
+
+
     }
     private fun setupPresenterAndFetchUser(){
         val taskRepository = DBHelperRepository(this)
-        presenter = SkillPresenter(this@SkillActivity, email, taskRepository)
+        presenter = SkillPresenter(SkillFragment(),this@SkillActivity, email, taskRepository)
         presenter.getUser(email, object : TaskCallback.TaskCallbackUser2{
             override fun onListUserLoaded(user: UserModel) {
                 nameUser = user.name.toString()
-                navHeadGetEmailUser(nameUser!!)
+                Log.d("name", nameUser.toString())
+                navHeadGetEmailUser(nameUser!!, email)
             }
 
         })
@@ -76,11 +69,14 @@ class SkillActivity : AppCompatActivity(), SkillContract.View{
         alertDialog.setCancelable(false)
         dialog = alertDialog.create()
     }
-    private fun navHeadGetEmailUser(nameUser: String) {
+    @SuppressLint("CutPasteId")
+    private fun navHeadGetEmailUser(nameUser: String, email: String) {
         val navigationView = findViewById<NavigationView>(R.id.navigation_drawer)
         val headerView = navigationView.getHeaderView(0)
-        val emailTextView = headerView.findViewById<TextView>(R.id.tv_name)
-        emailTextView.text = nameUser
+        val nameTextView = headerView.findViewById<TextView>(R.id.tv_name)
+        val emailTextView = headerView.findViewById<TextView>(R.id.tv_email)
+        nameTextView.text = nameUser
+        emailTextView.text = email
     }
     private fun setupUI() {
         val drawerLayout = binding.drawLayout
@@ -94,6 +90,16 @@ class SkillActivity : AppCompatActivity(), SkillContract.View{
             when (it.itemId) {
                 R.id.nav_rank -> {
                     Toast.makeText(this, "Rank", Toast.LENGTH_SHORT).show()
+                }
+                R.id.nav_info -> {
+                    if (supportFragmentManager.findFragmentById(R.id.fragment_container) !is InfoFragment) {
+                        openFragmentSkill(InfoFragment(), email)
+                    }
+                }
+                R.id.nav_home -> {
+                    if (supportFragmentManager.findFragmentById(R.id.fragment_container) !is SkillFragment) {
+                        openFragmentSkill(SkillFragment(), email)
+                    }
                 }
                 R.id.nav_setting -> {
                     Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show()
@@ -119,33 +125,29 @@ class SkillActivity : AppCompatActivity(), SkillContract.View{
             true
         }
     }
-    private fun openFragment(fragment: Fragment){
+    private fun openFragment(fragment: Fragment) {
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(R.anim.endter_from_right, R.anim.exit_to_right, R.anim.endter_from_right, R.anim.exit_to_right)
         fragmentTransaction.replace(R.id.fragment_container, fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
+    private fun openFragmentSkill(fragment: Fragment, email: String) {
+        val bundle = Bundle()
+        bundle.putString("email", email)
+        fragment.arguments = bundle
+
+        val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(R.anim.endter_from_right, R.anim.exit_to_right, R.anim.endter_from_right, R.anim.exit_to_right)
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
     private fun getDataFromIntent(){
         val intent = intent
         email = intent.getStringExtra("email").toString()
     }
-    private fun setAdapterHome(){
-        val adapter = SkillAdapter(mListHome, object : QuizzesContract.OnClickListener{
-            override fun onClickListenerItemHome(pos: Int) {
-                presenter.onStartActivity(mListHome[pos], email)
-            }
-        })
-        binding.rcvHome.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-        binding.rcvHome.adapter = adapter
 
-    }
-
-    private fun addDataHome(){
-        mListHome = arrayListOf()
-        mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Trắc Nghiệm"))
-        mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Từ Vựng"))
-        mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Luyện Nghe"))
-        mListHome.add(SkillModel(R.drawable.img_tracnghiem, "Sắp Xếp Câu"))
-    }
 
     override fun showTopicActivity(title: String, email: String) {
         val intent = Intent(this@SkillActivity, TopicActivity::class.java)

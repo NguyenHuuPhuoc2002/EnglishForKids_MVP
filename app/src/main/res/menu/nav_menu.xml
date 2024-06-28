@@ -6,6 +6,14 @@
     <group
         android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_home"
+            android:title="Trang chủ"
+            android:icon="@drawable/ic_home"/>
+        <item
+            android:id="@+id/nav_info"
+            android:title="Thông tin cá nhân"
+            android:icon="@drawable/ic_info"/>
+        <item
             android:id="@+id/nav_rank"
             android:title="Bảng xếp hạng"
             android:icon="@drawable/img_rank"/>

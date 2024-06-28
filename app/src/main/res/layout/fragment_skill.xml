@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img"
+    tools:context=".fragment.SkillFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_home"
+            android:layout_width="match_parent"
+            android:layout_height="395dp"
+            android:layout_marginTop="25dp"
+            android:paddingLeft="15dp"
+            android:layout_marginStart="7dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+</FrameLayout>

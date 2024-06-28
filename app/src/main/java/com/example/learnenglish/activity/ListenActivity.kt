@@ -73,7 +73,7 @@ class ListenActivity : AppCompatActivity(), ListenContract.View {
         btnLoaAns()
         btnQuit()
 
-        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
+        tvNumQuestion.text = "/ " + mListQues.size.toString() + " "
     }
     private fun getDataFromInten(){
         val intent = intent

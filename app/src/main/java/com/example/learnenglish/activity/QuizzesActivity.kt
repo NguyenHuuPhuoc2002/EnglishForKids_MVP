@@ -57,7 +57,7 @@ class QuizzesActivity : AppCompatActivity(), QuizzesContract.View , View.OnClick
         setupPresenterAndFetchUser()
         setData(currentPos)
         btnQuit()
-        tvNumQuestion.text = " / " + mListQues.size.toString()
+        tvNumQuestion.text = "/ " + mListQues.size.toString()
     }
 
     private fun getDataFromIntent(){

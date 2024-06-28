@@ -85,7 +85,7 @@ class VocabularyActivity : AppCompatActivity(), View.OnClickListener, Vocabulary
         btnQuit()
         btnRestart()
         btnSpeaker()
-        tvNumQuestion.text = " / " + mListQues.size.toString() + " "
+        tvNumQuestion.text = "/ " + mListQues.size.toString() + " "
     }
     private fun getDataFromIntent(){
         val intent = intent

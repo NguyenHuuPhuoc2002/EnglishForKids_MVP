@@ -5,11 +5,12 @@ import com.example.learnenglish.activity.SkillActivity
 import com.example.learnenglish.activity.TopicActivity
 import com.example.learnenglish.contract.SkillContract
 import com.example.learnenglish.contract.TaskCallback
+import com.example.learnenglish.fragment.SkillFragment
 import com.example.learnenglish.model.SkillModel
 import com.example.learnenglish.model.UserModel
 import com.example.learnenglish.repository.DBHelperRepository
 
-class SkillPresenter(private val view: SkillActivity, private val email: String, private val db: DBHelperRepository): SkillContract.Presenter {
+class SkillPresenter(private val view: SkillFragment, private val viewActivity: SkillActivity, private val email: String, private val db: DBHelperRepository): SkillContract.Presenter {
     override fun onStartActivity(skill: SkillModel, email: String) {
         if(skill.title == "Trắc Nghiệm"){
             view.showTopicActivity(skill.title, email)
@@ -35,7 +36,7 @@ class SkillPresenter(private val view: SkillActivity, private val email: String,
                 if(mUser != null){
                     callback.onListUserLoaded(mUser)
                 }else{
-                    view.showErrorMessage("Không tìm thấy người dùng với email $email")
+                    viewActivity.showErrorMessage("Không tìm thấy người dùng với email $email")
                 }
             }
 

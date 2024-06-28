@@ -14,7 +14,7 @@
         <item name="android:textColorHint">@color/black</item>
     </style>
     <style name="Theme.LearnEnglish" parent="Base.Theme.LearnEnglish" >
-        <item name="colorPrimary">@color/gray</item>
+        <item name="colorPrimary">@color/pink</item>
         <item name="colorPrimaryVariant">@color/gray</item>
         <item name="android:statusBarColor">@color/black</item>
     </style>

@@ -15,7 +15,7 @@
         android:layout_height="85dp"
         android:layout_gravity="left"
         android:src="@drawable/img_topic"
-        app:civ_border_color="@color/white"
+        app:civ_border_color="@color/black"
         app:civ_border_width="1dp"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,13 +29,31 @@
         android:layout_height="wrap_content"
         android:text="abc"
         android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textSize="18dp"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins"
+        app:layout_constraintVertical_bias="0.4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile_image"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_bias="0.07"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="abc"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"
+        android:textSize="14dp"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
