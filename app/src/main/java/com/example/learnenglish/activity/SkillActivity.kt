@@ -51,8 +51,8 @@ class SkillActivity : AppCompatActivity(), SkillContract.View{
     private fun setupPresenterAndFetchUser(){
         val taskRepository = DBHelperRepository(this)
         presenter = SkillPresenter(SkillFragment(),this@SkillActivity, email, taskRepository)
-        presenter.getUser(email, object : TaskCallback.TaskCallbackUser2{
-            override fun onListUserLoaded(user: UserModel) {
+        presenter.getUser(email, object : TaskCallback.TaskCallbackUserRank{
+            override fun onListUserLoaded(user: UserModel, rank: Int) {
                 nameUser = user.name.toString()
                 Log.d("name", nameUser.toString())
                 navHeadGetEmailUser(nameUser!!, email)

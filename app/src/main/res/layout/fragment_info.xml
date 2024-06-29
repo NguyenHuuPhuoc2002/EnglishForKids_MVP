@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/img"
     tools:context=".fragment.InfoFragment">
     <FrameLayout
         android:layout_width="match_parent"
+        android:background="@drawable/img"
         android:layout_height="match_parent">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_avatar"

@@ -10,6 +10,6 @@ interface SkillContract {
     }
     interface Presenter{
         fun onStartActivity(skill: SkillModel, email: String)
-        fun getUser(email: String, callback: TaskCallback.TaskCallbackUser2)
+        fun getUser(email: String, callback: TaskCallback.TaskCallbackUserRank)
     }
 }

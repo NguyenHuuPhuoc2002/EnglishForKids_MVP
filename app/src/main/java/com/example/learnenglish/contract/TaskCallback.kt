@@ -45,6 +45,11 @@ interface TaskCallback {
 
     }
 
+    interface TaskCallbackUserRank{
+        fun onListUserLoaded(user: UserModel, rank: Int)
+
+    }
+
     interface TaskCallbackLogin{
         fun onLogInSuccess(message: String)
         fun onLogInFail(message: String)

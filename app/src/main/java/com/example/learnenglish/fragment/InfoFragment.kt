@@ -42,11 +42,12 @@ class InfoFragment : Fragment(), SkillContract.View {
     private fun setupPresenterAndFetchUser(){
         val taskRepository = DBHelperRepository(requireContext())
         presenter = SkillPresenter(SkillFragment(),requireActivity() as SkillActivity, email!!, taskRepository)
-        presenter.getUser(email!!, object : TaskCallback.TaskCallbackUser2{
-            override fun onListUserLoaded(user: UserModel) {
+        presenter.getUser(email!!, object : TaskCallback.TaskCallbackUserRank{
+            override fun onListUserLoaded(user: UserModel, rank: Int) {
                binding.tvName.text = user.name
                binding.tvEmail.text = user.email
                binding.tvPoint.text = user.point.toString()
+               binding.tvRank.text = rank.toString()
             }
 
         })
