@@ -21,6 +21,7 @@ import com.example.learnenglish.contract.SkillContract
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.databinding.ActivitySkillBinding
 import com.example.learnenglish.fragment.InfoFragment
+import com.example.learnenglish.fragment.RankFragment
 import com.example.learnenglish.fragment.SkillFragment
 import com.example.learnenglish.model.UserModel
 import com.example.learnenglish.presenter.SkillPresenter
@@ -89,7 +90,9 @@ class SkillActivity : AppCompatActivity(), SkillContract.View{
         binding.navigationDrawer.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_rank -> {
-                    Toast.makeText(this, "Rank", Toast.LENGTH_SHORT).show()
+                    if (supportFragmentManager.findFragmentById(R.id.fragment_container) !is RankFragment) {
+                        openFragmentSkill(RankFragment(), email)
+                    }
                 }
                 R.id.nav_info -> {
                     if (supportFragmentManager.findFragmentById(R.id.fragment_container) !is InfoFragment) {

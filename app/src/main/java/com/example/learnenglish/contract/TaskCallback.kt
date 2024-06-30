@@ -47,7 +47,10 @@ interface TaskCallback {
 
     interface TaskCallbackUserRank{
         fun onListUserLoaded(user: UserModel, rank: Int)
+    }
 
+    interface TaskCallbackUserRankList{
+        fun onListUserLoadedRank(mListUser: ArrayList<UserModel>)
     }
 
     interface TaskCallbackLogin{
