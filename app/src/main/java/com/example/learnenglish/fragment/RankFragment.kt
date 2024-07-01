@@ -28,7 +28,7 @@ class RankFragment : Fragment() {
 
     private fun getDataFromIntent() {
         arguments?.let {
-           email = it.getString("email").toString()
+            email = it.getString("email").toString()
         }
     }
 
@@ -42,7 +42,8 @@ class RankFragment : Fragment() {
         presenter.getUser(email, object : TaskCallback.TaskCallbackUserRankList{
             override fun onListUserLoadedRank(mListUser: ArrayList<UserModel>) {
                 val newList = mListUser.sortedWith(compareByDescending { it.point })
-                val adapter = RankAdapter(newList)
+
+                val adapter = RankAdapter(email, newList)
                 binding.rcvRank.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
                 binding.rcvRank.adapter = adapter
             }

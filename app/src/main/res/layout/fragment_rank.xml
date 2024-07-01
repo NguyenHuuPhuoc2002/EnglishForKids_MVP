@@ -5,20 +5,84 @@
     android:layout_height="match_parent"
     android:background="@drawable/img"
     tools:context=".fragment.RankFragment">
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:textColor="@color/black"
-        android:text="Bảng Xếp Hạng"
         android:layout_gravity="center|top"
-        android:layout_marginTop="180dp"
-        android:fontFamily="@font/poppins"/>
+        android:layout_marginTop="155dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/img_rank2"
+                tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/tv_point_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="210"
+                android:fontFamily="@font/poppins"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/img_rank1"
+                tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/tv_point_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:text="210"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/img_rank3"
+                tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/tv_point_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:text="210"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"/>
+        </LinearLayout>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_rank"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="13dp"
         android:padding="10dp"
-        android:layout_height="wrap_content"
         android:layout_marginTop="230dp"
         android:layout_gravity="center|top"/>
 

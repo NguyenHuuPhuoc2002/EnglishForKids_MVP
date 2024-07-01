@@ -269,9 +269,7 @@ class DBHelperRepository(private val context: Context) {
                 if (snapshot.exists()) {
                     for (user in snapshot.children) {
                         val userData = user.getValue(UserModel::class.java)
-                        userData?.let {
-                            itemList.add(it)
-                        }
+                        itemList.add(userData!!)
                     }
                 }
                 callback.onListUserLoaded(itemList)

@@ -31,7 +31,14 @@ class InfoFragment : Fragment(), SkillContract.View {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentInfoBinding.inflate(inflater, container, false)
+        setUpUI()
         return binding.root
+    }
+
+    private fun setUpUI() {
+        binding.btnUpdate.setOnClickListener {
+
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

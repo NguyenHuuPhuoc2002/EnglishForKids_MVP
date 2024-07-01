@@ -38,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
+                    app:startIconDrawable="@drawable/ic_person"
                     android:layout_marginTop="5dp"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
                     <com.google.android.material.textfield.TextInputEditText
@@ -54,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
+                    app:startIconDrawable="@drawable/ic_email"
                     android:layout_marginTop="5dp"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
                     <com.google.android.material.textfield.TextInputEditText
@@ -73,6 +75,7 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginTop="5dp"
+                    app:startIconDrawable="@drawable/ic_password"
                     app:counterEnabled="true"
                     app:counterMaxLength="32"
                     app:passwordToggleEnabled="true">
@@ -95,6 +98,7 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginTop="1dp"
+                    app:startIconDrawable="@drawable/ic_password"
                     app:counterEnabled="true"
                     app:counterMaxLength="32"
                     app:passwordToggleEnabled="true">
@@ -123,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="50dp"
                         android:layout_marginEnd="50dp"
-                        android:background="@drawable/pink_boder"
+                        android:background="@drawable/black_boder"
                         android:text="Đăng Ký"
                         android:textSize="18sp"
                         android:textColor="@color/black" />
