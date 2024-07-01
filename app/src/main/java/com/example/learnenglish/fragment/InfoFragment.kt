@@ -1,6 +1,5 @@
 package com.example.learnenglish.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,18 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.learnenglish.activity.SkillActivity
-import com.example.learnenglish.activity.TopicActivity
+import com.example.learnenglish.R
+import com.example.learnenglish.contract.InfoContract
 import com.example.learnenglish.contract.SkillContract
+import com.example.learnenglish.contract.SkillContractV2
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.databinding.FragmentInfoBinding
 import com.example.learnenglish.model.UserModel
-import com.example.learnenglish.presenter.SkillPresenter
+import com.example.learnenglish.presenter.InfoPresenter
 import com.example.learnenglish.repository.DBHelperRepository
 
-class InfoFragment : Fragment(), SkillContract.View {
+class InfoFragment : Fragment(), InfoContract.View {
     private lateinit var binding: FragmentInfoBinding
-    private lateinit var presenter: SkillContract.Presenter
+    private lateinit var presenter: InfoPresenter
     private var email: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,30 +31,25 @@ class InfoFragment : Fragment(), SkillContract.View {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentInfoBinding.inflate(inflater, container, false)
-        setUpUI()
+
         return binding.root
-    }
-
-    private fun setUpUI() {
-        binding.btnUpdate.setOnClickListener {
-
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupPresenterAndFetchUser()
-        Log.d("okokok", email.toString())
-    }
-    private fun setupPresenterAndFetchUser(){
-        val taskRepository = DBHelperRepository(requireContext())
-        presenter = SkillPresenter(SkillFragment(),requireActivity() as SkillActivity, email!!, taskRepository)
+        val taskRepo = DBHelperRepository(requireContext())
+        presenter = InfoPresenter(this, taskRepo)
         presenter.getUser(email!!, object : TaskCallback.TaskCallbackUserRank{
             override fun onListUserLoaded(user: UserModel, rank: Int) {
-               binding.tvName.text = user.name
-               binding.tvEmail.text = user.email
-               binding.tvPoint.text = user.point.toString()
-               binding.tvRank.text = rank.toString()
+                binding.tvPoint.text = user.point.toString()
+                binding.tvName.text = user.name.toString()
+                binding.tvEmail.text = user.email.toString()
+                binding.tvRank.text = rank.toString()
+                binding.btnUpdate.setOnClickListener {
+                    val edtName = binding.edtName.text.toString()
+                    presenter.update(user.id!!, edtName)
+                    binding.edtName.setText("")
+                }
             }
 
         })
@@ -64,15 +59,19 @@ class InfoFragment : Fragment(), SkillContract.View {
             email = it.getString("email")
         }
     }
-
-    override fun showTopicActivity(title: String, email: String) {
-        val intent = Intent(requireActivity(), TopicActivity::class.java)
-        intent.putExtra("title_skill", title)
-        intent.putExtra("email", email)
-        startActivity(intent)
+    override fun showErrorMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showErrorMessage(message: String) {
+    override fun showSuccesMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showFailMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showTextBlankMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 

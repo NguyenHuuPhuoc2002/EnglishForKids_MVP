@@ -269,7 +269,9 @@ class DBHelperRepository(private val context: Context) {
                 if (snapshot.exists()) {
                     for (user in snapshot.children) {
                         val userData = user.getValue(UserModel::class.java)
-                        itemList.add(userData!!)
+                        userData?.let {
+                            itemList.add(it)
+                        }
                     }
                 }
                 callback.onListUserLoaded(itemList)
@@ -284,6 +286,18 @@ class DBHelperRepository(private val context: Context) {
         dbRef = FirebaseDatabase.getInstance().getReference("Users").child(id)
         val userInfo = mapOf<String, Any>("point" to point)
         dbRef.updateChildren(userInfo)
+    }
+
+    fun upDateNameUser(id: String, nameUser: String, callback: TaskCallback.TaskCallbackForgotInfo){
+        dbRef = FirebaseDatabase.getInstance().getReference("Users").child(id)
+        val userInfo = mapOf<String, Any>("name" to nameUser)
+        dbRef.updateChildren(userInfo)
+            .addOnSuccessListener {
+                callback.onSuccess("Cập nhật thành công!")
+            }
+            .addOnFailureListener {
+                callback.onFail("Cập nhật không thành công!")
+            }
     }
     fun upDatePassWord(email: String, callback: TaskCallback.TaskCallbackForgotPassWord){
         firebaseAuth = FirebaseAuth.getInstance()

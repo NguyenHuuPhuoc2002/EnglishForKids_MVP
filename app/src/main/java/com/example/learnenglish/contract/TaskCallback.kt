@@ -62,4 +62,8 @@ interface TaskCallback {
         fun onSuccess(message: String)
         fun onFail(message: String)
     }
+    interface TaskCallbackForgotInfo{
+        fun onSuccess(message: String)
+        fun onFail(message: String)
+    }
 }

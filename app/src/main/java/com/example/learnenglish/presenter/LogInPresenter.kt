@@ -1,12 +1,7 @@
 package com.example.learnenglish.presenter
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import androidx.core.content.ContextCompat.startActivity
 import com.example.learnenglish.activity.LogInActivity
-import com.example.learnenglish.activity.SkillActivity
 import com.example.learnenglish.contract.LogInContract
 import com.example.learnenglish.contract.TaskCallback
 import com.example.learnenglish.repository.DBHelperRepository

@@ -9,11 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.learnenglish.R
 import com.example.learnenglish.contract.FinishedContract
-import com.example.learnenglish.contract.TaskCallback
-import com.example.learnenglish.model.UserModel
 import com.example.learnenglish.presenter.FinishedPresenter
-import com.example.learnenglish.presenter.QuizzesPresenter
-import com.example.learnenglish.presenter.SkillPresenter
 import com.example.learnenglish.repository.DBHelperRepository
 
 class FinishedActivity : AppCompatActivity() {
